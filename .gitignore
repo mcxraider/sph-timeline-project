@@ -7,7 +7,9 @@ __pycache__/
 *.so
 
 # File types
-*.json
+data/
+ailearn/
+
 
 
 # Distribution / packaging
