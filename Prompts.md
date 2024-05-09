@@ -10,15 +10,8 @@ Answer:
 
 
 # Prompt to generate tags for each article:
-Given the text of a news article below, identify and list the most relevant tags that categorize the main themes, topics, or entities mentioned in the article. Focus on extracting key aspects like notable events, people, locations, and any significant issues discussed.
-
+Task Description: Given the combined title and text of a news article below, focus on identifying the most relevant tags that categorize the main   topic, people, locations or entities mentioned in the article. 
 Article:
 {Text}
 
 Generate Tags:
-
-
-
-
-
-
