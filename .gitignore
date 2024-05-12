@@ -10,6 +10,7 @@ __pycache__/
 data/
 mlearn/
 ml-env/
+mac-timeline/
 .env
 
 # Distribution / packaging
