@@ -30,12 +30,12 @@ def process_articles(df, max_workers=10):
             print(f"Starting batch processing for articles {i+1} to {min(i+batch_size, len(article_id_pairs))}")
             futures = {executor.submit(fetch_tags, pair): pair for pair in current_batch}
 
-            processed_count = 0
+            processed_count = i
             for future in as_completed(futures):
                 article_id, tags = future.result()
                 results[article_id] = tags
                 processed_count += 1
-                print(f"Processed article{processed_count} in Batch {i} ")
+                print(f"Processed article {processed_count} in Batch {(i//100)+1} ")
 
             if processed_count >= len(article_id_pairs):
                 return results
@@ -44,6 +44,6 @@ def process_articles(df, max_workers=10):
             time.sleep(cooldown_period)
     return results
 
-df = load_and_merge_csv('data_upload/cluster_labels{}.csv', 4)
+df = load_and_merge_csv('../data_upload/cluster_labels{}.csv', 4)
 df = df.loc[range(200)]
 tags = process_articles(df)
