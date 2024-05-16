@@ -30,11 +30,6 @@ Detailed Descriptions: Provide detailed descriptions of each event, explaining h
 Contextual Links: Use information from the articles to link events together logically and coherently.
 Handle Ambiguities: If an article uses ambiguous time references, infer the date based on the publication date of the article and provide a clear rationale for your inference.
 
-Example Format:
-Date: Description of the event with context and links to the main event.
-Date: Description of the event with context and links to the main event.
-...
-
 Example of a good output (Do not include this in the output):
 Date: August 1, 2023: Major flood hits the southern region of Country X, causing significant damage and displacing thousands of residents. (Article 2)
 Date: August 5, 2023: The government of Country X declares a state of emergency in response to the flooding, mobilizing national resources for disaster relief. (Article 1)
@@ -45,6 +40,13 @@ Contextual Links:
 External Influences: Mention any external influences (e.g., global conflicts, economic trends, scientific discoveries) that might have indirectly affected the events.
 Internal Issues: Highlight any internal issues or developments (e.g., political changes, organizational restructuring, societal movements) within the entities involved that might have impacted the events.
 Efforts for Improvement: Note any indications of efforts to improve the situation (e.g., policy changes, strategic initiatives, collaborative projects) despite existing challenges.
+
 Be as thorough and precise as possible, ensuring the timeline accurately reflects the sequence and context of events leading to the main event.
+
+Return them as a JSON object that the keys are Dates and Events the explanation, respectively.
+For example:
+Date: 2000-05-22, Event: Reports emerge about the successful evacuation of thousands of residents, and the government begins planning long-term recovery efforts.
+
+If the articles provided do not contain sufficient information to construct a detailed timeline of events leading up to a main event, simply output Null
 
 Series of Articles: {text}
