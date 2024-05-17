@@ -1,30 +1,37 @@
 [
     {
-        "Date": "2023-10-04",
-        "Event": "British Prime Minister Rishi Sunak cancels part of the high-speed rail project to Manchester, citing a need to redirect funds to other transport projects."
-    },
-    {
         "Date": "2023-10-14",
-        "Event": "Blinken tells Arab leaders that there can be 'no more business as usual' with Hamas, following deadly attacks in Israel."
+        "Event": "Blinken visited Doha and met with Qatari Prime Minister Sheikh Mohammed Bin Abdulrahman al-Thani. He condemned Hamas' attacks on Israel and called for an end to the violence.",
+        "Article_id": "2bl1gs4mgasvxehp"
     },
     {
         "Date": "2023-10-17",
-        "Event": "Blinken and Israeli PM Benjamin Netanyahu shelter in a bunker during a meeting in Tel Aviv as air raid sirens sound."
+        "Event": "Blinken and Netanyahu sheltered in a bunker during an air raid siren in Tel Aviv, highlighting the ongoing security concerns in the region.",
+        "Article_id": "kj6utqb16xumnojj"
     },
     {
         "Date": "2023-10-22",
-        "Event": "US Secretary of State Anthony Blinken warns Lebanon to remain out of the conflict between Israel and the Palestinian militant group Hamas."
+        "Event": "Blinken warned Lebanon against getting involved in the Israel-Palestine conflict, as it could have negative consequences for its people.",
+        "Article_id": "l5nulselgz9sb764"
     },
     {
         "Date": "2023-11-05",
-        "Event": "Blinken rebuffs Arab states' push for an immediate Gaza ceasefire, arguing that it would allow Hamas to regroup."
+        "Event": "Blinken met with Arab leaders in Amman and discussed the need for a ceasefire, but emphasized that Hamas must not be allowed to regroup.",
+        "Article_id": "nx5qf5g9cr2o69rs"
+    },
+    {
+        "Date": "2023-11-06",
+        "Event": "Antony Blinken, U.S. top diplomat, visited Ramallah and met with Palestinian Authority President Mahmoud Abbas to discuss the future of the Gaza Strip.",
+        "Article_id": "f89bytne82knyp2r"
     },
     {
         "Date": "2023-11-11",
-        "Event": "Blinken says 'far too many' Palestinians have been killed in the conflict between Israel and Hamas, and calls for more protection of civilians."
+        "Event": "Blinken criticized the high number of Palestinian casualties in the Gaza conflict and called for more protection for civilians.",
+        "Article_id": "vbzqou9f7u9qnyrf"
     },
     {
         "Date": "2023-11-18",
-        "Event": "Jordan's foreign minister expresses doubts about Israel's ability to eliminate Hamas."
+        "Event": "Jordan's foreign minister expressed doubts about Israel's ability to wipe out Hamas and warned against the displacement of Palestinians.",
+        "Article_id": "roaimcpogg3r9zuj"
     }
 ]
