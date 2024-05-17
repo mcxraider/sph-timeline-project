@@ -40,25 +40,3 @@
     'Ageing population',
     'Immigration']}}]
 
-
-
-
-Date: 2023-08-01
-Event: Major flood hits the southern region of Country X, causing significant damage and displacing thousands of residents. Article: 2
-Date: 2023-08-05 
-Event: The government of Country X declares a state of emergency in response to the flooding, mobilizing national resources for disaster relief. Article: 2
-Date: 2023-08-10
-Event: International aid begins to arrive in Country X, with several countries sending supplies and personnel to assist in the relief efforts. Article: 3
-
-
-
-response_schemas = [
-    ResponseSchema(name="Date", description="The date of the event in YYYY-MM-DD format"),
-    ResponseSchema(name="Event", description="A detailed description of the event"),
-    ResponseSchema(name="Article", description="The article number from which the event was extracted"),
-]
-
-output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
-
-# See the prompt template you created for formatting
-format_instructions = output_parser.get_format_instructions()

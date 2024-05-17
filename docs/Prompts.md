@@ -1,25 +1,59 @@
 # Prompt to try to determine need for headline:
-Given a news headline, determine whether headline requires a contextual background (for example, in the form of a timeline). 
-Guideline:
-Needs timeline:  (1) Complext article (2) Specific details or referring to individuals or entities (3) Important and impactful article
-Does not need timeline: (1) Explainer article (2) Forum, commentaries, podcast, inforgrahics (3) Accidents or independent events
-Then reply in term of the need with a score 1 - 5, 1 means unnecessary, 5 means necessary, in JSON format, for example {"score": 3}.
+You are a highly intelligent AI tasked with analyzing articles to determine whether generating a timeline of events leading up to the key event in the article would be beneficial. Consider the following factors to make your decision:
 
-Title: Swedish criminal gangs laundering money through Spotify: Report
-Answer: 
+    1. **Significance of the Event**:
+       - Does the event have a significant impact on a large number of people, industries, or countries?
+       - Are the potential long-term consequences of the event important?
+
+    2. **Controversy or Debate**:
+       - Is the event highly controversial or has it sparked significant debate?
+       - Has the event garnered significant media attention and public interest?
+
+    3. **Complexity**:
+       - Does the event involve multiple factors, stakeholders, or causes that make it complex?
+       - Does the event have deep historical roots or is it the culmination of long-term developments?
+
+    4. **Personal Relevance**:
+       - Does the event directly affect the reader or their community?
+       - Is the event of particular interest to the reader due to economic implications, political affiliations, or social issues?
+
+    5. **Educational Purposes**:
+       - Would a timeline provide valuable learning or research information?
+
+    Here is the information for the article:
+
+    Title:{title}
+    Text: {text}
+
+    Based on the factors above, decide whether generating a timeline of events leading up to the key event in this article would be beneficial. Provide a brief explanation for your decision. 
+    Then reply in terms of the need with a score 1 - 5, 1 means unnecessary, 5 means necessary, in JSON format, for example score 3. No need for an explanation
+    ANSWER:
 
 
 # Prompt to generate tags for each article:
-Task Description: Given the combined title and text of a news article below, focus on identifying the most relevant tags that categorize the main   topic, people, locations or entities mentioned in the article. 
-Article:
-{Text}
-
-Generate Tags:
+Task Description: Given the following news article, identify and suggest 8 most relevant tags that best categorize the geographical locations mentioned, main events, topics, entities.
+The tags should be concise, informative, and reflect the content accurately to facilitate effective searching and organization within a database.
+The tags should also be ranked in decreasing order of importance and relevance in the article.
+Combined Title and Summaries:
+{text}
+    
+    Formatting convention: List the tags to me in this example format:
+    Singapore, Big family, climbing, Baby, crying, hungry
+    
+    Ensure that the tags generated follow the formatting convention very closely, and the response should not include any "-" or backslash n.
+    Generated tags:
+    
+    Check again that the format follows the formatting convention stated above
 
 
 
 
 # Prompt to generate tineline:
+Given a series of articles, each containing a publication date, title, and content, your task is to construct a detailed timeline of events leading up to the main event described in the first article.
+Analyze the First Article: Begin by thoroughly analyzing the title, content, and publication date of the first article to understand the main event.
+Use Subsequent Articles: For each following article, examine the title, content, and publication date. Identify events, context, and any time references such as "last week," "last month," or specific dates.
+
+Construct the Timeline:
 Given a series of articles, each containing a publication date, title, and content, your task is to construct a detailed timeline of events leading up to the main event described in the first article.
 Analyze the First Article: Begin by thoroughly analyzing the title, content, and publication date of the first article to understand the main event.
 Use Subsequent Articles: For each following article, examine the title, content, and publication date. Identify events, context, and any time references such as "last week," "last month," or specific dates.
@@ -34,22 +68,14 @@ Contextual Links:
 External Influences: Mention any external influences (e.g., global conflicts, economic trends, scientific discoveries) that might have indirectly affected the events.
 Internal Issues: Highlight any internal issues or developments (e.g., political changes, organizational restructuring, societal movements) within the entities involved that might have impacted the events.
 Efforts for Improvement: Note any indications of efforts to improve the situation (e.g., policy changes, strategic initiatives, collaborative projects) despite existing challenges.
+
 Be as thorough and precise as possible, ensuring the timeline accurately reflects the sequence and context of events leading to the main event.
-Series of Articles: 
+
+Series of Articles:
 {text}
-Now, I want you to carefully analyse the timeline and cross reference that the information is correct, and that it corresponds with the correct date.
-Then, check carefully to ensure that the dates are arranged in chronological order.
-FORMAT FOR OUTPUT: Return them as a JSON object that the keys are Dates and Events the explanation, respectively.
-This is a good example of how to return the output (Do not include this in the timeline):
-{{"Date":"2000-05-22",
-"Event": "Reports emerge about the successful evacuation of thousands of residents, and the government begins planning long-term recovery efforts.",
-"Article": 1}},
-{{"Date":"2023-08-01",
-"Event": "Major flood hits the southern region of Country X, causing significant damage and displacing thousands of residents.",
-"Article": 1}}
 
-Check again that the output is formatted as a JSON object that the keys are Dates and Event and Article.
-
+FORMAT FOR OUTPUT:
+{format_instructions}
 
 
 
