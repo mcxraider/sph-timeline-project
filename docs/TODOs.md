@@ -12,9 +12,7 @@
 5. **Python Environment Issues**:
    - Fix any Python environment issues.
 
-### Timeline Generation:
-- Try generating a timeline of events for each article in the selected articles.
-- Use a prompt to combine these timelines to form one longer, possibly better timeline.
+### Timeline Optimisation:
 - Since having the `Article_id` for each event in the timeline, can do something with that to improve the contextual information of each event in the timeline.
 
 ---
