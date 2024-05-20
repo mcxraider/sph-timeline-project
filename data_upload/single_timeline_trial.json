@@ -1,72 +1,167 @@
 [
     {
-        "Date": "2020-11-10",
-        "Event": "Azerbaijan seized back significant amounts of territory it had lost to Armenian forces in the 1990s.",
-        "Article_id": "x6bs26mxih4wjnvb"
-    },
-    {
-        "Date": "2023-09-07",
-        "Event": "Armenia accused Azerbaijan of conducting an “ongoing military build-up along the line of contact in Nagorno-Karabakh and the Armenia-Azerbaijan border”.",
-        "Article_id": "x6bs26mxih4wjnvb"
-    },
-    {
-        "Date": "2023-09-07",
-        "Event": "Azerbaijan’s foreign ministry rejected the Armenian assertion and called on Yerevan to end what Baku called “military and political provocations.”",
-        "Article_id": "x6bs26mxih4wjnvb"
-    },
-    {
-        "Date": "2023-09-07",
-        "Event": "Russia said on Thursday it was continuing to fulfil its role as a security guarantor in the South Caucasus.",
-        "Article_id": "x6bs26mxih4wjnvb"
-    },
-    {
-        "Date": "2023-09-07",
-        "Event": "Kremlin spokesman Dmitry Peskov criticised Armenia’s decision to host a joint exercise involving 85 US soldiers next week as unhelpful.",
-        "Article_id": "x6bs26mxih4wjnvb"
-    },
-    {
-        "Date": "2022-09-20",
-        "Event": "Azerbaijan took control of Nagorno-Karabakh after three decades in a lightning military operation and vowed to prosecute the \"criminal\" separatist leadership.",
+        "Date": "2020-09-27",
+        "Event": "Azerbaijan launched a large-scale offensive against the self-proclaimed Republic of Artsakh (Nagorno-Karabakh), which resulted in a six-week war.",
         "Article_id": "96moyhcopwdgflfi"
     },
     {
-        "Date": "2023-09-12",
-        "Event": "Russian truck sets off with food aid for Armenians in Khankendi - Reuters witness.",
+        "Date": "2020-09-27",
+        "Event": "The Second Karabakh War began, with Azerbaijan retaking control of several territories in Nagorno-Karabakh.",
+        "Article_id": "vehvbiu65a6u2ryr"
+    },
+    {
+        "Date": "2020-09-27",
+        "Event": "Azerbaijan regained control of swathes of territory in Nagorno-Karabakh and surrounding regions.",
+        "Article_id": "bon7mzog28fpzkqk"
+    },
+    {
+        "Date": "2020-11-10",
+        "Event": "A tripartite ceasefire agreement was signed between Armenia, Azerbaijan, and Russia, ending the 2020 Nagorno-Karabakh war.",
+        "Article_id": "96moyhcopwdgflfi"
+    },
+    {
+        "Date": "2020-11-10",
+        "Event": "A ceasefire was signed between Armenia and Azerbaijan, with Nagorno-Karabakh being returned to Azerbaijani control.",
+        "Article_id": "vehvbiu65a6u2ryr"
+    },
+    {
+        "Date": "2022-03-24",
+        "Event": "Azerbaijan accuses Armenia of violating the ceasefire, sparking tensions between the two countries.",
+        "Article_id": "m5vcc0dfsmuho41p"
+    },
+    {
+        "Date": "2022-08-03",
+        "Event": "Clashes erupt between Armenian and Azerbaijani forces along the border, resulting in several casualties.",
+        "Article_id": "m5vcc0dfsmuho41p"
+    },
+    {
+        "Date": "2023-03-24",
+        "Event": "Azerbaijan launches a military operation in Nagorno-Karabakh, seeking to regain control of the disputed territory.",
+        "Article_id": "m5vcc0dfsmuho41p"
+    },
+    {
+        "Date": "2023-03-24",
+        "Event": "Armenia and Azerbaijan agree to a ceasefire, but fighting continues sporadically.",
+        "Article_id": "m5vcc0dfsmuho41p"
+    },
+    {
+        "Date": "2023-03-27",
+        "Event": "Russia deploys peacekeepers to Nagorno-Karabakh to monitor the ceasefire.",
+        "Article_id": "m5vcc0dfsmuho41p"
+    },
+    {
+        "Date": "2023-07-20",
+        "Event": "Azerbaijan announces the capture of several villages in Nagorno-Karabakh.",
+        "Article_id": "m5vcc0dfsmuho41p"
+    },
+    {
+        "Date": "2023-08-03",
+        "Event": "Azerbaijan launches a new offensive in Nagorno-Karabakh.",
+        "Article_id": "m5vcc0dfsmuho41p"
+    },
+    {
+        "Date": "2023-08-04",
+        "Event": "Azerbaijan and Armenia agree to a new ceasefire, but it is violated within hours.",
+        "Article_id": "m5vcc0dfsmuho41p"
+    },
+    {
+        "Date": "2023-09-08",
+        "Event": "Armenia accuses Azerbaijan of conducting a military build-up along the border of Nagorno-Karabakh and the Armenia-Azerbaijan border.",
+        "Article_id": "x6bs26mxih4wjnvb"
+    },
+    {
+        "Date": "2023-09-08",
+        "Event": "Azerbaijan’s foreign ministry rejects Armenia's assertion and accuses Yerevan of conducting military and political provocations.",
+        "Article_id": "x6bs26mxih4wjnvb"
+    },
+    {
+        "Date": "2023-09-08",
+        "Event": "Azerbaijan’s foreign policy adviser, Hikmet Hajiyev, confirms that Azerbaijan's armed forces are conducting pre-planned drills, but accuses Armenia of concentrating troops on the border and purchasing new weaponry systems.",
+        "Article_id": "x6bs26mxih4wjnvb"
+    },
+    {
+        "Date": "2023-09-08",
+        "Event": "Russia criticizes Armenia's decision to host a joint exercise involving 85 US soldiers, stating that it does not contribute to stabilizing the situation in the region.",
+        "Article_id": "x6bs26mxih4wjnvb"
+    },
+    {
+        "Date": "2023-09-11",
+        "Event": "Separatists in Karabakh refused to accept the cargo of a Russian Red Cross truck carrying aid, despite a deal announced with ethnic Armenian separatists to open the route for the first time in decades.",
         "Article_id": "j40zdfvo5mm8yv3c"
     },
     {
-        "Date": "2023-09-21",
-        "Event": "Prime Minister Nikol Pashinyan emphasizes the importance of peace for Armenia's continued independence following the surrender of the Nagorno-Karabakh region to Azerbaijan.",
-        "Article_id": "9owr18ngmcvsob4x"
+        "Date": "2023-09-12",
+        "Event": "A Russian truck carrying food aid for Armenians in the Karabakh city of Khankendi set off via the Aghdam road, according to a Reuters witness and local media.",
+        "Article_id": "j40zdfvo5mm8yv3c"
     },
     {
-        "Date": "2020",
-        "Event": "Under Pashinyan's presidency, Azerbaijan regained control of territories in the Nagorno-Karabakh region that had been under the control of ethnic Armenian separatists for three decades, culminating in the region's complete capture this week.",
-        "Article_id": "9owr18ngmcvsob4x"
+        "Date": "2023-09-12",
+        "Event": "Azerbaijan and Armenia agree to a third ceasefire, which is implemented with the support of Russia.",
+        "Article_id": "m5vcc0dfsmuho41p"
     },
     {
-        "Date": "2023-09-20",
-        "Event": "Azerbaijani armed forces attacked Kochoghot village in the Martakert district of Karabakh after attacks on its own citizens.",
-        "Article_id": "kgiisc7nhbtx8o7o"
-    },
-    {
-        "Date": "2023-09-25",
-        "Event": "Petya Grigoryan and thousands of other Armenians fled Karabakh to Armenia after a 24-hour Azerbaijani military operation.",
-        "Article_id": "kgiisc7nhbtx8o7o"
+        "Date": "2023-09-19",
+        "Event": "Ethnic Armenian separatist authorities reported a major escalation of hostilities in Azerbaijan's Nagorno-Karabakh region.",
+        "Article_id": "bon7mzog28fpzkqk"
     },
     {
         "Date": "2023-09-20",
-        "Event": "Thousands of Armenians gathered at the airport in Nagorno-Karabakh after a ceasefire agreement was reached with Azerbaijan.",
+        "Event": "Azerbaijan regained control of Nagorno-Karabakh after a three-decade-long Armenian occupation.",
+        "Article_id": "96moyhcopwdgflfi"
+    },
+    {
+        "Date": "2023-09-20",
+        "Event": "Azerbaijani President Ilham Aliyev said he had given a strict order to all military units that the Armenian population living in the Karabakh region should not be affected by the anti-terrorist measures and that the civilian population be protected.",
+        "Article_id": "kgiisc7nhbtx8o7o"
+    },
+    {
+        "Date": "2023-09-20",
+        "Event": "Thousands of Armenians gathered at the airport in Stepanakert, Nagorno-Karabakh, following a ceasefire agreement that would result in the surrender of separatist forces to Azerbaijan.",
         "Article_id": "8pjpbua9arko3ovu"
     },
     {
         "Date": "2023-09-20",
-        "Event": "Several hundred protesters gathered in the Armenian capital to demand that the government to do more to support ethnic Armenians in Nagorno-Karabakh.",
+        "Event": "Several hundred protesters gathered in the Armenian capital to demand that the government do more to support ethnic Armenians in Nagorno-Karabakh.",
         "Article_id": "vehvbiu65a6u2ryr"
     },
     {
-        "Date": "2023-09-19",
-        "Event": "Ethnic Armenian separatist authorities reported a major escalation of hostilities in Azerbaijan's Nagorno-Karabakh region, as Azerbaijan launched an offensive.",
-        "Article_id": "bon7mzog28fpzkqk"
+        "Date": "2023-09-21",
+        "Event": "Armenian Prime Minister Nikol Pashinyan urges peace after Azerbaijan retakes Karabakh.",
+        "Article_id": "9owr18ngmcvsob4x"
+    },
+    {
+        "Date": "2023-09-21",
+        "Event": "Azerbaijan's President Ilham Aliyev expresses willingness for wider peace negotiations with Armenia.",
+        "Article_id": "9owr18ngmcvsob4x"
+    },
+    {
+        "Date": "2023-09-21",
+        "Event": "Pashinyan emphasizes the importance of peace for Armenian independence, sovereignty, and security.",
+        "Article_id": "9owr18ngmcvsob4x"
+    },
+    {
+        "Date": "2023-09-24",
+        "Event": "The ethnic Armenian leadership of breakaway Nagorno-Karabakh says the terms of the ceasefire with Azerbaijan are being implemented, with work proceeding on the delivery of humanitarian aid and evacuation of the wounded.",
+        "Article_id": "m5vcc0dfsmuho41p"
+    },
+    {
+        "Date": "2023-09-25",
+        "Event": "Petya Grigoryan, a 69-year-old driver, fled his village in the Martakert district of Karabakh after it was heavily bombed by Azerbaijani armed forces. Grigoryan said there were two KAMAZ-truckloads full of civilian dead in the village and that they had no place to bury them. He and his family were among the first ethnic Armenians of Nagorno-Karabakh to make it to Armenia after a lightning 24-hour Azerbaijani military operation defeated the Karabakh Armenian forces.",
+        "Article_id": "kgiisc7nhbtx8o7o"
+    },
+    {
+        "Date": "2023-09-27",
+        "Event": "Azerbaijan vowed to prosecute the separatist leadership of Nagorno-Karabakh.",
+        "Article_id": "96moyhcopwdgflfi"
+    },
+    {
+        "Date": "2023-10-04",
+        "Event": "Four ex-leaders of Nagorno-Karabakh were detained by Azerbaijan's State Security Service and taken to Baku.",
+        "Article_id": "96moyhcopwdgflfi"
+    },
+    {
+        "Date": "2023-10-04",
+        "Event": "Three other former leaders of Nagorno-Karabakh arrived safely in Armenia.",
+        "Article_id": "96moyhcopwdgflfi"
     }
 ]
