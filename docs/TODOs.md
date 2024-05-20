@@ -8,7 +8,7 @@
 3. **Article Generation**:
    - Only use one article for the generation, not the list.
 4. **Good Coding Practices**:
-   - Ask about good coding practices and formatting of code to a `.py` script (i.e., if `__main__`, `__init__`).
+   - Change code to show good coding practices and formatting of code to a `.py` script (i.e., if `__main__`, `__init__`).
 5. **Python Environment Issues**:
    - Fix any Python environment issues.
 
