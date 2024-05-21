@@ -1,60 +1,29 @@
-# Import necessary libraries
-import os
-import json
-import sys
-from typing import Optional
-import re
-import logging
-from json import JSONDecodeError
-from typing import Optional
-import time
-from dotenv import load_dotenv
-import pandas as pd
+from pydantic import BaseModel, Field
 from datetime import datetime
+import logging
+import json
+import os
+import re
+from json import JSONDecodeError
+import time
+from tqdm import trange
+from typing import List
+from dotenv import load_dotenv
 
 
 # Import libraries for working with language models and Google Gemini
 from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.pydantic_v1 import BaseModel, Field
-
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 
-# Note: Install the google-generativeai package by running the following command in your terminal:
-# pip install -U google-generativeai
 
 # Load environment variables
 load_dotenv()
 GEMINI_KEY = os.environ.get('GEMINI_KEY')
 genai.configure(api_key=GEMINI_KEY)
 
-
-
-# Setup logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-def load_single_json(file_path: str) -> Optional[dict]:
-    """
-    Load JSON data from a file.
-    
-    Parameters:
-    file_path (str): The path to the JSON file to be loaded.
-    
-    Returns:
-    Optional[dict]: The loaded JSON data if successful, None otherwise.
-    """
-    try:
-        with open(file_path, 'r', encoding='utf-8') as fin:
-            data = json.load(fin)
-        logging.info(f"JSON file '{file_path}' loaded successfully.")
-        return data
-    except FileNotFoundError:
-        logging.error(f"File '{file_path}' not found. Please check the file path.")
-        return None
-    except json.JSONDecodeError:
-        logging.error(f"Error decoding JSON from file '{file_path}'. Please check the file content.")
-        return None
 
 def first_timeline_merge(timeline):
     llm = genai.GenerativeModel(model_name='gemini-1.5-flash-latest')
@@ -94,7 +63,7 @@ def first_timeline_merge(timeline):
         }
     )
 
-    data = clean_output(response)
+    data = clean_output(response.parts[0].text)
     sorted_timeline = sorted(data, key=lambda x: datetime.strptime(x['Date'], '%Y-%m-%d'))
     return sorted_timeline
 
@@ -121,8 +90,8 @@ def second_timeline_enhancement(sorted_timeline, retrieval):
     template = '''
     You are given a timeline of events, and an article related to this timeline. 
     Your task is to reference the provided article and enhance this timeline by improving its clarity and contextual information.
-    Add to the Contextual Annotations by providing annotations for major events to give additional context and improve understanding, 
-    however, ensure that the contextual annotations added do not blatantly repeat what the contents of the event.
+    Add to the Contextual Annotations by providing annotations for major events to give additional context and improve understanding,\ 
+    however, ensure that the contextual annotations added are not repeats of the contents of the event.
 
     Initial Timeline:
     {timeline}
@@ -159,56 +128,6 @@ def second_timeline_enhancement(sorted_timeline, retrieval):
         )
         section = clean_output(response.parts[0].text)
         final_timeline.append(section)
-        time.sleep(5)
+        time.sleep(3)
 
     return final_timeline
-
-
-def save_enhanced_timeline(enhanced_timeline, output_path: str):
-    """
-    Save the enhanced timeline to a JSON file.
-
-    Parameters:
-    enhanced_timeline (list): The enhanced timeline data.
-    output_path (str): The file path where the JSON will be saved.
-    """
-    unsorted_timeline = []
-    for timeline in enhanced_timeline:
-        for event in timeline:
-            unsorted_timeline.append(event)
-
-    sorted_events = sorted(unsorted_timeline, key=lambda x: x['Date'])
-    json_data = json.dumps(sorted_events, indent=4, ensure_ascii=False)
-
-    # Write the JSON string to a file
-    with open(output_path, 'w', encoding='utf-8') as fin:
-        fin.write(json_data)
-    logging.info(f"Enhanced timeline saved to '{output_path}'")
-
-
-
-def main():
-    single_timeline = '../data_upload/single_timeline_trial.json'
-    single_timeline_articles = '../data_upload/df_retrieve.json'
-    output_path = '../data_upload/enhanced_timeline_trial.json'
-
-    timeline_data = load_single_json(single_timeline)
-    article_data = load_single_json(single_timeline_articles)
-
-    if article_data is not None:
-        retrieval = pd.DataFrame(article_data)
-    else:
-        retrieval = pd.DataFrame()
-        logging.warning("No data loaded for retrieval, check file")
-
-    if timeline_data is not None:
-        sorted_timeline = first_timeline_merge(timeline_data)
-        final_timeline = second_timeline_enhancement(sorted_timeline, retrieval)
-        save_enhanced_timeline(final_timeline, output_path)
-    else:
-        logging.warning("No timeline data to merge.")
-
-
-if __name__ == "__main__":
-    main()
-    
