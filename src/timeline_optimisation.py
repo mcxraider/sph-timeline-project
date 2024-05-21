@@ -28,7 +28,6 @@ from google.generativeai.types import HarmCategory, HarmBlockThreshold
 load_dotenv()
 GEMINI_KEY = os.environ.get('GEMINI_KEY')
 genai.configure(api_key=GEMINI_KEY)
-plt.style.use('seaborn')
 
 
 
@@ -113,7 +112,12 @@ def clean_output(output):
 
 def second_timeline_enhancement(sorted_timeline, retrieval):
     llm = genai.GenerativeModel(model_name='gemini-1.5-flash-latest')
-
+    class Event(BaseModel):
+        Date: str = Field(description="The date of the event in YYYY-MM-DD format")
+        Event: str = Field(description="A detailed description of the event")
+        Contextual_Annotation: str = Field(description="Contextual anecdotes of the event.")
+        Article: str = Field(description="The article id from which the event was extracted")
+        
     template = '''
     You are given a timeline of events, and an article related to this timeline. 
     Your task is to reference the provided article and enhance this timeline by improving its clarity and contextual information.
@@ -133,6 +137,7 @@ def second_timeline_enhancement(sorted_timeline, retrieval):
         input_variables=["timeline", "article"],
         template=template
     )
+    parser = JsonOutputParser(pydantic_object=Event)
 
     final_timeline = []
     unique_ids = []
@@ -140,7 +145,7 @@ def second_timeline_enhancement(sorted_timeline, retrieval):
         if event['Article'] not in unique_ids:
             unique_ids.append(event['Article'])
 
-    for i in trange(len(unique_ids)):
+    for i in range(len(unique_ids)):
         text = [event for event in sorted_timeline if event['Article'] == unique_ids[i]]
         article = retrieval[retrieval['id'] == unique_ids[i]].reset_index()['Text'][0]
         final_prompt = prompt.format(timeline=text, article=article, format_instructions=parser.get_format_instructions())
