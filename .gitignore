@@ -8,9 +8,6 @@ __pycache__/
 
 # File types
 data/
-mlearn/
-ml-env/
-mac-timeline/
 .env
 
 # Distribution / packaging
