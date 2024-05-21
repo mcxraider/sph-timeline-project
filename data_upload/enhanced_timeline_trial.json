@@ -1,116 +1,158 @@
 [
     {
         "Date": "2020-09-27",
-        "Event": "Azerbaijan launched a large-scale offensive against the self-proclaimed Republic of Artsakh (Nagorno-Karabakh), resulting in a six-week war.",
-        "Contextual_Annotation": "This marked the beginning of the Second Karabakh War, a conflict rooted in the historical dispute over the Nagorno-Karabakh region. The war was a result of decades of unresolved tensions between Armenia and Azerbaijan over the region, which had been under Armenian control since the 1990s following the collapse of the Soviet Union.",
+        "Event": "Azerbaijan launched a large-scale offensive against the self-proclaimed Republic of Artsakh (Nagorno-Karabakh), sparking the Second Karabakh War.",
+        "Contextual_Annotation": "This marked the beginning of a six-week conflict that saw Azerbaijan regain control of several territories in Nagorno-Karabakh, ultimately leading to a ceasefire agreement in November 2020.",
         "Article": "96moyhcopwdgflfi"
     },
     {
         "Date": "2020-11-10",
         "Event": "A tripartite ceasefire agreement was signed between Armenia, Azerbaijan, and Russia, ending the 2020 Nagorno-Karabakh war.",
-        "Contextual_Annotation": "The ceasefire agreement resulted in Azerbaijan regaining control of significant territories in Nagorno-Karabakh and surrounding regions, including the city of Shusha, which is considered to be of great strategic and symbolic importance for Azerbaijan. The agreement also led to the deployment of Russian peacekeepers to the region to monitor the ceasefire and oversee the return of displaced persons.",
+        "Contextual_Annotation": "The ceasefire agreement resulted in Azerbaijan regaining control of Nagorno-Karabakh, which had been under Armenian control since the 1990s following the collapse of the Soviet Union.",
         "Article": "96moyhcopwdgflfi"
     },
     {
         "Date": "2022-03-24",
-        "Event": "Azerbaijan accuses Armenia of violating the ceasefire, sparking tensions between the two countries.",
-        "Contextual_Annotation": "This marked a period of heightened tension following the ceasefire agreement, highlighting the fragility of the peace established after the 2020 war.",
+        "Event": "Azerbaijan accused Armenia of violating the ceasefire, leading to heightened tensions between the two countries.",
+        "Contextual_Annotation": "This accusation marked the beginning of a period of renewed tension along the border, setting the stage for further clashes and escalations.",
         "Article": "m5vcc0dfsmuho41p"
     },
     {
         "Date": "2022-08-03",
-        "Event": "Clashes erupt between Armenian and Azerbaijani forces along the border, resulting in several casualties.",
-        "Contextual_Annotation": "Further escalation of tensions between Armenia and Azerbaijan, underscoring the ongoing dispute over the Nagorno-Karabakh region.",
+        "Event": "Clashes erupted between Armenian and Azerbaijani forces along the border, resulting in casualties.",
+        "Contextual_Annotation": "These clashes represented a significant escalation of the ongoing conflict, indicating a breakdown in the fragile ceasefire and heightened tensions.",
         "Article": "m5vcc0dfsmuho41p"
     },
     {
         "Date": "2023-03-24",
-        "Event": "Azerbaijan launches a military operation in Nagorno-Karabakh, seeking to regain control of the disputed territory.",
-        "Contextual_Annotation": "This marked a renewed escalation in the conflict, with Azerbaijan launching a lightning offensive to retake control of the mountainous region, which they claim as their own.",
+        "Event": "Azerbaijan launched a military operation in Nagorno-Karabakh, aiming to regain control of the disputed territory.",
+        "Contextual_Annotation": "This military operation, which Azerbaijan described as an 'anti-terrorist' operation,  marked a major turning point in the conflict, leading to the retaking of Nagorno-Karabakh by Azerbaijani forces.",
         "Article": "m5vcc0dfsmuho41p"
     },
     {
         "Date": "2023-03-27",
-        "Event": "Russia deploys peacekeepers to Nagorno-Karabakh to monitor the ceasefire.",
-        "Contextual_Annotation": "Russia's role as a peacekeeper in the region is highlighted, aiming to maintain a fragile peace amidst ongoing tensions.  This deployment followed the ceasefire agreement brokered by Russia.",
+        "Event": "Russia deployed peacekeepers to Nagorno-Karabakh to monitor the ceasefire.",
+        "Contextual_Annotation": "Russia's peacekeeping mission, with 2,000 troops deployed, aimed to stabilize the situation and prevent further escalation, demonstrating Russia's ongoing role as a mediator in the region.",
         "Article": "m5vcc0dfsmuho41p"
     },
     {
         "Date": "2023-07-20",
-        "Event": "Azerbaijan announces the capture of several villages in Nagorno-Karabakh.",
-        "Contextual_Annotation": "This signifies a shift in the conflict, with Azerbaijan making territorial gains within the disputed region.  This move followed a months-long de facto blockade of the region.",
+        "Event": "Azerbaijan announced the capture of several villages in Nagorno-Karabakh.",
+        "Contextual_Annotation": "This announcement highlighted Azerbaijan's territorial gains during the conflict and indicated a shift in the power dynamics within the region.",
         "Article": "m5vcc0dfsmuho41p"
     },
     {
         "Date": "2023-08-03",
-        "Event": "Azerbaijan launches a new offensive in Nagorno-Karabakh.",
-        "Contextual_Annotation": "This indicates a significant escalation of the conflict, with Azerbaijan pushing further into the disputed territory after capturing several villages. This was labeled an 'anti-terrorist' operation by Azerbaijan.",
+        "Event": "Azerbaijan launched a new offensive in Nagorno-Karabakh.",
+        "Contextual_Annotation": "This new offensive led to the retaking of the mountainous region by Azerbaijan and a subsequent ceasefire agreement that was violated within hours, demonstrating the fragility of the peace process and the ongoing tensions between the two countries.",
         "Article": "m5vcc0dfsmuho41p"
     },
     {
         "Date": "2023-08-04",
-        "Event": "Azerbaijan and Armenia agree to a new ceasefire, but it is violated within hours.",
-        "Contextual_Annotation": "This highlights the fragility of any ceasefire agreements in the region, with ongoing hostilities despite attempts at peace. This ceasefire followed the offensive launched by Azerbaijan.",
+        "Event": "Azerbaijan and Armenia agreed to a new ceasefire, but it was violated within hours.",
+        "Contextual_Annotation": "The fragility of the ceasefire highlighted the ongoing tensions and challenges in finding a lasting solution to the conflict.",
         "Article": "m5vcc0dfsmuho41p"
     },
     {
         "Date": "2023-09-08",
-        "Event": "Armenia accuses Azerbaijan of conducting a military build-up along the border of Nagorno-Karabakh and the Armenia-Azerbaijan border. Azerbaijan's foreign ministry rejects Armenia's assertion and accuses Yerevan of conducting military and political provocations. Azerbaijan's foreign policy adviser, Hikmet Hajiyev, confirms that Azerbaijan's armed forces are conducting pre-planned drills, but accuses Armenia of concentrating troops on the border and purchasing new weaponry systems. Russia criticizes Armenia's decision to host a joint exercise involving 85 US soldiers, stating that it does not contribute to stabilizing the situation in the region.",
-        "Contextual_Annotation": "This series of events represents a significant escalation of tensions between Armenia and Azerbaijan. Both sides accuse each other of military provocations, further intensifying the ongoing conflict over the Nagorno-Karabakh region.  This comes amidst a backdrop of ongoing negotiations for a peace deal and Azerbaijan's continued restrictions on movement along the only road to Nagorno-Karabakh from Armenia, which Azerbaijan claims is intended to prevent arms smuggling.  Russia, which plays a critical role as a security guarantor in the region, expressed concern over the increasing tensions and criticized Armenia's decision to host the US military exercise, deeming it unhelpful to the stabilization efforts.",
+        "Event": "Armenia accused Azerbaijan of conducting a military buildup along the border of Nagorno-Karabakh and the Armenia-Azerbaijan border.",
+        "Contextual_Annotation": "This accusation, countered by Azerbaijan's foreign ministry, heightened tensions and fueled concerns about a potential escalation. Both countries claimed to be committed to a peace process despite the military buildup. Azerbaijan maintains that the troops are part of pre-planned drills for the upcoming autumn and winter.",
         "Article": "x6bs26mxih4wjnvb"
     },
     {
         "Date": "2023-09-11",
         "Event": "Separatists in Karabakh refused to accept the cargo of a Russian Red Cross truck carrying aid, despite a deal announced with ethnic Armenian separatists to open the route for the first time in decades.",
-        "Contextual_Annotation": "This incident highlights the ongoing tensions and mistrust between the separatists in Karabakh and the Azerbaijani government, despite the agreement to open the route for humanitarian aid.",
+        "Contextual_Annotation": "This refusal, despite the agreement to open the route, underscored the ongoing tensions and mistrust between the parties. The incident highlighted the challenges in implementing peace agreements and providing humanitarian aid in the region, where the conflict has been a source of instability for decades.",
         "Article": "j40zdfvo5mm8yv3c"
     },
     {
         "Date": "2023-09-12",
-        "Event": "A Russian truck carrying food aid for Armenians in the Karabakh city of Khankendi set off via the Aghdam road, according to a Reuters witness and local media. Azerbaijan and Armenia agree to a third ceasefire, which is implemented with the support of Russia.",
-        "Contextual_Annotation": "This signifies a significant step towards easing tensions and delivering humanitarian assistance to Armenians in Karabakh, amidst a backdrop of ongoing conflict between Azerbaijan and Armenia. The agreement for the ceasefire and the delivery of aid is a testament to the ongoing efforts of Russia to mediate and stabilize the situation in the region.",
+        "Event": "Azerbaijan and Armenia agreed to a third ceasefire, which was implemented with the support of Russia.",
+        "Contextual_Annotation": "This ceasefire agreement aimed to de-escalate the situation and pave the way for a more lasting solution, with Russia playing a crucial role in facilitating the agreement.",
+        "Article": "m5vcc0dfsmuho41p"
+    },
+    {
+        "Date": "2023-09-12",
+        "Event": "A Russian truck carrying food aid for Armenians in the Karabakh city of Khankendi set off via the Aghdam road.",
+        "Contextual_Annotation": "This marked a significant step towards improving humanitarian access to the region, following the previous day's refusal of aid by separatists. This event demonstrated a potential shift towards cooperation and a willingness to address the urgent needs of the Armenian population in Karabakh, despite the ongoing tensions.",
         "Article": "j40zdfvo5mm8yv3c"
     },
     {
         "Date": "2023-09-19",
-        "Event": "Azerbaijan launched an offensive in the Nagorno-Karabakh region, claiming to be conducting \"anti-terrorist measures of a local nature\".",
-        "Contextual_Annotation": "This marked a significant escalation of the conflict, with Azerbaijan initiating a military operation targeting Armenian-controlled territories. This offensive was triggered by Azerbaijan's claims of \"terrorist provocations\" by Armenian forces.",
+        "Event": "Azerbaijan launched an offensive in the Nagorno-Karabakh region, targeting Armenian military units and initiating shelling of the enclave.",
+        "Contextual_Annotation": "This offensive marked a significant escalation of the conflict, with Azerbaijan claiming it was conducting \"anti-terrorist measures\" and targeting Armenian military positions. The offensive followed months of tensions and accusations by Armenia that Russia was failing to uphold its peacekeeping role in the region.",
         "Article": "bon7mzog28fpzkqk"
     },
     {
         "Date": "2023-09-20",
-        "Event": "Azerbaijan regained control of Nagorno-Karabakh after a three-decade-long Armenian occupation. Azerbaijani President Ilham Aliyev said he had given a strict order to all military units that the Armenian population living in the Karabakh region should not be affected by the anti-terrorist measures and that the civilian population be protected. Thousands of Armenians gathered at the airport in Stepanakert, Nagorno-Karabakh, following a ceasefire agreement that would result in the surrender of separatist forces to Azerbaijan. Several hundred protesters gathered in the Armenian capital to demand that the government do more to support ethnic Armenians in Nagorno-Karabakh.",
-        "Contextual_Annotation": "This marked a significant shift in the power dynamic, with Azerbaijan reclaiming control of Nagorno-Karabakh after decades of conflict. This event was precipitated by the breakdown of the 2020 ceasefire agreement and Azerbaijan's swift military operation. The event also highlights the humanitarian concerns and the reactions of the Armenian population. Thousands of Armenians fled Nagorno-Karabakh to Armenia fearing for their safety, highlighting the complex and sensitive nature of the situation.",
+        "Event": "Azerbaijan regained control of Nagorno-Karabakh after a three-decade-long Armenian occupation.",
+        "Contextual_Annotation": "This marked a significant victory for Azerbaijan in a swift military operation, leading to the exodus of nearly all the 120,000 inhabitants of Karabakh to Armenia.",
         "Article": "96moyhcopwdgflfi"
     },
     {
+        "Date": "2023-09-20",
+        "Event": "Azerbaijani President Ilham Aliyev assured the Armenian population living in the Karabakh region that they would not be affected by the anti-terrorist measures and that civilian protection would be a priority.",
+        "Contextual_Annotation": "This statement aimed to reassure the Armenian population amid Azerbaijan's military operation, claiming that only Karabakh fighters were targeted and civilian safety was paramount. However, this assertion stands in stark contrast to the accounts of Armenian refugees who fled the region, describing heavy bombardment and civilian casualties.",
+        "Article": "kgiisc7nhbtx8o7o"
+    },
+    {
+        "Date": "2023-09-20",
+        "Event": "Thousands of Armenians gathered at the airport in Stepanakert, Nagorno-Karabakh, following a ceasefire agreement that would result in the surrender of separatist forces to Azerbaijan. The separatist leaders, running the self-styled \"Republic of Artsakh,\" urged the population not to rush to the airport and to avoid panicking.",
+        "Contextual_Annotation": "The gathering at the airport reflected the widespread fear and uncertainty among the Armenian population in Nagorno-Karabakh as they awaited the outcome of the conflict and the potential for displacement. The separatist leaders' plea for calm underscored the chaotic situation and the heightened anxiety felt by the population.",
+        "Article": "8pjpbua9arko3ovu"
+    },
+    {
+        "Date": "2023-09-20",
+        "Event": "Several hundred protesters gathered in the Armenian capital, Yerevan, to demand that the government do more to support ethnic Armenians in Nagorno-Karabakh after the breakaway region was forced into a ceasefire agreement with Azerbaijan.",
+        "Contextual_Annotation": "This protest reflects the growing frustration and anger among Armenians regarding the situation in Nagorno-Karabakh, which they consider a part of their homeland. The protesters are calling for stronger government action to support the region and its Armenian population, particularly after the ceasefire agreement which effectively handed control back to Azerbaijan.",
+        "Article": "vehvbiu65a6u2ryr"
+    },
+    {
         "Date": "2023-09-21",
-        "Event": "Armenian Prime Minister Nikol Pashinyan urges peace after Azerbaijan retakes Karabakh. Azerbaijan's President Ilham Aliyev expresses willingness for wider peace negotiations with Armenia. Pashinyan emphasizes the importance of peace for Armenian independence, sovereignty, and security.",
-        "Contextual_Annotation": "This statement comes after the fall of Nagorno-Karabakh, a region held by ethnic Armenian separatists for three decades, and amid calls for Pashinyan's resignation in Armenia. The loss of Karabakh has significantly impacted Armenia's political landscape and security, leading to a focus on peace efforts and the preservation of Armenian independence.",
+        "Event": "Armenian Prime Minister Nikol Pashinyan urges peace after Azerbaijan retakes Karabakh.",
+        "Contextual_Annotation": "Pashinyan's call for peace came in the aftermath of Azerbaijan's recapture of Nagorno-Karabakh, a region that had been under Armenian control for three decades. The loss of Karabakh had ignited calls for Pashinyan's resignation within Armenia, highlighting the political turmoil and emotional strain caused by the conflict.",
+        "Article": "9owr18ngmcvsob4x"
+    },
+    {
+        "Date": "2023-09-21",
+        "Event": "Azerbaijan's President Ilham Aliyev expressed willingness for wider peace negotiations with Armenia.",
+        "Contextual_Annotation": "Aliyev's statement signaled a potential shift in the conflict dynamics, suggesting a willingness for dialogue and a path towards a peaceful resolution. This stance stemmed from Azerbaijan's successful military campaign, which culminated in the capture of Karabakh, leaving Armenia with limited options for resistance.",
+        "Article": "9owr18ngmcvsob4x"
+    },
+    {
+        "Date": "2023-09-21",
+        "Event": "Pashinyan emphasized the importance of peace for Armenian independence, sovereignty, and security.",
+        "Contextual_Annotation": "Pashinyan's statement underscored Armenia's commitment to preserving its national interests and seeking a peaceful solution, acknowledging that the conflict had taken a heavy toll on the country. This stance aimed to navigate Armenia's post-conflict situation, balancing domestic political pressure with the need for a negotiated settlement.",
         "Article": "9owr18ngmcvsob4x"
     },
     {
         "Date": "2023-09-24",
-        "Event": "The ethnic Armenian leadership of breakaway Nagorno-Karabakh says the terms of the ceasefire with Azerbaijan are being implemented, with work proceeding on the delivery of humanitarian aid and evacuation of the wounded.",
-        "Contextual_Annotation": "This marks a step towards normalcy in the region, with the implementation of the ceasefire agreement and the provision of humanitarian aid.  It is an indication that both sides have agreed to a cessation of hostilities and are working towards addressing the humanitarian crisis in the region.",
+        "Event": "The ethnic Armenian leadership of breakaway Nagorno-Karabakh stated that the terms of the ceasefire with Azerbaijan are being implemented, with humanitarian aid delivery and evacuation of the wounded underway.",
+        "Contextual_Annotation": "This statement indicated a potential stabilization of the situation and the implementation of the ceasefire agreement, with humanitarian efforts taking place to address the needs of the affected population.",
         "Article": "m5vcc0dfsmuho41p"
     },
     {
         "Date": "2023-09-25",
-        "Event": "Petya Grigoryan, a 69-year-old driver, fled his village in the Martakert district of Karabakh after it was heavily bombed by Azerbaijani armed forces. Grigoryan said there were two KAMAZ-truckloads full of civilian dead in the village and that they had no place to bury them. He and his family were among the first ethnic Armenians of Nagorno-Karabakh to make it to Armenia after a lightning 24-hour Azerbaijani military operation defeated the Karabakh Armenian forces.",
-        "Contextual_Annotation": "Grigoryan's account highlights the devastating impact of the Azerbaijani military operation on the civilian population of Karabakh, leaving behind a scene of widespread destruction and death. This event marked the beginning of a mass exodus of Armenians from the region, as they feared for their safety and future in a region controlled by Azerbaijan.",
+        "Event": "Petya Grigoryan, a 69-year-old driver, fled his village in the Martakert district of Karabakh after it was heavily bombed by Azerbaijani armed forces. He reported finding two KAMAZ-truckloads full of civilian dead in the village and the lack of space to bury them. He and his family were among the first ethnic Armenians of Nagorno-Karabakh to make it to Armenia after Azerbaijan's rapid military operation.",
+        "Contextual_Annotation": "Grigoryan's harrowing account, corroborated by other refugees, paints a stark picture of the devastation in Karabakh. This account directly contradicts Azerbaijan's claims of civilian protection and underscores the gravity of the situation on the ground. It highlights the desperate exodus of Armenians from Karabakh, fearing for their lives and unsure of their future.",
         "Article": "kgiisc7nhbtx8o7o"
     },
     {
         "Date": "2023-09-27",
         "Event": "Azerbaijan vowed to prosecute the separatist leadership of Nagorno-Karabakh.",
-        "Contextual_Annotation": "This indicates a shift in Azerbaijan's approach towards the separatists, aiming to hold them accountable for their actions during the conflict. Azerbaijan viewed the separatists as criminals and blamed them for poisoning the minds of the Armenian population.  This statement was made in the context of the swift military operation by Azerbaijan to regain control of Nagorno-Karabakh.",
+        "Contextual_Annotation": "Azerbaijan labeled the separatist leaders as 'criminal' and accused them of poisoning the minds of the population, raising concerns about the fate of the separatist leaders and the potential for accountability and justice.",
         "Article": "96moyhcopwdgflfi"
     },
     {
         "Date": "2023-10-04",
-        "Event": "Four ex-leaders of Nagorno-Karabakh were detained by Azerbaijan's State Security Service and taken to Baku. Three other former leaders of Nagorno-Karabakh arrived safely in Armenia.",
-        "Contextual_Annotation": "This signifies Azerbaijan's efforts to address the leadership of the separatist movement following their victory in the conflict. The detention of former leaders, including ex-president Arkady Gukasyan, Bako Sahakyan, and Araik Arutyunyan, highlights Azerbaijan's determination to hold them accountable for their actions.  The safe arrival of three other former leaders, including Artur Arutyunyan,  in Armenia adds a layer of complexity to the situation and raises questions about the fate of other former separatist leaders.",
+        "Event": "Four former leaders of Nagorno-Karabakh were detained by Azerbaijan's State Security Service and taken to Baku.",
+        "Contextual_Annotation": "Among the detained were Ruben Vardanyan, a former head of Karabakh's government, Levon Mnatsakanyan, former commander of Nagorno-Karabakh's separatist army, Arkady Gukasyan, Bako Sahakyan and Araik Arutyunyan, former self-styled presidents, and David Ishkhanyan, ex-parliamentary speaker.",
+        "Article": "96moyhcopwdgflfi"
+    },
+    {
+        "Date": "2023-10-04",
+        "Event": "Three other former leaders of Nagorno-Karabakh arrived safely in Armenia.",
+        "Contextual_Annotation": "These former leaders, including Artur Arutyunyan, Karen Sarkisyan, and Ararat Melkunyan, provided a glimmer of hope for the safety of those who had fled Karabakh. However, the future of these individuals remains uncertain amidst the ongoing political tensions.",
         "Article": "96moyhcopwdgflfi"
     }
 ]
