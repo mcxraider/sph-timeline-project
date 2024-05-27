@@ -109,7 +109,7 @@ def get_best_variance(perf_results):
 
 
 def split_scale_df(df):
-    df_test = df.sample(10)
+    df_test = df.sample(1)
     df_train = df.drop(df_test.index)
     return df_train, df_test
 

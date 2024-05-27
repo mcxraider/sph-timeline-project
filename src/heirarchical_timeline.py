@@ -1,10 +1,10 @@
 import logging
 import pandas as pd
-import sys
 from utils.data_loader import *
 from utils.timeline_enhancer import *
 from utils.json_utils import *
 from utils.heir_clustering import *
+from utils.timeline_generator import *
 
 
 
@@ -18,7 +18,6 @@ def main():
     #Drop nan rows 
     df = df.drop(df[df.isnull().any(axis=1)].index)
     
-    
     X_train_scaled, X_test_scaled = split_scale_embeddings(df)
     variance_perf = get_variance_perf(X_train_scaled, X_test_scaled)
     best_variance, best_max_d = get_best_variance(variance_perf)
@@ -27,31 +26,12 @@ def main():
     train_embeddings, test_embeddings = scale_df_embeddings(df_train, df_test)
     train_clusters, test_clusters = get_cluster_labels(best_variance, best_max_d, train_embeddings,  test_embeddings)
     similar_articles_dict = get_similar_articles(train_clusters, test_clusters, df_train, df_test)
+    if to_generate_timeline(similar_articles_dict):
+        timelines, retrieval = generate_timeline(similar_articles_dict, df_train, df_test)
+        generated_timeline = sort_and_clean(timelines, retrieval)
     
-    
-    
-    
-    
-    
-    
-    
-    single_timeline = '../data_upload/single_timeline_trial.json'
-    single_timeline_articles = '../data_upload/df_retrieve.json'
     output_path = '../data_upload/enhanced_timeline_trial.json'
-
-    timeline_data = load_single_json(single_timeline)
-    if timeline_data is None:
-        logging.warning("No timeline data to merge.")
-        sys.exit()
-
-    article_data = load_single_json(single_timeline_articles)
-    if article_data is None:
-        logging.warning("No data loaded for retrieval, check file")
-        sys.exit()
-
-    retrieval = pd.DataFrame(article_data)
-
-    sorted_timeline = first_timeline_merge(timeline_data)
+    sorted_timeline = first_timeline_merge(generated_timeline)
     print("First timeline enhancement done")
     final_timeline = second_timeline_enhancement(sorted_timeline, retrieval)
     print("Second timeline enhancement done")

@@ -25,6 +25,19 @@ GEMINI_KEY = os.environ.get('GEMINI_KEY')
 genai.configure(api_key=GEMINI_KEY)
 
 
+def clean_output(output):
+    try:
+        updated_timeline = json.loads(output)
+        return updated_timeline
+    except JSONDecodeError:
+        #try 1: Ensuring that the string ends with just the open and close lists brackets
+        try:
+            new_output = re.search(r'\[[^\]]*\]', output).group(0)
+        except AttributeError:
+            new_output = re.search(r'\{.*?\}', output, re.DOTALL).group(0)  
+        updated_timeline = json.loads(new_output)
+        return updated_timeline
+
 def first_timeline_merge(timeline):
     llm = genai.GenerativeModel(model_name='gemini-1.5-flash-latest')
 
@@ -66,17 +79,6 @@ def first_timeline_merge(timeline):
     data = clean_output(response.parts[0].text)
     sorted_timeline = sorted(data, key=lambda x: datetime.strptime(x['Date'], '%Y-%m-%d'))
     return sorted_timeline
-
-
-def clean_output(output):
-    try:
-        updated_timeline = json.loads(output)
-        return updated_timeline
-    except JSONDecodeError:
-        #try 1: Ensuring that the string ends with just the open and close lists brackets
-        output = re.search(r'\[[^\]]*\]', output).group(0)
-        updated_timeline = json.loads(output)
-        return updated_timeline
 
 
 def second_timeline_enhancement(sorted_timeline, retrieval):
