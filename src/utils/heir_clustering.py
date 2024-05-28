@@ -30,7 +30,7 @@ def split_scale_embeddings(df):
     tags_embeddings= np.array(df['tags_embeddings'].apply(ast.literal_eval).tolist())
     all_embeddings = np.concatenate((body_embeddings, title_embeddings, tags_embeddings), axis=1)
 
-    train_embeddings, test_embeddings = train_test_split(all_embeddings, test_size=10, random_state=42)
+    train_embeddings, test_embeddings = train_test_split(all_embeddings, test_size=1)
 
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(train_embeddings)
@@ -42,20 +42,18 @@ def split_scale_embeddings(df):
 
 def get_variance_perf(X_train_scaled, X_test_scaled):
 # Experiment for this variance range of 94% to 97%
-    variance_range = list(np.arange(0.92, 0.97, 0.01))
+    variance_range = list(np.arange(0.92, 0.95, 0.01))
     variance_dic = {}
 
     for variance in variance_range:
         pca = PCA(n_components=variance)
         train_pca_embeddings = pca.fit_transform(X_train_scaled)
-        test_pca_embeddings = pca.transform(X_test_scaled)
         
         # Range of max_d values to try
-        max_d_values = np.arange(40, 80)
+        max_d_values = np.arange(45, 70)
         
-        # Lists to store silhouette scores
+        # List to store silhouette scores
         silhouette_scores_train = []
-        silhouette_scores_test = []
 
         # Perform hierarchical clustering
         Z = linkage(train_pca_embeddings, method='ward')
@@ -63,33 +61,21 @@ def get_variance_perf(X_train_scaled, X_test_scaled):
         for max_d in max_d_values:
             clusters_train = fcluster(Z, max_d, criterion='distance')
             
-            knn = KNeighborsClassifier(n_neighbors=1)
-            knn.fit(train_pca_embeddings, clusters_train)
-            clusters_test = knn.predict(test_pca_embeddings)
-            
-            # Calculate silhouette scores only if there are at least 2 unique clusters and fewer than the number of samples
+            # Calculate silhouette score only if there are at least 2 unique clusters and fewer than the number of samples
             if 1 < len(set(clusters_train)) < len(train_pca_embeddings):
                 score_train = silhouette_score(train_pca_embeddings, clusters_train)
             else:
                 score_train = -1  # Assign a score of -1 if less than 2 unique clusters or too many clusters
             
-            if 1 < len(set(clusters_test)) < len(test_pca_embeddings):
-                score_test = silhouette_score(test_pca_embeddings, clusters_test)
-            else:
-                score_test = -1  # Assign a score of -1 if less than 2 unique clusters or too many clusters
-            
             silhouette_scores_train.append(score_train)
-            silhouette_scores_test.append(score_test)
 
         # Determine the best max_d
         best_max_d_train = max_d_values[np.argmax(silhouette_scores_train)]
-        best_max_d_test = max_d_values[np.argmax(silhouette_scores_test)]
         variance_dic[variance] = {
             'max_d_train': best_max_d_train,
-            "max_d_test": best_max_d_test,
-            'best_train_silhouette': max(silhouette_scores_train),
-            "best_test_silhouette": max(silhouette_scores_test)
+            'best_train_silhouette': max(silhouette_scores_train)
         }
+        
     return variance_dic
 
 
