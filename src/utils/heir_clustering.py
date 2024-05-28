@@ -1,27 +1,13 @@
-import os
 import ast
-import csv
-import json
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-
-from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
-from sklearn.manifold import TSNE
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.decomposition import PCA
 from scipy.cluster.hierarchy import linkage, fcluster
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-
-from tqdm import trange
-from scipy.cluster.hierarchy import linkage, dendrogram, fcluster
-
-
-
+from scipy.cluster.hierarchy import linkage, fcluster
 
 def split_scale_embeddings(df):
     # Deserialising of embeddings
@@ -38,8 +24,6 @@ def split_scale_embeddings(df):
         
     return X_train_scaled, X_test_scaled
 
-    
-
 def get_variance_perf(X_train_scaled, X_test_scaled):
 # Experiment for this variance range of 94% to 97%
     variance_range = list(np.arange(0.92, 0.95, 0.01))
@@ -49,8 +33,8 @@ def get_variance_perf(X_train_scaled, X_test_scaled):
         pca = PCA(n_components=variance)
         train_pca_embeddings = pca.fit_transform(X_train_scaled)
         
-        # Range of max_d values to try
-        max_d_values = np.arange(45, 70)
+        # Range of max_d values to try, for this dataset we use 60
+        max_d_values = np.arange(45, 65)
         
         # List to store silhouette scores
         silhouette_scores_train = []
@@ -75,9 +59,7 @@ def get_variance_perf(X_train_scaled, X_test_scaled):
             'max_d_train': best_max_d_train,
             'best_train_silhouette': max(silhouette_scores_train)
         }
-        
     return variance_dic
-
 
 def get_best_variance(perf_results):
     highest_train_sil = 0
@@ -92,7 +74,6 @@ def get_best_variance(perf_results):
     final_best_max_d = perf_results[best_variance_s[0]]['max_d_train']
     print(f"Best variance for this clustering is {round(best_variance_s[0], 2)} and the best maximum distance is {final_best_max_d}")
     return round(best_variance_s[0], 2), final_best_max_d
-
 
 def split_scale_df(df):
     df_test = df.sample(1)
@@ -119,7 +100,9 @@ def scale_df_embeddings(df_train, df_test):
     test_embeddings = scaler.transform(all_embeddings_test)
     return train_embeddings,  test_embeddings
 
-
+def predict_cluster(test_embedding, train_embeddings, clusters):
+        distances = np.linalg.norm(train_embeddings - test_embedding, axis=1)
+        return clusters[np.argmin(distances)]
 
 def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddings, df_train, df_test):
     # Perform PCA
@@ -127,19 +110,16 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
     pca_train_embeddings = pca.fit_transform(train_embeddings)
     pca_test_embeddings = pca.transform(test_embeddings)
 
-
     Z = linkage(pca_train_embeddings, method='ward', metric='euclidean')
     clusters_train = fcluster(Z, best_max_d, criterion='distance')
     # Predict clusters for test data using the nearest cluster center
-    def predict_cluster(test_embedding, train_embeddings, clusters):
-        distances = np.linalg.norm(train_embeddings - test_embedding, axis=1)
-        return clusters[np.argmin(distances)]
 
     test_clusters = [predict_cluster(te, pca_train_embeddings, clusters_train) for te in pca_test_embeddings]
 
     df_train['Cluster_labels'] = clusters_train
     df_test['Cluster_labels'] = test_clusters
     df_test.reset_index(drop=True, inplace=True)
+    
     # Create a dictionary to store the results
     cluster_dict = {}
 
@@ -170,6 +150,6 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
     for _, row in cluster_df.iterrows():
         input_list += f"Article id: {row['id']}, Title: {row['Title']}, Tags: {row['tags']}]\n"
     print(input_list)
-    return input_list, clusters_train, test_clusters
+    return input_list, df_train, df_test
 
 

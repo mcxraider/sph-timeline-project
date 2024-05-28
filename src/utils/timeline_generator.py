@@ -5,33 +5,22 @@ import json
 import pandas as pd
 
 # Import libraries for working with language models and Google Gemini
-from langchain_openai import ChatOpenAI, OpenAI
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
+from langchain_core.prompts import PromptTemplate
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
-from dotenv import load_dotenv
 from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.prompts import PromptTemplate
 from langchain_core.pydantic_v1 import BaseModel, Field
-from json import JSONDecodeError
-
-from datetime import datetime
 
 from utils.heir_clustering import *
-
+from utils.data_cleaner import *
 
 # Load environment variables
+from dotenv import load_dotenv
 load_dotenv()
 GEMINI_KEY = os.environ.get('GEMINI_KEY')
 genai.configure(api_key=GEMINI_KEY)
 
-
-def clean_llm_score(output):
-    text = output.parts[0].text.replace("```", '').replace('json','')
-    result = json.loads(text)
-    return result
-
+#DONE
 def to_generate_timeline(test_data):
     # Initialize the generative model
     llm = genai.GenerativeModel("gemini-1.5-flash-latest")
@@ -80,7 +69,7 @@ def to_generate_timeline(test_data):
 
     # Create the prompt template
     prompt = PromptTemplate(
-        input_variables=["text", "title"],
+        input_variables=["title", "text"],
         partial_variables={"format_instructions": format_instructions},
         template=template,
     )     
@@ -106,22 +95,23 @@ def to_generate_timeline(test_data):
     if final_response['score'] >=3:
         print("Timeline generation is required. Proceeding to generate timeline.")
         return True
+    # If LLM doesn't approve 
     else:
         print("A timeline for this article is not required." + "\n" + final_response['Reason'] + "\n" +  "Hence a required timeline score of " + str(final_response['score']))
         return False
 
-
+#DONE
 def get_article_dict(output, df_train, df_test):
     new_output = re.search(r'\[[^\]]*\]', output.text).group(0)
     article_keys =  json.loads(new_output)
     if not article_keys:
         print("No useful similar articles found in database for timeline generation.")
         sys.exit()
+    
     similar_articles_dict = {}
 
     # Iterate over each test article in the filtered df_test
     for index, test_row in df_test.iterrows():
-        test_tags = test_row['tags']
         test_cluster_label = test_row['Cluster_labels']
         
         # Filter df_train for the same cluster label
@@ -130,7 +120,6 @@ def get_article_dict(output, df_train, df_test):
         # Find similar articles in df_train
         similar_indexes = []
         for train_index, train_row in df_train_cluster.iterrows():
-            train_tags = train_row['tags']
             if train_row['id'] in article_keys:
                 similar_indexes.append(train_index)
         
@@ -141,45 +130,18 @@ def get_article_dict(output, df_train, df_test):
                 'indexes': similar_indexes,
                 'Text': test_row['Text']
             }
-    #Show results 
+            
+    # Print results 
     print("-"*80 + "\n")
     print(f"Test Article Title: << {similar_articles_dict['Title']}>>\n")
     print("Supporting Article Titles:")
     for idx in similar_articles_dict['indexes']:
         print(f" - {df_train.loc[idx, 'Title']}")
     print("\n" + "-"*80)
-
+    
     return similar_articles_dict
   
-
-
-def clean_output(output):
-    try:
-        updated_timeline = json.loads(output)
-        return updated_timeline
-    except JSONDecodeError:
-        #try 1: Ensuring that the string ends with just the open and close lists brackets
-        try:
-            new_output = re.search(r'\[[^\]]*\]', output).group(0)
-        except AttributeError:
-            new_output = re.search(r'\{.*?\}', output, re.DOTALL).group(0)  
-        updated_timeline = json.loads(new_output)
-        return updated_timeline
-
-
-def clean_output(output):
-    try:
-        updated_timeline = json.loads(output)
-        return updated_timeline
-    except JSONDecodeError:
-        #try 1: Ensuring that the string ends with just the open and close lists brackets
-        try:
-            new_output = re.search(r'\[[^\]]*\]', output).group(0)
-        except AttributeError:
-            new_output = re.search(r'\{.*?\}', output, re.DOTALL).group(0)  
-        updated_timeline = json.loads(new_output)
-        return updated_timeline
-  
+#DONE
 def generate_timeline(similar_articles_dict, df_train, df_test):
     llm = genai.GenerativeModel('gemini-1.5-flash-latest' )
     class Event(BaseModel):
@@ -198,7 +160,6 @@ def generate_timeline(similar_articles_dict, df_train, df_test):
     the dates are represented in YYYY-MM-DD format. Identify events, context, and any time references such as "last week," "last month," or specific dates. 
     The article could contain more or one key events. 
     If the article does not provide a publication date or any events leading up to the main event, return NAN in the Date field, and 0 i the Article Field
-
 
     Construct the Timeline:
     Chronological Order: Organize the events chronologically, using the publication dates and time references within the articles.
@@ -227,12 +188,15 @@ def generate_timeline(similar_articles_dict, df_train, df_test):
     )
 
     df_retrieve = df_train.loc[similar_articles_dict['indexes']]
-    df_retrieve = pd.concat([df_retrieve, df_test], axis=0)
-    df_retrieve = df_retrieve.iloc[::-1].reset_index(drop=True)
-    df_retrieve
-    timelines = {}
-    indiv_text = list(df_retrieve.combined.values)
-    indiv_dates = list(df_retrieve.Publication_date.values)
+    df_retrieve = pd.concat([df_retrieve, df_test], axis=0).iloc[::-1].reset_index(drop=True)
+
+    # Prepare texts and publication dates
+    indiv_text = df_retrieve['combined'].tolist()
+    indiv_dates = df_retrieve['Publication_date'].tolist()
+
+    timeline_dic = {}
+    
+    # Do this simultaneously. One worker for each Article. Wont bust the limit
     for i in range(len(indiv_text)):
         s =  f'Article {i+1}: Publication date: {indiv_dates[i]}  {indiv_text[i]}'
         final_prompt = prompt.format(text=s)
@@ -242,49 +206,24 @@ def generate_timeline(similar_articles_dict, df_train, df_test):
                                             HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
                                             HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE, 
                                             HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
-                                            }
-        )
-        if '[' or '{' not in response.parts[0].text:
-            response = llm.generate_content(final_prompt,
+                                            })
+        # Check if Model returns correct format 
+        if '[' in response.parts[0].text or '{' in response.parts[0].text:
+            timeline_dic[i] = response.parts[0].text
+        else:
+            retry_response = llm.generate_content(final_prompt,
                                         safety_settings={
                                             HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
                                             HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
                                             HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE, 
                                             HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
-                                            }
-            )
-        #key corresponds to the index in the df_test
-        try:
-            timelines[i] = response.parts[0].text
-        except ValueError:
-            print("ERROR: There were issues with the generation of the timeline. The timeline could not be generated")
-            sys.exit()
-    return timelines
-
-def clean_sort_timeline(timelines, df_retrieve):  
-    generated_timeline = []
-    for idx, line in timelines.items():
-        indiv_timeline = clean_output(line)
-        if type(indiv_timeline) == list:
-            for el in indiv_timeline:
-                generated_timeline.append(el)
-        else:
-            generated_timeline.append(indiv_timeline)
-    unsorted_timeline = []
-
-    for event in generated_timeline:
-        article_index = event["Article"] - 1
-        event["Article_id"] = df_retrieve.iloc[article_index].id
-    for event in generated_timeline:
-        del event["Article"]
-        unsorted_timeline.append(event)  
-        
-    timeline = sorted(unsorted_timeline, key=lambda x:x['Date'])
-    timeline = [event for event in timeline if event['Date'].lower()!= 'nan']
-    for event in timeline:
-        date = event['Date']
-        if date.endswith('-XX-XX'):
-            event['Date'] = date[:4]
-        elif date.endswith('-XX'):
-            event['Date'] = date[:7]
-    return timeline
+                                            })
+            try:
+                timeline_dic[i] = retry_response.parts[0].text
+            except ValueError:
+                print("ERROR: There were issues with the generation of the timeline. The timeline could not be generated")
+                sys.exit()  
+    
+    finished_timeline = clean_sort_timeline(timeline_dic, df_retrieve)
+       
+    return finished_timeline
