@@ -24,18 +24,21 @@ def main():
     
     df_train, df_test = split_scale_df(df)
     train_embeddings, test_embeddings = scale_df_embeddings(df_train, df_test)
-    train_clusters, test_clusters = get_cluster_labels(best_variance, best_max_d, train_embeddings,  test_embeddings)
-    similar_articles_dict = get_similar_articles(train_clusters, test_clusters, df_train, df_test)
-    if to_generate_timeline(similar_articles_dict):
+    input_list, train_clusters, test_clusters = get_cluster_labels(best_variance, best_max_d, train_embeddings,  test_embeddings)
+    # need to change this part
+    if to_generate_timeline(df_test):
+        similar_articles_dict = get_article_dict(input_list, df_train, df_test)
+
         timelines, retrieval = generate_timeline(similar_articles_dict, df_train, df_test)
         generated_timeline = sort_and_clean(timelines, retrieval)
     
-    output_path = '../data_upload/enhanced_timeline_trial.json'
-    sorted_timeline = first_timeline_merge(generated_timeline)
-    print("First timeline enhancement done")
-    final_timeline = second_timeline_enhancement(sorted_timeline, retrieval)
-    print("Second timeline enhancement done")
-    save_enhanced_timeline(final_timeline, output_path)
+        output_path = '../data_upload/enhanced_timeline_trial.json'
+        sorted_timeline = first_timeline_merge(generated_timeline)
+        print("First timeline enhancement done")
+        final_timeline = second_timeline_enhancement(sorted_timeline, retrieval)
+        print("Second timeline enhancement done")
+        #maybe dont saeve it into a new json?
+        # save_enhanced_timeline(final_timeline, output_path)
 
 if __name__ == "__main__":
     main()

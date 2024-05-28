@@ -121,7 +121,7 @@ def scale_df_embeddings(df_train, df_test):
 
 
 
-def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddings):
+def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddings, df_train, df_test):
     # Perform PCA
     pca = PCA(n_components=best_variance)
     pca_train_embeddings = pca.fit_transform(train_embeddings)
@@ -130,48 +130,46 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
 
     Z = linkage(pca_train_embeddings, method='ward', metric='euclidean')
     clusters_train = fcluster(Z, best_max_d, criterion='distance')
+    # Predict clusters for test data using the nearest cluster center
     def predict_cluster(test_embedding, train_embeddings, clusters):
         distances = np.linalg.norm(train_embeddings - test_embedding, axis=1)
         return clusters[np.argmin(distances)]
 
-    # Assign clusters to test points
     test_clusters = [predict_cluster(te, pca_train_embeddings, clusters_train) for te in pca_test_embeddings]
-    return clusters_train, test_clusters
 
-
-def get_common_tags(tags1, tags2):
-        return set(tags1).intersection(set(tags2))
-
-
-def get_similar_articles(clusters_train, test_clusters, df_train, df_test):
-    #Update train and test dataset
     df_train['Cluster_labels'] = clusters_train
     df_test['Cluster_labels'] = test_clusters
     df_test.reset_index(drop=True, inplace=True)
+    # Create a dictionary to store the results
+    cluster_dict = {}
 
-    # Initialize the dictionary to store similar articles
-    similar_articles_dict = {}
+    # Populate the dictionary with cluster contents for each test point
+    for i, (test_point, test_cluster) in enumerate(zip(df_test.itertuples(), test_clusters)):
+        cluster_contents = []
+        
+        cluster_indices = np.where(clusters_train == test_cluster)[0]
+        cluster_df = df_train.iloc[cluster_indices]
+        
+        cluster_dict = {
+            "Test point": {'id': test_point.id,
+                        "Title": test_point.Title, 
+                        "Tags": test_point.tags},
+            "Cluster": test_cluster,
+            "Cluster contents": cluster_contents
+        }
+        
+        for _, row in cluster_df.iterrows():
+            cluster_contents.append({"id": row['id'], 
+                                    "Title": row['Title'],
+                                    "Tags": row['tags'], 
+                                    })
 
-    # Iterate over each test article in the filtered df_test
-    for index, test_row in df_test.iterrows():
-        test_tags = test_row['tags']
-        test_cluster_label = test_row['Cluster_labels']
-        
-        # Filter df_train for the same cluster label
-        df_train_cluster = df_train[df_train['Cluster_labels'] == test_cluster_label]
-        
-        # Find similar articles in df_train
-        similar_indexes = []
-        for train_index, train_row in df_train_cluster.iterrows():
-            train_tags = train_row['tags']
-            if len(get_common_tags(test_tags, train_tags)) >= 2:
-                similar_indexes.append(train_index)
-        
-        # Store the result in the dictionary if there are at least 2 supporting articles
-        if len(similar_indexes) >= 2:
-            similar_articles_dict[index] = {
-                'Title': test_row['Title'],
-                'indexes': similar_indexes,
-                'Text': test_row['Text']
-            }
-    return similar_articles_dict
+    print(f"Cluster {test_cluster}\n")
+    input_list = ""
+    input_list += f"Test Artice: (Title: {cluster_dict['Test point']['Title']}\nTags: {cluster_dict['Test point']['Tags']}):\n\n"
+    for _, row in cluster_df.iterrows():
+        input_list += f"Article id: {row['id']}, Title: {row['Title']}, Tags: {row['tags']}]\n"
+    print(input_list)
+    return input_list, clusters_train, test_clusters
+
+

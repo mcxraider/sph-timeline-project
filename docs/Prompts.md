@@ -1,6 +1,6 @@
 # Prompt to try to determine need for headline:
-You are a highly intelligent AI tasked with analyzing articles to determine whether generating a timeline of events leading up to the key event in the article would be beneficial. Consider the following factors to make your decision:
-
+You are a highly intelligent AI tasked with analyzing articles to determine whether generating a timeline of events leading up to the key event in the article would be beneficial. 
+Consider the following factors to make your decision:
     1. **Significance of the Event**:
        - Does the event have a significant impact on a large number of people, industries, or countries?
        - Are the potential long-term consequences of the event important?
@@ -17,22 +17,24 @@ You are a highly intelligent AI tasked with analyzing articles to determine whet
        - Does the event directly affect the reader or their community?
        - Is the event of particular interest to the reader due to economic implications, political affiliations, or social issues?
 
-    5. **Educational Purposes**:
+    5. Educational Purposes:
        - Would a timeline provide valuable learning or research information?
 
     Here is the information for the article:
-
     Title:{title}
     Text: {text}
+    
 
-    Based on the factors above, decide whether generating a timeline of events leading up to the key event in this article would be beneficial. Provide a brief explanation for your decision. 
-    Then reply in terms of the need with a score 1 - 5, 1 means unnecessary, 5 means necessary, in JSON format, for example score 3. No need for an explanation
+    Based on the factors above, decide whether generating a timeline of events leading up to the key event in this article would be beneficial. 
+    Your answer will include the need for this article to have a timeline with a score 1 - 5, 1 means unnecessary, 5 means necessary. It will also include the main reason for your choice.
+    {format_instructions}    
     ANSWER:
 
 
 # Prompt to generate tags for each article:
 Task Description: Given the following news article, identify and suggest 8 most relevant tags that best categorize the geographical locations mentioned, main events, topics, entities.
 The tags should be concise, informative, and reflect the content accurately to facilitate effective searching and organization within a database.
+Do not use abbreviations in the tags. (Example: COE should be Certificate of Entitlement)
 The tags should also be ranked in decreasing order of importance and relevance in the article.
 Combined Title and Summaries:
 {text}
@@ -49,14 +51,12 @@ Combined Title and Summaries:
 
 
 # Prompt to generate tineline:
-Given a series of articles, each containing a publication date, title, and content, your task is to construct a detailed timeline of events leading up to the main event described in the first article.
-Analyze the First Article: Begin by thoroughly analyzing the title, content, and publication date of the first article to understand the main event.
-Use Subsequent Articles: For each following article, examine the title, content, and publication date. Identify events, context, and any time references such as "last week," "last month," or specific dates.
+Given an article, containing a publication date, title, and content, your task is to construct a detailed timeline of events leading up to the main event described in the first article.
+Begin by thoroughly analyzing the title, content, and publication date of the article to understand the main event in the first article. 
+the dates are represented in YYYY-MM-DD format. Identify events, context, and any time references such as "last week," "last month," or specific dates. 
+The article could contain more or one key events. 
+If the article does not provide a publication date or any events leading up to the main event, return NAN in the Date field, and 0 i the Article Field
 
-Construct the Timeline:
-Given a series of articles, each containing a publication date, title, and content, your task is to construct a detailed timeline of events leading up to the main event described in the first article.
-Analyze the First Article: Begin by thoroughly analyzing the title, content, and publication date of the first article to understand the main event.
-Use Subsequent Articles: For each following article, examine the title, content, and publication date. Identify events, context, and any time references such as "last week," "last month," or specific dates.
 
 Construct the Timeline:
 Chronological Order: Organize the events chronologically, using the publication dates and time references within the articles.
@@ -71,12 +71,11 @@ Efforts for Improvement: Note any indications of efforts to improve the situatio
 
 Be as thorough and precise as possible, ensuring the timeline accurately reflects the sequence and context of events leading to the main event.
 
-Series of Articles:
+Article:
 {text}
 
-FORMAT FOR OUTPUT:
 {format_instructions}
-
+Check and ensure again that the output follows the format instructions above very strictly. 
 
 
 
