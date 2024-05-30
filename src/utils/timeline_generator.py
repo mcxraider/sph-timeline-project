@@ -1,3 +1,6 @@
+from utils.heir_clustering import *
+from utils.data_cleaner import *
+
 import os
 import sys
 import re
@@ -11,31 +14,29 @@ from google.generativeai.types import HarmCategory, HarmBlockThreshold
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.pydantic_v1 import BaseModel, Field
 
-from utils.heir_clustering import *
-from utils.data_cleaner import *
-
 # Load environment variables
 from dotenv import load_dotenv
 load_dotenv()
 GEMINI_KEY = os.environ.get('GEMINI_KEY')
 genai.configure(api_key=GEMINI_KEY)
 
-#DONE
+
 def to_generate_timeline(test_data):
-    # Initialize the generative model
-    llm = genai.GenerativeModel("gemini-1.5-flash-latest")
+    llm = genai.GenerativeModel('gemini-1.5-flash-latest')
     class Event(BaseModel):
         score: int = Field(description="The need for this article to have a timeline")
+        Reason: str = Field(description = "The main reason for your choice why a timeline is needed or why it is not needed")
             
+
     output_parser = JsonOutputParser(pydantic_object=Event)
 
-    # See the prompt template you created for formatting
+        # See the prompt template you created for formatting
     format_instructions = output_parser.get_format_instructions()
 
     # Define the template
     template = '''
-    You are a highly intelligent AI tasked with analyzing articles to determine whether generating a timeline of events leading up to the key event in the article would be beneficial. Consider the following factors to make your decision:
-
+    You are a highly intelligent AI tasked with analyzing articles to determine whether generating a timeline of events leading up to the key event in the article would be beneficial. 
+    Consider the following factors to make your decision:
     1. **Significance of the Event**:
        - Does the event have a significant impact on a large number of people, industries, or countries?
        - Are the potential long-term consequences of the event important?
@@ -56,23 +57,23 @@ def to_generate_timeline(test_data):
        - Would a timeline provide valuable learning or research information?
 
     Here is the information for the article:
-
     Title:{title}
     Text: {text}
     
 
     Based on the factors above, decide whether generating a timeline of events leading up to the key event in this article would be beneficial. 
-    Your answer will be the need for this article to have a timeline with a score 1 - 5, 1 means unnecessary, 5 means necessary.
+    Your answer will include the need for this article to have a timeline with a score 1 - 5, 1 means unnecessary, 5 means necessary. It will also include the main reason for your choice.
     {format_instructions}    
     ANSWER:
-'''
+    '''
 
     # Create the prompt template
     prompt = PromptTemplate(
-        input_variables=["title", "text"],
+        input_variables=["text", "title"],
         partial_variables={"format_instructions": format_instructions},
         template=template,
-    )     
+    )
+
         # Define the headline
     headline = test_data.Title[0]
     body = test_data.Text[0]
@@ -93,23 +94,64 @@ def to_generate_timeline(test_data):
     final_response = clean_llm_score(response)
     # If LLM approves
     if final_response['score'] >=3:
-        print("Timeline generation is required. Proceeding to generate timeline.")
+        print("Timeline is necessary for this chosen article.\n")
         return True
-    # If LLM doesn't approve 
     else:
-        print("A timeline for this article is not required." + "\n" + final_response['Reason'] + "\n" +  "Hence a required timeline score of " + str(final_response['score']))
+        print("A timeline for this article is not required. \n")
+        for part in final_response['Reason'].replace(". ", ".").split(". "):
+            print(f"{part}\n")
+        print("Hence I gave this a required timeline score of " + str(final_response['score']))
         return False
 
-#DONE
-def get_article_dict(output, df_train, df_test):
-    new_output = re.search(r'\[[^\]]*\]', output.text).group(0)
+def get_article_dict(input_list, df_train, df_test):
+    llm = genai.GenerativeModel("gemini-1.5-flash-latest")
+
+    # Initialize the generative model
+    class Event(BaseModel):
+        Article_id: list = Field(description="Article ids that are most relevant for the generation of the timeline")
+            
+
+    output_parser = JsonOutputParser(pydantic_object=Event)
+
+    # See the prompt template you created for formatting
+    format_instructions = output_parser.get_format_instructions()
+
+    template = '''
+    Task Description: Given the following test article, and the relevant tags of that article, and the contents of articles similar to it.
+    I want you to select the articles that are closest in similarity to the test article, 
+    for which i will be able to leverage on to build a timeline upon. Return the article ids for the chosen articles. 
+    Ensure that the chosen articles are relevant in terms of geographical location and main topic.
+    {text}
+
+    {format_instructions}
+    Check and ensure again that the output follows the format instructions above very strictly. 
+    '''
+
+    # Create the prompt template
+    prompt = PromptTemplate(
+        input_variables=["text"],
+        partial_variables={"format_instructions": format_instructions},
+        template=template,
+    )
+
+    final_prompt = prompt.format(text=input_list)
+    response = llm.generate_content(
+            final_prompt,
+            safety_settings={
+                HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
+            }
+        )
+    new_output = re.search(r'\[[^\]]*\]', response.parts[0].text).group(0)
     article_keys =  json.loads(new_output)
     if not article_keys:
-        print("No useful similar articles found in database for timeline generation.")
+        print("No useful similar articles found in database for timeline generation.\n")
         sys.exit()
     
     similar_articles_dict = {}
-
+    
     # Iterate over each test article in the filtered df_test
     for index, test_row in df_test.iterrows():
         test_cluster_label = test_row['Cluster_labels']
@@ -130,20 +172,23 @@ def get_article_dict(output, df_train, df_test):
                 'indexes': similar_indexes,
                 'Text': test_row['Text']
             }
-            
-    # Print results 
-    print("-"*80 + "\n")
-    print(f"Test Article Title: << {similar_articles_dict['Title']}>>\n")
-    print("Supporting Article Titles:")
-    for idx in similar_articles_dict['indexes']:
-        print(f" - {df_train.loc[idx, 'Title']}")
-    print("\n" + "-"*80)
-    
-    return similar_articles_dict
-  
-#DONE
-def generate_timeline(similar_articles_dict, df_train, df_test):
+    print(similar_articles_dict)
+    if not similar_articles_dict:
+        print("Inadequate articles found to construct a timeline... Exiting execution now\n")
+        sys.exit()
+    else:
+        # Print results 
+        print("-"*80 + "\n")
+        print(f"Test Article Title: << {similar_articles_dict['Title']}>>\n")
+        print("Supporting Article Titles:")
+        for idx in similar_articles_dict['indexes']:
+            print(f" - {df_train.loc[idx, 'Title']}")
+        print("\n" + "-"*80)
+        return similar_articles_dict
+        
+def generate_and_sort_timeline(similar_articles_dict, df_train, df_test):
     llm = genai.GenerativeModel('gemini-1.5-flash-latest' )
+    
     class Event(BaseModel):
         Date: str = Field(description="The date of the event in YYYY-MM-DD format")
         Event: str = Field(description="A detailed description of the important event")
@@ -223,7 +268,93 @@ def generate_timeline(similar_articles_dict, df_train, df_test):
             except ValueError:
                 print("ERROR: There were issues with the generation of the timeline. The timeline could not be generated")
                 sys.exit()  
+    print("The first timeline has been generated\n")
+    generated_timeline = []
+    for idx, line in timeline_dic.items():
+        indiv_timeline = clean_output(line)
+        if type(indiv_timeline) == list:
+            for el in indiv_timeline:
+                generated_timeline.append(el)
+        else:
+            generated_timeline.append(indiv_timeline)
     
-    finished_timeline = clean_sort_timeline(timeline_dic, df_retrieve)
-       
+    unsorted_timeline = []
+    for event in generated_timeline:
+        article_index = event["Article"] - 1
+        event["Article_id"] = df_retrieve.iloc[article_index].id
+    for event in generated_timeline:
+        del event["Article"]
+        unsorted_timeline.append(event)  
+        
+    timeline = sorted(unsorted_timeline, key=lambda x:x['Date'])
+    finished_timeline = [event for event in timeline if event['Date'].lower()!= 'nan']
+    for i in range(len(generated_timeline)):
+        date = generated_timeline[i]['Date']
+        if date.endswith('-XX-XX') or date.endswith('00-00'):
+            generated_timeline[i]['Date'] = date[:4]
+        elif date.endswith('-XX') or date.endswith('00'):
+            generated_timeline[i]['Date'] = date[:7]
     return finished_timeline
+
+def enhance_timeline(timeline):
+    llm = genai.GenerativeModel(model_name='gemini-1.5-flash-latest')
+
+    class Event(BaseModel):
+        Date: str = Field(description="The date of the event in YYYY-MM-DD format")
+        Event: str = Field(description="A detailed description of the event")
+        Contextual_Annotation: str = Field(description="Contextual anecdotes of the event.")
+        Article: str = Field(description="The article id from which the event was extracted")
+
+    parser = JsonOutputParser(pydantic_object=Event)
+
+    template = '''
+    You are given a timeline of events, your task is to enhance this timeline by improving its clarity and contextual information.
+    If events occur on the same date and have similar descriptions, merge these events to avoid redundancy.
+    Add contextual annotations by providing brief annotations for major events to give additional context and improve understanding.
+    Only retain important information that would be value-add when the general public reads the information.
+
+    Initial Timeline:
+    {text}
+
+    {format_instructions}
+    Ensure that the format follows the example output format strictly before returning the output.
+    '''
+    prompt = PromptTemplate(
+        input_variables=["text"],
+        template=template
+    )
+
+    final_prompt = prompt.format(text=timeline, format_instructions=parser.get_format_instructions())
+    response = llm.generate_content(final_prompt,
+        safety_settings={
+            HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+            HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+            HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE, 
+            HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
+        }
+    )
+    data = clean_output(response.parts[0].text)
+    sorted_timeline = sorted(data, key=lambda x:x['Date'])
+    return sorted_timeline
+
+def save_enhanced_timeline(enhanced_timeline, output_path: str):
+    """
+    Save the enhanced timeline to a JSON file.
+
+    Parameters:
+    enhanced_timeline (list): The enhanced timeline data.
+    output_path (str): The file path where the JSON will be saved.
+    """
+    sorted_events = sorted(enhanced_timeline, key=lambda x: x['Date'])
+    json_data = json.dumps(sorted_events, indent=4, ensure_ascii=False)
+
+    # Write the JSON string to a file
+    with open(output_path, 'w', encoding='utf-8') as fin:
+        fin.write(json_data)
+    print(f"Enhanced timeline saved to '{output_path}'")
+
+def generate_save_timeline(relevant_articles, df_train, df_test):
+    similar_articles = get_article_dict(relevant_articles, df_train, df_test)
+    generated_timeline = generate_and_sort_timeline(similar_articles, df_train, df_test)
+    final_timeline = enhance_timeline(generated_timeline)
+    return final_timeline

@@ -1,158 +1,152 @@
 [
     {
-        "Date": "2020-09-27",
-        "Event": "Azerbaijan launched a large-scale offensive against the self-proclaimed Republic of Artsakh (Nagorno-Karabakh), sparking the Second Karabakh War.",
-        "Contextual_Annotation": "This marked the beginning of a six-week conflict that saw Azerbaijan regain control of several territories in Nagorno-Karabakh, ultimately leading to a ceasefire agreement in November 2020.",
-        "Article": "96moyhcopwdgflfi"
+        "Date": "2020-01-01",
+        "Event": "The Trump administration significantly reduced US aid to the Palestinian territories, cutting it to $8 million in 2020, down from billions of dollars in previous years.",
+        "Contextual_Annotation": "This significant reduction in aid might have exacerbated the economic situation in Gaza, making the current humanitarian crisis more challenging.",
+        "Article": "yssfrux1ldigt3pb"
     },
     {
-        "Date": "2020-11-10",
-        "Event": "A tripartite ceasefire agreement was signed between Armenia, Azerbaijan, and Russia, ending the 2020 Nagorno-Karabakh war.",
-        "Contextual_Annotation": "The ceasefire agreement resulted in Azerbaijan regaining control of Nagorno-Karabakh, which had been under Armenian control since the 1990s following the collapse of the Soviet Union.",
-        "Article": "96moyhcopwdgflfi"
+        "Date": "2023-01-01",
+        "Event": "Since Biden took office, total yearly US assistance for the Palestinian territories has been restored to around $150 million, a substantial increase from the Trump administration's funding level.",
+        "Contextual_Annotation": "However, it is still significantly less than the $1 billion disbursed in the 2013 fiscal year during the Obama administration.",
+        "Article": "yssfrux1ldigt3pb"
     },
     {
-        "Date": "2022-03-24",
-        "Event": "Azerbaijan accused Armenia of violating the ceasefire, leading to heightened tensions between the two countries.",
-        "Contextual_Annotation": "This accusation marked the beginning of a period of renewed tension along the border, setting the stage for further clashes and escalations.",
-        "Article": "m5vcc0dfsmuho41p"
+        "Date": "2023-10-07",
+        "Event": "Hamas launched a devastating assault on Israel, killing more than 1,300 Israelis and taking scores of hostages in the worst breach of Israel's defenses since its creation in 1948.",
+        "Contextual_Annotation": "This marks the beginning of the conflict.  The attack was the deadliest day in Israel's 75-year history and was described as the deadliest assault on Jewish civilians since the Holocaust.",
+        "Article": "809rlzgnb15kdkuo"
     },
     {
-        "Date": "2022-08-03",
-        "Event": "Clashes erupted between Armenian and Azerbaijani forces along the border, resulting in casualties.",
-        "Contextual_Annotation": "These clashes represented a significant escalation of the ongoing conflict, indicating a breakdown in the fragile ceasefire and heightened tensions.",
-        "Article": "m5vcc0dfsmuho41p"
+        "Date": "2023-10-07",
+        "Event": "Israel responded to the Hamas attack by imposing a 'total blockade' on Gaza, halting food supplies and cutting electricity to the region.",
+        "Contextual_Annotation": "This siege, which also included cutting off water supplies, triggered a humanitarian crisis.",
+        "Article": "809rlzgnb15kdkuo"
     },
     {
-        "Date": "2023-03-24",
-        "Event": "Azerbaijan launched a military operation in Nagorno-Karabakh, aiming to regain control of the disputed territory.",
-        "Contextual_Annotation": "This military operation, which Azerbaijan described as an 'anti-terrorist' operation,  marked a major turning point in the conflict, leading to the retaking of Nagorno-Karabakh by Azerbaijani forces.",
-        "Article": "m5vcc0dfsmuho41p"
+        "Date": "2023-10-11",
+        "Event": "Israel retaliated by imposing a total siege on Gaza, home to 2.3 million people, and launching an intense bombing campaign.",
+        "Contextual_Annotation": "This marked the most powerful aerial offensive in the 75-year history of the Israeli-Palestinian conflict.",
+        "Article": "a52mvx23ow3p3r1b"
     },
     {
-        "Date": "2023-03-27",
-        "Event": "Russia deployed peacekeepers to Nagorno-Karabakh to monitor the ceasefire.",
-        "Contextual_Annotation": "Russia's peacekeeping mission, with 2,000 troops deployed, aimed to stabilize the situation and prevent further escalation, demonstrating Russia's ongoing role as a mediator in the region.",
-        "Article": "m5vcc0dfsmuho41p"
+        "Date": "2023-10-12",
+        "Event": "The International Committee of the Red Cross (ICRC) reported that Gaza's fuel supply was nearing depletion, citing safety concerns as a major obstacle to moving stored aid within the besieged enclave.",
+        "Contextual_Annotation": "The ICRC highlighted the challenges in delivering aid and medicine to Gaza, stating that their stocks were stranded due to the lack of safe passage. Despite the difficulty, ongoing negotiations with all parties involved, including Egypt, were underway to establish a humanitarian corridor.",
+        "Article": "a52mvx23ow3p3r1b"
     },
     {
-        "Date": "2023-07-20",
-        "Event": "Azerbaijan announced the capture of several villages in Nagorno-Karabakh.",
-        "Contextual_Annotation": "This announcement highlighted Azerbaijan's territorial gains during the conflict and indicated a shift in the power dynamics within the region.",
-        "Article": "m5vcc0dfsmuho41p"
+        "Date": "2023-10-12",
+        "Event": "Israel declared that its siege of Gaza would not include any humanitarian exceptions until all hostages seized by Hamas militants during the weekend attacks were released.",
+        "Contextual_Annotation": "The ICRC confirmed that they were in direct contact with both Hamas and Israeli officials regarding the hostages but declined to provide specific details.",
+        "Article": "a52mvx23ow3p3r1b"
     },
     {
-        "Date": "2023-08-03",
-        "Event": "Azerbaijan launched a new offensive in Nagorno-Karabakh.",
-        "Contextual_Annotation": "This new offensive led to the retaking of the mountainous region by Azerbaijan and a subsequent ceasefire agreement that was violated within hours, demonstrating the fragility of the peace process and the ongoing tensions between the two countries.",
-        "Article": "m5vcc0dfsmuho41p"
+        "Date": "2023-10-13",
+        "Event": "Israel tells Palestinians in northern Gaza to evacuate to the south, citing their safety concerns and avoiding entanglement in the conflict.",
+        "Contextual_Annotation": "Israel guarantees safe passage for Palestinians fleeing the north on two main roads until 4 p.m. (1300 GMT) on Friday. Gaza authorities report 70 people killed and 200 wounded when Israel strikes cars and trucks carrying people fleeing the north.",
+        "Article": "809rlzgnb15kdkuo"
     },
     {
-        "Date": "2023-08-04",
-        "Event": "Azerbaijan and Armenia agreed to a new ceasefire, but it was violated within hours.",
-        "Contextual_Annotation": "The fragility of the ceasefire highlighted the ongoing tensions and challenges in finding a lasting solution to the conflict.",
-        "Article": "m5vcc0dfsmuho41p"
+        "Date": "2023-10-14",
+        "Event": "An unrelenting Israeli bombardment intensifies, leading to a shortage of bread and drinking water in Gaza.",
+        "Contextual_Annotation": "Power outages are widespread, leaving families unable to charge their phones to check on relatives. The flood of people fleeing the north to south Gaza has overwhelmed the already strained resources of the region. The United Nations urges Israel to 'avert a humanitarian catastrophe' in Gaza, highlighting the dire situation in the region. Shops in Gaza are running out of essential items, including basic food, eggs, rice, canned food, and milk, due to the ongoing blockade. Israel has launched raids and built up troops and tanks on the border with Gaza. The UN Refugee Agency (UNRWA) calls for fuel to be trucked into Gaza to ensure safe drinking water, warning of potential death due to dehydration. U.S. President Joe Biden states his priority is to address the humanitarian crisis in Gaza, working with Israel, Egypt, Jordan, other Arab states, and the UN. The Gaza Health Ministry reports 10,000 people injured in the bombardment, with hospitals struggling to cope due to limited medical supplies and fuel. Over 1,695 buildings and high-rise towers have been destroyed in Israeli airstrikes, along with 7,000 housing units. Power cuts and lack of fuel for generators force residents to rely on solar panels for charging their phones, leaving many 'cut off from the world'.",
+        "Article": "809rlzgnb15kdkuo"
     },
     {
-        "Date": "2023-09-08",
-        "Event": "Armenia accused Azerbaijan of conducting a military buildup along the border of Nagorno-Karabakh and the Armenia-Azerbaijan border.",
-        "Contextual_Annotation": "This accusation, countered by Azerbaijan's foreign ministry, heightened tensions and fueled concerns about a potential escalation. Both countries claimed to be committed to a peace process despite the military buildup. Azerbaijan maintains that the troops are part of pre-planned drills for the upcoming autumn and winter.",
-        "Article": "x6bs26mxih4wjnvb"
+        "Date": "2023-10-15",
+        "Event": "Israel announced an agreement with the United States to resume some water supplies to the Gaza Strip.",
+        "Contextual_Annotation": "However, Hamas claimed that water supplies to the Gaza Strip had not been resumed, while an Israeli official said that some water was being provided to the community of Bnei Sahila in southern Khan Younis. Israeli Energy and Infrastructure Minister Israel Katz stated that resupplying water in southern Gaza would encourage Palestinian civilians to gather there as Israel continued military operations against Hamas targets in Gaza City.",
+        "Article": "r116ovpazmfs1xn5"
     },
     {
-        "Date": "2023-09-11",
-        "Event": "Separatists in Karabakh refused to accept the cargo of a Russian Red Cross truck carrying aid, despite a deal announced with ethnic Armenian separatists to open the route for the first time in decades.",
-        "Contextual_Annotation": "This refusal, despite the agreement to open the route, underscored the ongoing tensions and mistrust between the parties. The incident highlighted the challenges in implementing peace agreements and providing humanitarian aid in the region, where the conflict has been a source of instability for decades.",
-        "Article": "j40zdfvo5mm8yv3c"
+        "Date": "2023-10-17",
+        "Event": "The World Health Organization (WHO) expressed urgent need for access to Gaza to deliver aid and medical supplies due to a humanitarian crisis in the Israeli-occupied Palestinian enclave.",
+        "Contextual_Annotation": "The WHO met with \"decision-makers\" on Tuesday to discuss opening access to Gaza as soon as possible. The WHO reported that 2,800 people have died and 11,000 injured in Gaza since Israeli air strikes began. Approximately half of the casualties were women and children.",
+        "Article": "sbaewi0thfkcqyan"
     },
     {
-        "Date": "2023-09-12",
-        "Event": "Azerbaijan and Armenia agreed to a third ceasefire, which was implemented with the support of Russia.",
-        "Contextual_Annotation": "This ceasefire agreement aimed to de-escalate the situation and pave the way for a more lasting solution, with Russia playing a crucial role in facilitating the agreement.",
-        "Article": "m5vcc0dfsmuho41p"
+        "Date": "2023-10-21",
+        "Event": "Aid began flowing into Gaza through Rafah, the main crossing point with Egypt, with up to 20 trucks crossing daily.",
+        "Contextual_Annotation": "This marked the start of the aid effort, which was brokered by the US, Israel, and Egypt. US Special Envoy David Satterfield, who has been negotiating with Israel, Egypt, and the UN to set up sustained aid deliveries, stated that while the critical role of fuel was understood, the provision of food, water, and medicine would continue to be the focus 'in the immediate future'.",
+        "Article": "c10ogpwyyopbp20g"
     },
     {
-        "Date": "2023-09-12",
-        "Event": "A Russian truck carrying food aid for Armenians in the Karabakh city of Khankendi set off via the Aghdam road.",
-        "Contextual_Annotation": "This marked a significant step towards improving humanitarian access to the region, following the previous day's refusal of aid by separatists. This event demonstrated a potential shift towards cooperation and a willingness to address the urgent needs of the Armenian population in Karabakh, despite the ongoing tensions.",
-        "Article": "j40zdfvo5mm8yv3c"
+        "Date": "2023-10-23",
+        "Event": "Two hostages taken by Hamas militants during the Oct 7 attack were freed through Rafah, with Hamas crediting Qatar and Egypt for their mediation.",
+        "Contextual_Annotation": "This followed the release of two other hostages the previous week.",
+        "Article": "c10ogpwyyopbp20g"
     },
     {
-        "Date": "2023-09-19",
-        "Event": "Azerbaijan launched an offensive in the Nagorno-Karabakh region, targeting Armenian military units and initiating shelling of the enclave.",
-        "Contextual_Annotation": "This offensive marked a significant escalation of the conflict, with Azerbaijan claiming it was conducting \"anti-terrorist measures\" and targeting Armenian military positions. The offensive followed months of tensions and accusations by Armenia that Russia was failing to uphold its peacekeeping role in the region.",
-        "Article": "bon7mzog28fpzkqk"
+        "Date": "2023-10-24",
+        "Event": "The current Israel-Hamas war has resulted in a dire humanitarian situation in Gaza, with 2.3 million people facing economic isolation and constant bombardment.",
+        "Contextual_Annotation": "Supplies of essential resources are dwindling, creating an urgent need for humanitarian aid. US President Joe Biden pledged $100 million in humanitarian assistance for the citizens of Gaza, raising concerns about the logistics and ethics of delivering aid in a war zone. Due to the closure of the border with Israel, aid can only enter Gaza through the Rafah crossing on the Egyptian border. The US Agency for International Development (USAid) is likely to partner with the United Nations Relief and Works Agency (UNRWA) to distribute aid in Gaza. UNRWA has a network of 284 schools and 22 hospitals that are now being used as shelters and are well-positioned for aid distribution. Hamas has a history of diverting international aid for military purposes, raising ethical concerns about the effectiveness of humanitarian assistance. Hamas has been accused of using UNRWA schools as rocket depots and stealing fuel and food from UNRWA facilities. The US government will require Congressional approval to allocate aid to Gaza, which could delay the process due to the ongoing political turmoil in the House of Representatives. The first humanitarian convoy to Gaza is expected to be relatively small and will be monitored by international inspectors to ensure no weapons are present. The convoy will fly the UN flag and will not have a military escort to avoid provoking Hamas. The Biden administration is using the first convoy as a test for future, more sustained aid operations. The success or failure of this first effort will influence the future course of humanitarian assistance to Gaza.",
+        "Article": "yssfrux1ldigt3pb"
     },
     {
-        "Date": "2023-09-20",
-        "Event": "Azerbaijan regained control of Nagorno-Karabakh after a three-decade-long Armenian occupation.",
-        "Contextual_Annotation": "This marked a significant victory for Azerbaijan in a swift military operation, leading to the exodus of nearly all the 120,000 inhabitants of Karabakh to Armenia.",
-        "Article": "96moyhcopwdgflfi"
+        "Date": "2023-10-27",
+        "Event": "UN Secretary-General Antonio Guterres reported that an average of only 12 trucks a day were entering Gaza, a significant decrease from the pre-conflict average of 500 trucks.",
+        "Contextual_Annotation": "",
+        "Article": "tubm0bbus5itkpgm"
     },
     {
-        "Date": "2023-09-20",
-        "Event": "Azerbaijani President Ilham Aliyev assured the Armenian population living in the Karabakh region that they would not be affected by the anti-terrorist measures and that civilian protection would be a priority.",
-        "Contextual_Annotation": "This statement aimed to reassure the Armenian population amid Azerbaijan's military operation, claiming that only Karabakh fighters were targeted and civilian safety was paramount. However, this assertion stands in stark contrast to the accounts of Armenian refugees who fled the region, describing heavy bombardment and civilian casualties.",
-        "Article": "kgiisc7nhbtx8o7o"
+        "Date": "2023-10-28",
+        "Event": "Israel continued its air strikes on Gaza, with some suggesting that a ground offensive was imminent.",
+        "Contextual_Annotation": "",
+        "Article": "tubm0bbus5itkpgm"
     },
     {
-        "Date": "2023-09-20",
-        "Event": "Thousands of Armenians gathered at the airport in Stepanakert, Nagorno-Karabakh, following a ceasefire agreement that would result in the surrender of separatist forces to Azerbaijan. The separatist leaders, running the self-styled \"Republic of Artsakh,\" urged the population not to rush to the airport and to avoid panicking.",
-        "Contextual_Annotation": "The gathering at the airport reflected the widespread fear and uncertainty among the Armenian population in Nagorno-Karabakh as they awaited the outcome of the conflict and the potential for displacement. The separatist leaders' plea for calm underscored the chaotic situation and the heightened anxiety felt by the population.",
-        "Article": "8pjpbua9arko3ovu"
+        "Date": "2023-10-29",
+        "Event": "Egypt's Foreign Ministry publicly criticized Israel for obstructing aid delivery to Gaza by imposing stringent truck inspection procedures at the Nitzana crossing, which delayed the passage of aid through the Rafah crossing.",
+        "Contextual_Annotation": "Thousands of Gaza residents broke into UN warehouses to seize flour and other necessities, driven by desperate need for food and water. The escalating crisis led to a breakdown in civil order. The UNRWA storage facility in Deir al-Balah, central Gaza, was overrun by residents searching for supplies. This event further hampered the UN's efforts to distribute aid effectively. The Rafah border crossing became a shelter for thousands seeking protection and access to aid, creating further logistical challenges for UNRWA. The Palestinian Red Crescent reported that 140 trucks of aid had entered Gaza since the start of the conflict. This amount is significantly less than the required daily volume of 100 trucks needed to address the urgent needs of the population. The U.S. President Joe Biden and Egypt's President Abdel Fattah al-Sisi committed to accelerating assistance to Gaza. Several dozen trucks carrying aid were dispatched from the Egyptian side of the Rafah border crossing.",
+        "Article": "tubm0bbus5itkpgm"
     },
     {
-        "Date": "2023-09-20",
-        "Event": "Several hundred protesters gathered in the Armenian capital, Yerevan, to demand that the government do more to support ethnic Armenians in Nagorno-Karabakh after the breakaway region was forced into a ceasefire agreement with Azerbaijan.",
-        "Contextual_Annotation": "This protest reflects the growing frustration and anger among Armenians regarding the situation in Nagorno-Karabakh, which they consider a part of their homeland. The protesters are calling for stronger government action to support the region and its Armenian population, particularly after the ceasefire agreement which effectively handed control back to Azerbaijan.",
-        "Article": "vehvbiu65a6u2ryr"
+        "Date": "2023-10-30",
+        "Event": "UNRWA officials reported that four aid distribution centers and a storage facility in Gaza became inoperable due to the breakdown in civil order.",
+        "Contextual_Annotation": "The situation highlights the increasing desperation for food and water among the Gaza population. UNRWA officials stated that more aid alone cannot resolve the humanitarian crisis in Gaza. A ceasefire is necessary to address the collapse of public services. UNRWA was unable to distribute flour to bakers and could only provide one liter of potable water per person to displaced individuals, significantly less than the recommended humanitarian survival rate of three liters per day. The southern Gaza region is experiencing an influx of displaced individuals from the north. While access is relatively reasonable in the south, it becomes increasingly challenging in the north due to damage and security concerns stemming from Israeli military operations. Tommaso Della Longa, spokesperson for the International Federation of Red Cross and Red Crescent Societies, described the desperate situation in Gaza, warning that prolonged conflict could lead to widespread desperation.",
+        "Article": "3iwa09nlsu0xxnrk"
     },
     {
-        "Date": "2023-09-21",
-        "Event": "Armenian Prime Minister Nikol Pashinyan urges peace after Azerbaijan retakes Karabakh.",
-        "Contextual_Annotation": "Pashinyan's call for peace came in the aftermath of Azerbaijan's recapture of Nagorno-Karabakh, a region that had been under Armenian control for three decades. The loss of Karabakh had ignited calls for Pashinyan's resignation within Armenia, highlighting the political turmoil and emotional strain caused by the conflict.",
-        "Article": "9owr18ngmcvsob4x"
+        "Date": "2023-11-08",
+        "Event": "Israel allowed a small amount of fuel into Gaza to keep UNRWA aid delivery trucks moving.",
+        "Contextual_Annotation": "",
+        "Article": "et24x553bmr7np38"
     },
     {
-        "Date": "2023-09-21",
-        "Event": "Azerbaijan's President Ilham Aliyev expressed willingness for wider peace negotiations with Armenia.",
-        "Contextual_Annotation": "Aliyev's statement signaled a potential shift in the conflict dynamics, suggesting a willingness for dialogue and a path towards a peaceful resolution. This stance stemmed from Azerbaijan's successful military campaign, which culminated in the capture of Karabakh, leaving Armenia with limited options for resistance.",
-        "Article": "9owr18ngmcvsob4x"
+        "Date": "2023-11-12",
+        "Event": "Tens of thousands of Palestinians are fleeing Israeli army strikes in Gaza, moving south towards Rafah.",
+        "Contextual_Annotation": "Mr. Youssef Mehna, a resident of Jabalia refugee camp, fled north Gaza for the south after his house was destroyed and he was wounded during the war. Mr. Mehna's journey to Rafah was hampered by fuel shortages, forcing him to travel in short intervals using various modes of transportation, including donkey carts, trucks, and cars. Ms. Umm Yaaqub, who arrived in Khan Yunis three days ago with her family from Gaza City, is struggling to find food and shelter for her seven children. The only operational mill in Gaza is unable to grind wheat due to a lack of electricity and fuel, making access to bread in the south challenging. The price of a 50kg sack of flour has increased from 40 shekels to 150 shekels, exacerbating the food shortage. Mr. Atef Abu Jarad and his family are among the many displaced people living in a school classroom. Shops in southern Gaza are running out of essential supplies, including bottled water, milk, diapers, pasta, and juices. A little food aid is being distributed to the displaced, but it is not enough to meet their needs. Rim, Mr. Abu Jarad's daughter, has had to stop taking her painkillers due to the lack of access to medication.",
+        "Article": "x4layjlszgmr8ryy"
     },
     {
-        "Date": "2023-09-21",
-        "Event": "Pashinyan emphasized the importance of peace for Armenian independence, sovereignty, and security.",
-        "Contextual_Annotation": "Pashinyan's statement underscored Armenia's commitment to preserving its national interests and seeking a peaceful solution, acknowledging that the conflict had taken a heavy toll on the country. This stance aimed to navigate Armenia's post-conflict situation, balancing domestic political pressure with the need for a negotiated settlement.",
-        "Article": "9owr18ngmcvsob4x"
+        "Date": "2023-11-15",
+        "Event": "US Secretary of State Antony Blinken urged Israel to allow fuel into Gaza, warning of a potential humanitarian crisis due to the acute fuel shortage.",
+        "Contextual_Annotation": "",
+        "Article": "et24x553bmr7np38"
     },
     {
-        "Date": "2023-09-24",
-        "Event": "The ethnic Armenian leadership of breakaway Nagorno-Karabakh stated that the terms of the ceasefire with Azerbaijan are being implemented, with humanitarian aid delivery and evacuation of the wounded underway.",
-        "Contextual_Annotation": "This statement indicated a potential stabilization of the situation and the implementation of the ceasefire agreement, with humanitarian efforts taking place to address the needs of the affected population.",
-        "Article": "m5vcc0dfsmuho41p"
+        "Date": "2023-11-16",
+        "Event": "No aid lorries reached Gaza for the second consecutive day due to a lack of fuel for distributing relief supplies.",
+        "Contextual_Annotation": "The UN World Food Programme (WFP) warned that nearly the entire population of Gaza was in dire need of food assistance. Israeli troops recovered the body of another woman hostage, also in a building near Al-Shifa Hospital. Hamas' Al-Quds Brigades reported engaging Israeli forces for several hours in the city of Jenin in the occupied West Bank, launching a \"torrent of fire\" and setting ambushes with explosives. Israel's military said its warplanes struck militants in Jenin who had fired on Israeli soldiers, killing at least five militants.",
+        "Article": "ivsjqtgvfm48daf7"
     },
     {
-        "Date": "2023-09-25",
-        "Event": "Petya Grigoryan, a 69-year-old driver, fled his village in the Martakert district of Karabakh after it was heavily bombed by Azerbaijani armed forces. He reported finding two KAMAZ-truckloads full of civilian dead in the village and the lack of space to bury them. He and his family were among the first ethnic Armenians of Nagorno-Karabakh to make it to Armenia after Azerbaijan's rapid military operation.",
-        "Contextual_Annotation": "Grigoryan's harrowing account, corroborated by other refugees, paints a stark picture of the devastation in Karabakh. This account directly contradicts Azerbaijan's claims of civilian protection and underscores the gravity of the situation on the ground. It highlights the desperate exodus of Armenians from Karabakh, fearing for their lives and unsure of their future.",
-        "Article": "kgiisc7nhbtx8o7o"
+        "Date": "2023-11-17",
+        "Event": "UN aid deliveries to Gaza were suspended again due to fuel shortages and a communications shutdown.",
+        "Contextual_Annotation": "The WFP declared that civilians in Gaza faced the \"immediate possibility of starvation\" due to the lack of food supplies. A Palestinian news agency reported that several Palestinians were killed and injured in an Israeli airstrike targeting a group of displaced people near the Rafah border crossing between Gaza and Egypt. Al Jazeera TV cited sources claiming that nine people were killed in the strike. Israel announced that its troops had discovered a tunnel shaft used by Hamas at Al-Shifa Hospital in northern Gaza. Israel alleges that Hamas has stored weapons and ammunition and is holding hostages in a network of tunnels beneath hospitals like Al-Shifa, using patients and those seeking shelter as human shields. Hamas denies these accusations. The World Health Organization (WHO) expressed deep concern about the spread of disease in Gaza, citing over 70,000 reported cases of acute respiratory infections and more than 44,000 cases of diarrhea, significantly exceeding expected rates. Israel's military chief of staff stated that Israel was nearing the destruction of Hamas' military system in northern Gaza and that the army was expanding its campaign to other parts of the Gaza Strip. Israel accused Hamas of preventing people from moving towards the southern part of the Gaza Strip, a claim denied by Hamas. The Israeli military released a video allegedly showing a tunnel entrance in an outdoor area of Al-Shifa Hospital. The video, which Reuters was unable to verify independently, depicted a deep hole in the ground surrounded by rubble and sand, suggesting excavation had taken place. The Israeli military reported that its soldiers had recovered the body of a female soldier who had been held captive in a building near Al-Shifa Hospital. The military confirmed her death on November 14 after Hamas released a video showing her alive, followed by images of what they claimed was her body after she was killed in an Israeli strike.",
+        "Article": "ivsjqtgvfm48daf7"
     },
     {
-        "Date": "2023-09-27",
-        "Event": "Azerbaijan vowed to prosecute the separatist leadership of Nagorno-Karabakh.",
-        "Contextual_Annotation": "Azerbaijan labeled the separatist leaders as 'criminal' and accused them of poisoning the minds of the population, raising concerns about the fate of the separatist leaders and the potential for accountability and justice.",
-        "Article": "96moyhcopwdgflfi"
+        "Date": "2023-11-17",
+        "Event": "Israel's war cabinet agreed to allow 140,000 liters of fuel into Gaza every two days, with 120,000 liters allocated to UNRWA and other essential services like water desalination, sewage pumping, bakeries, and hospitals in southern Gaza.",
+        "Contextual_Annotation": "An additional 20,000 liters would be used to power the generators of Paltel, a telecom company facing an imminent blackout due to fuel shortages.",
+        "Article": "et24x553bmr7np38"
     },
     {
-        "Date": "2023-10-04",
-        "Event": "Four former leaders of Nagorno-Karabakh were detained by Azerbaijan's State Security Service and taken to Baku.",
-        "Contextual_Annotation": "Among the detained were Ruben Vardanyan, a former head of Karabakh's government, Levon Mnatsakanyan, former commander of Nagorno-Karabakh's separatist army, Arkady Gukasyan, Bako Sahakyan and Araik Arutyunyan, former self-styled presidents, and David Ishkhanyan, ex-parliamentary speaker.",
-        "Article": "96moyhcopwdgflfi"
-    },
-    {
-        "Date": "2023-10-04",
-        "Event": "Three other former leaders of Nagorno-Karabakh arrived safely in Armenia.",
-        "Contextual_Annotation": "These former leaders, including Artur Arutyunyan, Karen Sarkisyan, and Ararat Melkunyan, provided a glimmer of hope for the safety of those who had fled Karabakh. However, the future of these individuals remains uncertain amidst the ongoing political tensions.",
-        "Article": "96moyhcopwdgflfi"
+        "Date": "2023-11-18",
+        "Event": "The decision to allow fuel into Gaza was announced publicly by both Israeli and US officials.",
+        "Contextual_Annotation": "",
+        "Article": "et24x553bmr7np38"
     }
 ]

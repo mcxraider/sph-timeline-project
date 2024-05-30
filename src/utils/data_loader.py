@@ -12,6 +12,7 @@ def load_single_json(file_path: str) -> Optional[dict]:
     try:
         with open(file_path, 'r', encoding='utf-8') as fin:
             data = json.load(fin)
+            print("Files Loaded")
         logging.info(f"JSON file '{file_path}' loaded successfully.")
         return data
     except FileNotFoundError:
@@ -21,7 +22,6 @@ def load_single_json(file_path: str) -> Optional[dict]:
         logging.error(f"Error decoding JSON from file '{file_path}'. Please check the file content.")
         return None
 
-
 def combine_4_json(files):
     combined_data = []
     for file in files:
@@ -29,9 +29,8 @@ def combine_4_json(files):
             # Load data from the file and append it to the combined list
             data = json.load(f)
             combined_data.extend(data)
+    print("Input files combined\n")
     return combined_data
-
-
 
 def read_load_json_to_df(json_data):
     for item in json_data:
@@ -39,9 +38,12 @@ def read_load_json_to_df(json_data):
         item['tags_embeddings'] = json.dumps(item['tags_embeddings'])
         item['Title_embeddings'] = json.dumps(item['Title_embeddings'])
     df = pd.DataFrame(json_data)
+    print("Input data converted and read in\n")
     return df
 
-
-
-
-    
+def load_df(files):
+    db = combine_4_json(files)
+    df = read_load_json_to_df(db)
+    #Drop nan rows 
+    final_df = df.drop(df[df.isnull().any(axis=1)].index)
+    return final_df
