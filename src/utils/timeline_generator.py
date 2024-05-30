@@ -1,4 +1,4 @@
-from utils.heir_clustering import *
+from utils.hierarchical_clustering import *
 from utils.data_cleaner import *
 
 import os
@@ -353,8 +353,9 @@ def save_enhanced_timeline(enhanced_timeline, output_path: str):
         fin.write(json_data)
     print(f"Enhanced timeline saved to '{output_path}'")
 
-def generate_save_timeline(relevant_articles, df_train, df_test):
+def generate_save_timeline(relevant_articles, df_train, df_test, output_path):
     similar_articles = get_article_dict(relevant_articles, df_train, df_test)
     generated_timeline = generate_and_sort_timeline(similar_articles, df_train, df_test)
     final_timeline = enhance_timeline(generated_timeline)
+    save_enhanced_timeline(final_timeline, output_path)
     return final_timeline

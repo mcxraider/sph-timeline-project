@@ -1,4 +1,4 @@
-data_files:
+data_input_files:
   - '../data_upload/final_db1.json'
   - '../data_upload/final_db2.json'
   - '../data_upload/final_db3.json'
