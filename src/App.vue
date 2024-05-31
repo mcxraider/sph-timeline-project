@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import StoryTimeline from './components/StoryTimeline.vue'
+import StoryTimeline from "./components/StoryTimeline.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    StoryTimeline
-  }
-}
+    StoryTimeline,
+  },
+};
 </script>
 
 <style>

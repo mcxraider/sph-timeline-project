@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="q-px-lg q-py-md">
-      <q-timeline :layout="layout" color="secondary">
+      <q-timeline :layout="layout" color="secondary" class="timeline">
         <q-timeline-entry heading>
           <strong>Timeline heading</strong>
         </q-timeline-entry>
@@ -9,19 +9,13 @@
         <hr />
 
         <q-timeline-entry v-for="(entry, index) in timelineData" :key="index">
-          <div class="entry-Date"><strong>Date: </strong>{{ entry.Date }}</div>
-
-          <div class="entry-Event">
-            <strong>Event: </strong>{{ entry.Event }}
+          <div><strong>Date: </strong>{{ entry.Date }}</div>
+          <div><strong>Event: </strong>{{ entry.Event }}</div>
+          <div>
+            <strong>Contextual_Annotation: </strong
+            >{{ entry.Contextual_Annotation }}
           </div>
-
-          <div class="entry-Context">
-            <strong>Event Context: </strong>{{ entry.Contextual_Annotation }}
-          </div>
-
-          <div class="entry-Article">
-            <strong>Article ID: </strong> {{ entry.Article }}
-          </div>
+          <div><strong>Article id: </strong>{{ entry.Article }}</div>
 
           <hr />
         </q-timeline-entry>
@@ -73,5 +67,21 @@ onMounted(() => {
 <style scoped>
 .timeline {
   margin: 10px;
+}
+
+.q-timeline-entry {
+  padding: 10px 0;
+}
+
+.q-timeline-entry .entry-content {
+  margin-top: 10px;
+}
+
+.q-timeline-entry .entry-content p {
+  margin: 0 0 5px;
+}
+
+.q-timeline-entry strong {
+  font-weight: bold;
 }
 </style>
