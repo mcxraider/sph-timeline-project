@@ -3,15 +3,17 @@
       <div class="q-px-lg q-py-md">
         <q-timeline :layout="layout" color="secondary">
           <q-timeline-entry heading>
-            Timeline heading
+            <strong>Timeline heading</strong>
           </q-timeline-entry>
+          
+          <hr>
   
-          <q-timeline-entry v-for="(entry, index) in timelineData" :key="index"
-            :title="entry.Event"
-            :subtitle="entry.Date"
-          >
-            <div>{{ entry.Contextual_Annotation }}</div>
-            <div><strong>Article ID:</strong> {{ entry.Article }}</div>
+          <q-timeline-entry v-for="(entry, index) in timelineData" :key="index">
+            <div class="entry-Date"><strong>Date: </strong>{{ entry.Date }}</div>
+            <div class="entry-Event"><strong>Event: </strong>{{ entry.Event }}</div>
+            <div class="entry-Context"><strong>Event Context: </strong>{{ entry.Contextual_Annotation }}</div>
+            <div class="entry-Article"><strong>Article ID: </strong> {{ entry.Article }}</div>
+            <hr>
           </q-timeline-entry>
         </q-timeline>
       </div>
