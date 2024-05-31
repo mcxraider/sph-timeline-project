@@ -3,5 +3,5 @@ data_input_files:
   - '../data_upload/final_db2.json'
   - '../data_upload/final_db3.json'
   - '../data_upload/final_db4.json'
-output_path: '../data_upload/Enhanced_timeline.json'
+output_path: '../public/data_upload/Timeline.json'
 
