@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "esnext", // Set to esnext for modern JavaScript features
+    "module": "esnext", // Use ESNext module resolution
+    "baseUrl": "./", // Base directory for resolving paths
+    "moduleResolution": "node", // Resolve modules using Node.js rules
+    "paths": {
+      "@/*": ["src/*"] // Alias @ to the src directory
+    },
+    "lib": [
+      "esnext", // Include latest ECMAScript features
+      "dom", // Include DOM API
+      "dom.iterable", // Include DOM iterable API
+      "scripthost" // Include scripting host API
+    ],
+    "jsx": "preserve" // Preserve JSX syntax in .jsx files (useful if using JSX)
+  },
+  "exclude": [
+    "node_modules", // Exclude node_modules directory
+    "dist" // Exclude dist directory (if exists)
+  ],
+  "include": [
+    "src/**/*" // Include all files in the src directory
+  ]
+}
