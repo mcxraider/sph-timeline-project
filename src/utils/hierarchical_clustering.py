@@ -136,7 +136,7 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
         input_list += f"Article id: {row['id']}, Title: {row['Title']}, Tags: {row['tags']}]\n"
     return input_list, df_train, df_test
 
-def generate_cluster(df_train, df_test):
+def generate_clusters(df_train, df_test):
     train_embeddings, test_embeddings = scale_df_embeddings(df_train, df_test)
     variance_perf = get_variance_performance(train_embeddings)
     best_variance, best_max_d = get_best_variance(variance_perf)
