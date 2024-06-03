@@ -46,3 +46,28 @@ def load_df(files):
     #Drop nan rows 
     final_df = df.drop(df[df.isnull().any(axis=1)].index)
     return final_df
+
+
+def split_batches(timeline, max_batch_size=30):
+    n = len(timeline)
+    if n <= max_batch_size:
+        return [timeline]
+    
+    num_batches = n // max_batch_size
+    remainder = n % max_batch_size
+    
+    if remainder > 0 and remainder < max_batch_size // 2:
+        num_batches -= 1
+        remainder += max_batch_size
+
+    batches = []
+    start = 0
+    for i in range(num_batches):
+        end = start + max_batch_size
+        batches.append(timeline[start:end])
+        start = end
+    
+    if remainder > 0:
+        batches.append(timeline[start:start + remainder])
+    
+    return batches

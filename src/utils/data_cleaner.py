@@ -19,6 +19,23 @@ def clean_output(output):
             new_output = re.search(r'\{.*?\}', output, re.DOTALL).group(0)  
         updated_timeline = json.loads(new_output)
         return updated_timeline
+    
+def extract_json_from_string(string):
+    # Use a regular expression to find the content within the first and last square brackets
+    match = re.search(r'\[.*\]', string, re.DOTALL)
+    
+    if match:
+        json_content = match.group(0)
+        try:
+            # Load the extracted content into a JSON object
+            json_data = json.loads(json_content)
+            return json_data
+        except json.JSONDecodeError as e:
+            print("Failed to decode JSON:", e)
+            return None
+    else:
+        print("No valid JSON content found.")
+        return None
 
 def clean_sort_timeline(timelines, df_retrieve):  
     generated_timeline = []
