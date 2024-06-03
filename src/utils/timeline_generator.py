@@ -97,8 +97,8 @@ def to_generate_timeline(test_data):
         print("Timeline is necessary for this chosen article.\n")
         return True
     else:
-        print("A timeline for this article is not required. \n")
-        for part in final_response['Reason'].replace(". ", ".").split(". "):
+        print(f"A timeline for this article with the Title: {headline} is not required. \n")
+        for part in final_response['Refason'].replace(". ", ".").split(". "):
             print(f"{part}\n")
         print("Hence I gave this a required timeline score of " + str(final_response['score']))
         return False
@@ -147,8 +147,8 @@ def get_article_dict(input_list, df_train, df_test):
     new_output = re.search(r'\[[^\]]*\]', response.parts[0].text).group(0)
     article_keys =  json.loads(new_output)
     if not article_keys:
-        print("No useful similar articles found in database for timeline generation.\n")
-        sys.exit()
+        print("No useful similar articles found in database for timeline generation. Exiting execution now...\n")
+        return
     
     similar_articles_dict = {}
     
@@ -175,7 +175,7 @@ def get_article_dict(input_list, df_train, df_test):
     print(similar_articles_dict)
     if not similar_articles_dict:
         print("Inadequate articles found to construct a timeline... Exiting execution now\n")
-        sys.exit()
+        return
     else:
         # Print results 
         print("-"*80 + "\n")
@@ -266,8 +266,8 @@ def generate_and_sort_timeline(similar_articles_dict, df_train, df_test):
             try:
                 timeline_dic[i] = retry_response.parts[0].text
             except ValueError:
-                print("ERROR: There were issues with the generation of the timeline. The timeline could not be generated")
-                sys.exit()  
+                print("ERROR: There were issues with the generation of the timeline. The timeline could not be generated. Exiting execution now")
+                return
     print("The first timeline has been generated\n")
     generated_timeline = []
     for idx, line in timeline_dic.items():

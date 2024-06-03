@@ -14,7 +14,7 @@ def load_config(config_path):
     return config
 
 
-def main(config_path ="../config.yaml"):
+def main(config_path = "../config.yaml"):
     config = load_config(config_path)
     files = config['data_input_files']
     output_path = config['output_path']
