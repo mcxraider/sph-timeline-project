@@ -2,7 +2,6 @@ import json
 import logging
 import pandas as pd
 from typing import Optional
-from sklearn.preprocessing import StandardScaler
 
 
 def load_single_json(file_path: str) -> Optional[dict]:

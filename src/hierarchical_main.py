@@ -7,14 +7,14 @@ from utils.timeline_generator import *
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def load_config(config_path='../config.yaml'):
+def load_config(config_path):
     """Load configuration from a YAML file."""
     with open(config_path, 'r') as file:
         config = yaml.safe_load(file)
     return config
 
 
-def main(config_path='config.yaml'):
+def main(config_path='../config.yaml'):
     config = load_config(config_path)
     files = config['data_input_files']
     output_path = config['output_path']
