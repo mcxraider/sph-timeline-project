@@ -410,8 +410,8 @@ def save_enhanced_timeline(enhanced_timeline, output_path: str):
     json_data = json.dumps(sorted_events, indent=4, ensure_ascii=False)
 
     # Write the JSON string to a file
-    with open(output_path, 'w', encoding='utf-8') as fin:
-        fin.write(json_data)
+    with open(output_path, 'w', encoding='utf-8') as fout:
+        fout.write(json_data)
     print(f"Enhanced timeline saved to '{output_path}'")
 
 def generate_save_timeline(relevant_articles, df_train, df_test, output_path):

@@ -15,7 +15,7 @@
             <strong>Contextual_Annotation: </strong
             >{{ entry.Contextual_Annotation }}
           </div>
-          <div><strong>Article id: </strong>{{ entry.Article }}</div>
+          <div><strong>Article id: </strong>{{ entry.Article_id }}</div>
 
           <hr />
         </q-timeline-entry>
