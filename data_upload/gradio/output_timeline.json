@@ -15,5 +15,69 @@
         "Article_id": [
             "c3ydcl28nk5o24to"
         ]
+    },
+    {
+        "Date": "February 2022",
+        "Event": "Russia launched its full-scale assault on Ukraine.",
+        "Contextual_Annotation": "This event drastically altered the global security landscape, leading to heightened security concerns and increased risks for key Ukrainian officials.",
+        "Article_id": [
+            "h4g9g9zxoy5klp34"
+        ]
+    },
+    {
+        "Date": "August 2022",
+        "Event": "Lieutenant-General Kyrylo Budanov's wife, Marianna Budanova, began living with him in his office for security purposes.",
+        "Contextual_Annotation": "This move underscores the heightened security threats faced by Ukrainian officials amidst the ongoing conflict.",
+        "Article_id": [
+            "h4g9g9zxoy5klp34"
+        ]
+    },
+    {
+        "Date": "October 2022",
+        "Event": "Explosions occurred on the Kerch bridge, which connects Russia to the annexed Crimean peninsula, with Moscow accusing Ukraine's military intelligence service (GUR) of being behind the attacks.",
+        "Contextual_Annotation": "This event marked a significant escalation in the conflict, with Russia blaming Ukraine and threatening retaliatory measures.",
+        "Article_id": [
+            "h4g9g9zxoy5klp34"
+        ]
+    },
+    {
+        "Date": "29 March 2023",
+        "Event": "Evan Gershkovich, a Wall Street Journal reporter, was arrested in Yekaterinburg, Russia on charges of espionage, which he denies.",
+        "Contextual_Annotation": "Gershkovich's arrest sparked international condemnation and raised concerns about press freedom in Russia.",
+        "Article_id": [
+            "a8p0oy3cxhpkubdx"
+        ]
+    },
+    {
+        "Date": "13 September 2023",
+        "Event": "The U.S. ambassador to Russia announced that he will visit Paul Whelan in prison.",
+        "Contextual_Annotation": "This visit signifies the U.S. government's continued efforts to secure Whelan's release and highlight his case.",
+        "Article_id": [
+            "c3ydcl28nk5o24to"
+        ]
+    },
+    {
+        "Date": "25 September 2023",
+        "Event": "A Moscow court rejected Gershkovich's latest appeal against his pre-trial detention.",
+        "Contextual_Annotation": "This ruling further prolongs Gershkovich's detention and increases concerns about the fairness of the Russian legal system.",
+        "Article_id": [
+            "a8p0oy3cxhpkubdx"
+        ]
+    },
+    {
+        "Date": "29 September 2023",
+        "Event": "The Democratic and Republican leaders of the U.S. Senate Foreign Relations Committee announced a resolution calling for Gershkovich's immediate release from Russia.",
+        "Contextual_Annotation": "The resolution, supported by 27 U.S. senators, highlights Gershkovich's continued detention and underscores the U.S.'s concern about his case. The U.S. accuses Russia of using Gershkovich for hostage diplomacy, particularly amidst the strained relations between the two countries due to the ongoing conflict in Ukraine.",
+        "Article_id": [
+            "a8p0oy3cxhpkubdx"
+        ]
+    },
+    {
+        "Date": "28 November 2023",
+        "Event": "Marianna Budanova, wife of Ukraine's military intelligence chief, was hospitalized after her health deteriorated significantly. Ukrainian investigators suspect Russia was involved in a poisoning attempt targeting Marianna Budanova, citing the presence of highly toxic substances like mercury and arsenic in her system. Ukrainian authorities opened an investigation into the suspected poisoning attempt, described as \u201cattempted murder\u201d by Babel news outlet. Reports indicate that several other employees of the GUR, Ukraine's military intelligence service, are also being treated for suspected poisoning, with traces of heavy metals found in their systems.",
+        "Contextual_Annotation": "These events raise serious concerns about Russia's potential use of chemical weapons as a tool of intimidation and suppression against Ukrainian officials. The allegations, if proven, would represent a grave escalation in the conflict.",
+        "Article_id": [
+            "h4g9g9zxoy5klp34"
+        ]
     }
 ]
