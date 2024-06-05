@@ -406,8 +406,18 @@ def save_enhanced_timeline(enhanced_timeline, output_path: str):
     enhanced_timeline (list): The enhanced timeline data.
     output_path (str): The file path where the JSON will be saved.
     """
-    sorted_events = sorted(enhanced_timeline, key=lambda x: x['Date'])
-    json_data = json.dumps(sorted_events, indent=4, ensure_ascii=False)
+    
+    def edit_timeline(timeline):
+        for event in timeline:
+            new_date = format_timeline_date(event['Date'])
+            event['Date'] = new_date
+            # Check if Contextual Annotation empty    
+            if not event['Contextual_Annotation']:
+                event['Contextual_Annotation'] = "NONE"
+        return timeline
+
+    edited_timeline = edit_timeline(enhanced_timeline)
+    json_data = json.dumps(edited_timeline, indent=4, ensure_ascii=False)
 
     # Write the JSON string to a file
     with open(output_path, 'w', encoding='utf-8') as fout:
@@ -420,3 +430,6 @@ def generate_save_timeline(relevant_articles, df_train, df_test, output_path):
     final_timeline = enhance_timeline(generated_timeline)
     save_enhanced_timeline(final_timeline, output_path)
     return final_timeline
+
+
+

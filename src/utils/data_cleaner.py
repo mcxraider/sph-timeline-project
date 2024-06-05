@@ -64,3 +64,21 @@ def clean_sort_timeline(timelines, df_retrieve):
         elif date.endswith('-XX'):
             event['Date'] = date[:7]
     return timeline
+
+
+# DATE CLEANING FUNCTION
+from datetime import datetime
+def format_timeline_date(date_str):
+    formats = ['%Y', '%Y-%m-%d', '%Y-%m']
+    for fmt in formats:
+        try:
+            date_obj = datetime.strptime(date_str, fmt)
+            if fmt == '%Y':
+                return date_obj.strftime('%Y')
+            elif fmt == '%Y-%m-%d':
+                return date_obj.strftime('%d %B %Y')
+            elif fmt == '%Y-%m':
+                return date_obj.strftime('%B %Y')
+        except ValueError:
+            continue
+    return None
