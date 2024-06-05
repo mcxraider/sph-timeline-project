@@ -24,28 +24,6 @@ GEMINI_KEY = os.environ.get('GEMINI_KEY')
 genai.configure(api_key=GEMINI_KEY)
 
 
-import os
-import sys
-import re
-import json
-import pandas as pd
-
-# Import libraries for working with language models and Google Gemini
-from langchain_core.prompts import PromptTemplate
-import google.generativeai as genai
-from google.generativeai.types import HarmCategory, HarmBlockThreshold
-from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.pydantic_v1 import BaseModel, Field
-from concurrent.futures import ThreadPoolExecutor, as_completed
-
-
-# Load environment variables
-from dotenv import load_dotenv
-load_dotenv()
-GEMINI_KEY = os.environ.get('GEMINI_KEY')
-genai.configure(api_key=GEMINI_KEY)
-
-
 def to_generate_timeline(test_data):
     llm = genai.GenerativeModel('gemini-1.5-flash-latest')
     class Event(BaseModel):
