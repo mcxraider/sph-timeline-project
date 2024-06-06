@@ -24,7 +24,7 @@ def main(config_path = "../config.yaml"):
 
     #check if the test point is worth generating a timeline. 
     if not to_generate_timeline(df_test):
-        return None, None
+        return None
     
     relevant_articles, df_train, df_test = generate_clusters(df_train, df_test)
     final_timeline = generate_save_timeline(relevant_articles, df_train, df_test, output_path)
