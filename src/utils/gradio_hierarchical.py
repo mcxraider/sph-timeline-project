@@ -799,7 +799,6 @@ def gradio_generate_timeline(test_articles_json, index):
     
     
 
-
 # Function to display the first two entries of the timeline content in HTML format
 def display_timeline(timeline_str):
     timeline_list = json.loads(timeline_str)
@@ -866,7 +865,7 @@ def display_gradio():
             outputs=[output_error, output_timeline]
         )
 
-        output_error.visible = True  # Make sure the error textbox is initially hidden, and only displayed when there is an error
+        output_error.visible = True  
         
         show_timeline_button.click(display_timeline,
                                    inputs=output_timeline,
