@@ -2,13 +2,12 @@ import os
 import ast
 import sys
 import json
-import logging
 import re
-import yaml
-from pathlib import Path
 from json import JSONDecodeError
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Optional
+from datetime import datetime
+from pymongo import MongoClient
+
 
 import gradio as gr
 import pandas as pd
@@ -16,7 +15,6 @@ import numpy as np
 from dotenv import load_dotenv
 from sklearn.metrics import silhouette_score
 from sklearn.decomposition import PCA
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from scipy.cluster.hierarchy import linkage, fcluster
 
@@ -30,8 +28,9 @@ from langchain_core.pydantic_v1 import BaseModel, Field
 # Load environment variables
 load_dotenv()
 GEMINI_KEY = os.environ.get('GEMINI_KEY')
+MONGO_URL = os.environ['MONGO_URL']
 genai.configure(api_key=GEMINI_KEY)
-
+mongo_client = MongoClient(MONGO_URL)
 
 
 def clean_llm_score(output):
@@ -97,8 +96,8 @@ def clean_sort_timeline(timelines, df_retrieve):
             event['Date'] = date[:7]
     return timeline
 
-# DATE CLEANING FUNCTION
-from datetime import datetime
+
+
 def format_timeline_date(date_str):
     formats = ['%Y', '%Y-%m-%d', '%Y-%m']
     for fmt in formats:
@@ -113,51 +112,6 @@ def format_timeline_date(date_str):
         except ValueError:
             continue
     return None
-
-
-
-def load_single_json(file_path: str) -> Optional[dict]:
-    """
-    Load JSON data from a file.
-    """
-    try:
-        with open(file_path, 'r', encoding='utf-8') as fin:
-            data = json.load(fin)
-            print("Files Loaded")
-        logging.info(f"JSON file '{file_path}' loaded successfully.")
-        return data
-    except FileNotFoundError:
-        logging.error(f"File '{file_path}' not found. Please check the file path.")
-        return None
-    except json.JSONDecodeError:
-        logging.error(f"Error decoding JSON from file '{file_path}'. Please check the file content.")
-        return None
-
-def combine_4_json(files):
-    combined_data = []
-    for file in files:
-        with open(file, 'r') as f:
-            # Load data from the file and append it to the combined list
-            data = json.load(f)
-            combined_data.extend(data)
-    print("Input files combined\n")
-    return combined_data
-
-def read_load_json_to_df(json_data):
-    for item in json_data:
-        #Convert the embeddings to json string as CSVs dont accept list as a data type
-        item['tags_embeddings'] = json.dumps(item['tags_embeddings'])
-        item['Title_embeddings'] = json.dumps(item['Title_embeddings'])
-    df = pd.DataFrame(json_data)
-    print("Input data converted and read in\n")
-    return df
-
-def load_df(files):
-    db = combine_4_json(files)
-    df = read_load_json_to_df(db)
-    #Drop nan rows 
-    final_df = df.drop(df[df.isnull().any(axis=1)].index)
-    return final_df
 
 def split_batches(timeline, max_batch_size=30):
     n = len(timeline)
@@ -180,14 +134,9 @@ def split_batches(timeline, max_batch_size=30):
     
     if remainder > 0:
         batches.append(timeline[start:start + remainder])
-    
     return batches
 
 
-
-def split_df(df, test_size):
-    df_train, df_test = train_test_split(df, test_size=test_size)
-    return df_train, df_test.reset_index(drop=True)
 
 def scale_df_embeddings(df_train, df_test):
     print("Processing embedding data and scaling data...\n")
@@ -324,6 +273,7 @@ def generate_clusters(df_train, df_test):
 
 
 def to_generate_timeline(test_data):
+    print("Evaluating necessity of Timeline for this aricle.\n")
     llm = genai.GenerativeModel('gemini-1.5-flash-latest')
     class Event(BaseModel):
         score: int = Field(description="The need for this article to have a timeline")
@@ -398,12 +348,13 @@ def to_generate_timeline(test_data):
         print("Timeline is necessary for this chosen article.\n")
         return True, None
     else:
-        output_error = "A timeline for this article is not required. \n" + final_response['Reason'] + "Hence I gave this a required timeline score of " + str(final_response['score'])
         print("A timeline for this article is not required. \n")
         for part in final_response['Reason'].replace(". ", ".").split(". "):
             print(f"{part}\n")
         print("Hence I gave this a required timeline score of " + str(final_response['score']))
-        output_error = "\nA timeline for this article is not required. \n" + "\n" +final_response['Reason'] + "\n"+ "\nHence this timeline received a necessity score of " + str(final_response['score']) + "\n"
+        output_error = "A timeline for this article is not required. \n" \
+                    + "\n" +final_response['Reason'] + "\n"+ "\nHence this timeline received a necessity score of " \
+                    + str(final_response['score'])
         return False, output_error
 
 def get_article_dict(input_list, df_train, df_test):
@@ -476,13 +427,8 @@ def get_article_dict(input_list, df_train, df_test):
                 'indexes': similar_indexes,
                 'Text': test_row['Text']
             }
-    ## FOR TESTING:
-    similar_articles_dict = {}
-    #####
-    
-    print(similar_articles_dict)
     if not similar_articles_dict:
-        print("There are not enough useful articles to construct a timeline... Exiting execution now\n")
+        print("There are insufficient relevant articles to construct a meaningful timeline. ... Exiting execution now\n")
         return "generate_similar_error"
     else:
         # Print results 
@@ -713,37 +659,6 @@ def generate_save_timeline(relevant_articles, df_train, df_test):
 
 
 
-
-def load_config(config_path):
-    """Load configuration from a YAML file."""
-    with open(config_path, 'r') as file:
-        config = yaml.safe_load(file)
-    return config
-
-def gradio_split(path):
-    config = load_config(path)
-    files = config['data_input_files']
-    
-    df = load_df(files)
-    # This causes a test df of 7 random samples 
-    df_train, df_test = split_df(df, 7)
-    return df_train, df_test
-
-
-
-def gradio_jsonify_train_test(path="../config.yaml"):
-    df_train, df_test = gradio_split(path)
-    test_filename = '../data_upload/gradio/test_articles.json'
-    train_filename = '../data_upload/gradio/train_articles.json'
-
-    # Write the DataFrame to a JSON file with UTF-8 encoding
-    df_test.to_json(test_filename, orient='records', force_ascii=False, indent=4)
-    df_train.to_json(train_filename, orient='records', force_ascii=False, indent=4)
-
-# # Only run to generate new train and test
-# gradio_jsonify_train_test(config_path)
-
-
 def main_hierarchical(test_article, df_train):
     #check if the test point is worth generating a timeline. 
     to_generate, reason01 = to_generate_timeline(test_article)
@@ -752,58 +667,97 @@ def main_hierarchical(test_article, df_train):
         relevant_articles, df_train, df_test = generate_clusters(df_train, df_test)
         final_timeline = generate_save_timeline(relevant_articles, df_train, df_test)
         if final_timeline=="Error02":
-            reason02 = "There are not enough useful articles to construct a timeline"
+            reason02 = "There are insufficient relevant articles to construct a meaningful timeline. "
             return "generate_similar_articles_error", reason02
         return final_timeline, None
     else:
         return "to_generate_error", reason01    
 
+def load_mongo():
+    print("Fetching article data from MongoDB...\n")
+    # Connect to the MongoDB client
+    try:
+        db = mongo_client['timeline-project']
+        train_docs = db['train-articles'].find()
+        print("Data successfully fetched from MongoDB\n")
+    except Exception as error: 
+        print("Unable to fetch data from MongoDB. Check your connection the database...\n")
+        print(f"ERROR: {error}\n")
+        sys.exit()
+    return train_docs
 
 def gradio_generate_timeline(test_articles_json, index):
-    print("Generate timeline function called")
-    # Parse the JSON database
+    print("Starting Timeline Generation\n")
+    
+    # Function to load JSON formatted test articles:
     def load_test_articles():
         with open(test_articles_json, "r", encoding='utf-8') as fin:
             test_database = json.load(fin)
             print("Test Database loaded\n")
         return test_database
     
-    def load_train_articles():
-        with open("../data_upload/gradio/train_articles.json", "r", encoding="utf-8") as fin2:
-            train_database = json.load(fin2)
-            print("Train Database loaded\n")
-        return train_database
-    
+    train_database = load_mongo()
     test_database = load_test_articles()
+
     # Select the test article based on the given index
     test_article = test_database[index-1]
     
-    train_database = load_train_articles()
     df_train = pd.DataFrame(train_database)
     
     # Validate the index
     if index < 0 or index >= len(test_database):
         return {"error": "Index out of range"}
+
+    test_article_id = test_article['id']
     
     # Run this after gradio workflow tested
-    timeline, reason = main_hierarchical(test_article, df_train)
+    timeline, fail_reason = main_hierarchical(test_article, df_train)
     
+    # Pull database
+    db = mongo_client['timeline-project']
     
+    # Get collection from database
+    gen_timeline_documents = db['generated-timelines']
+            
+    # If timeline should not be generated
     if timeline == "to_generate_error" or timeline == "generate_similar_articles_error":
-        return {"error": reason}
+        
+        # Timeline instance to return for error message
+        timeline_return = {"Article_id": test_article_id, "error": fail_reason}
+        
+        # Timeline instance to export to MongoDB
+        timeline_export = {"Article_id": test_article_id, "Timeline": "null"}
+        try:
+            # Insert result into collection
+            gen_timeline_documents.insert_one(timeline_export)
+            print("Data successfully saved to MongoDB")
+        except Exception as error:
+            print(f"Unable to save timeline to database. Check your connection the database...\nERROR: {error}\n")
+            sys.exit()
+            
+            
     else:
         # Convert the timeline to JSON
         timeline_json = json.dumps(timeline)
-        return {"timeline": timeline_json}
-    
-    
-    
+        timeline_return = {"Article_id": test_article_id, "Timeline": timeline_json}
+        timeline_export = timeline_return
+        
+        # Send the timeline data to MongoDB
+        try:
+            # Insert result into collection
+            gen_timeline_documents.insert_one(timeline_export)
+            print("Data successfully saved to MongoDB")
+        except Exception as error:
+            print(f"Unable to save timeline to database. Check your connection the database...\nERROR: {error}\n")
+            sys.exit()
+    return timeline_return
 
-# Function to display the first two entries of the timeline content in HTML format
 def display_timeline(timeline_str):
+    print("Displaying timeline on Gradio Interface \n")
     timeline_list = json.loads(timeline_str)
-    html_content = "<div style='padding: 10px;'>"
-    for event in timeline_list:
+    display_list= timeline_list[:3]
+    html_content = "First 3 events in the timeline:\n<div style='padding: 10px;'>"
+    for event in display_list:
         html_content += f"<h3>{event['Date']}</h3>"
         html_content += f"<p><strong>Event:</strong> {event['Event']}</p>"
         html_content += f"<p><strong>Contextual Annotation:</strong> {event['Contextual_Annotation']}</p>"
@@ -812,17 +766,12 @@ def display_timeline(timeline_str):
     html_content += "</div>"
     return html_content
 
-# Function to save the timeline as a JSON file
-def save_timeline_json(timeline_ls):
-    timeline_json_str = json.dumps(timeline_ls)
-    # Save to a file
-    output_path = Path("../data_upload/gradio/output_timeline.json")
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(timeline_json_str)
-    return str(output_path)
+def user_download_timeline(timeline, article_id):
+    timeline_export = {"Article_id": article_id, "Timeline": timeline}
+    return json.dumps(timeline_export, indent=4)
 
 def display_gradio():
-    with gr.Blocks(title="Timeline Generator", theme='snehilsanyal/scikit-learn') as gradio_timeline:
+    with gr.Blocks(title="Article Timeline Generator", theme='snehilsanyal/scikit-learn') as gradio_timeline:
         gr.Markdown("""
             <h1 style='text-align: center;'>
             Timeline Generator
@@ -838,47 +787,54 @@ def display_gradio():
                 with gr.Column():
                     input_test_db = gr.File(label="Upload the JSON Database")
                     input_test_index = gr.Number(label="Test Article Index. Choose an index from 1-7", value=0)
+                    hidden_article_id = gr.Textbox(visible=False)
 
                     with gr.Row():
                         clear_button = gr.Button("Reset index")
                         generate_button = gr.Button("Generate Timeline")
                     output_timeline = gr.JSON(label="Generated Timeline in JSON format")
+                    gr.Markdown('''
+                                If error message not shon past the 7 second mark, Timeline is necessary for the chosen article. 
+                                ''')
                     output_error = gr.Textbox(label="Error Message:", visible=False)  # Initialize as not visible
                 
                 with gr.Column():
-                    show_timeline_button = gr.Button("Display generated Timeline")
+                    show_timeline_button = gr.Button("Show Generated Timeline")
                     output_timeline_HTML = gr.HTML()
-            download_button = gr.DownloadButton("Download Timeline", visible=True)
+                    download_button = gr.DownloadButton("Download Full Timeline", visible=True)
         
         clear_button.click(lambda: 0, None, input_test_index)
+        output_error.visible = True
         
         def handle_generate_timeline(test_articles_json, index):
-            result = gradio_generate_timeline(test_articles_json, index)
-            if "error" in result:
-                return result["error"], None  # Return error message, no JSON output
-            else:
-                return "", result["timeline"]  # Return empty string for error, and the timeline JSON
+                result = gradio_generate_timeline(test_articles_json, index)
+                article_id = result['Article_id']
+                if "error" in result:
+                    timeline_error = result["error"]
+                    return timeline_error, None, article_id, ""
+                else:
+                    timeline = result['timeline']
+                    return "NIL", timeline, article_id, ""
 
         generate_button.click(
-            handle_generate_timeline, 
-            inputs=[input_test_db, input_test_index], 
-            outputs=[output_error, output_timeline]
-        )
+                handle_generate_timeline,
+                inputs=[input_test_db, input_test_index],
+                outputs=[output_error, output_timeline, hidden_article_id]
+            )
 
-        output_error.visible = True  
-        
-        show_timeline_button.click(display_timeline,
-                                   inputs=output_timeline,
-                                   outputs=output_timeline_HTML)
-        
-        download_button.click(save_timeline_json,
-                                   inputs=output_timeline,
-                                   outputs=download_button)
+        show_timeline_button.click(
+                display_timeline,
+                inputs=output_timeline,
+                outputs=output_timeline_HTML
+            )
+        download_button.click(
+            user_download_timeline,
+            inputs=[output_timeline, hidden_article_id],
+            outputs=download_button  # This provides the file for download
+        )
         
     gradio_timeline.launch(inbrowser=True, debug=True)
+    
 
-
-if __name__ == "__main__":
+if __name__== "__main__":
     display_gradio()
-
-
