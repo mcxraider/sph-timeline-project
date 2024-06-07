@@ -10,9 +10,12 @@
 
 
 Friday:
-1. Download and install MongoDB on laptop
-2. Link the Generated timelines to a local database
-3. Plan RAG Approach and go through it with someone
-4. Ask if need timeline heading? - If so just use gemini API code
-5. Work on styling the StoryTimeline.vue file
-6.
+1. Link the Generated timelines to a local database
+2. Plan RAG Approach and go through it with someone
+3. Ask if need timeline heading? - If so just use gemini API code
+4. Work on styling the StoryTimeline.vue file
+5. Try to mount this repo onto the SPH one
+
+Tuesday:
+- Clarify workflow of start to end of timeline generation. What is the intended function?
+- 
