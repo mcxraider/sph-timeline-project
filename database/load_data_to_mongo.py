@@ -7,10 +7,10 @@ from pymongo import MongoClient
 
 from dotenv import load_dotenv
 load_dotenv()
-MONGO_URI = os.environ['MONGO_URI']
+MONGO_URL = os.environ['MONGO_URL']
 
 # Connect to the MongoDB client
-client = MongoClient(MONGO_URI)
+client = MongoClient(MONGO_URL)
 db = client['article_content_profile']
 
 

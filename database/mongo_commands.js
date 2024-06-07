@@ -17,7 +17,7 @@ db.grantRolesToUser("jerry", [
 ]);
 
 // How to connect into a mongodb database that is running on docker
-mongodb://[<username>:<password>@]hostname0<:port>[,hostname1:<port1>][,hostname2:<port2>][...][,hostnameN:<portN>]
+//mongodb://[<username>:<password>@]hostname0<:port>[,hostname1:<port1>][,hostname2:<port2>][...][,hostnameN:<portN>]
 
 
 
