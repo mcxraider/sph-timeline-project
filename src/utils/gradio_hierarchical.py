@@ -2,6 +2,7 @@ import os
 import ast
 import sys
 import json
+import yaml
 import re
 from json import JSONDecodeError
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -28,9 +29,13 @@ from langchain_core.pydantic_v1 import BaseModel, Field
 # Load environment variables
 load_dotenv()
 GEMINI_KEY = os.environ.get('GEMINI_KEY')
-MONGO_URL = os.environ['MONGO_URL']
 genai.configure(api_key=GEMINI_KEY)
-mongo_client = MongoClient(MONGO_URL)
+
+# Normally where to do this? (in which function?)
+with open("../gradio_config.yaml", "r") as config_file:
+    config = yaml.safe_load(config_file)
+
+mongo_client = MongoClient(config["database"]["uri"])
 
 
 def clean_llm_score(output):
@@ -677,8 +682,8 @@ def load_mongo():
     print("Fetching article data from MongoDB...\n")
     # Connect to the MongoDB client
     try:
-        db = mongo_client['timeline-project']
-        train_docs = db['train-articles'].find()
+        db = mongo_client[config["database"]["name"]]
+        train_docs = db[config["database"]["train_collection"]].find()
         print("Data successfully fetched from MongoDB\n")
     except Exception as error: 
         print("Unable to fetch data from MongoDB. Check your connection the database...\n")
@@ -714,10 +719,10 @@ def gradio_generate_timeline(test_articles_json, index):
     timeline, fail_reason = main_hierarchical(test_article, df_train)
     
     # Pull database
-    db = mongo_client['timeline-project']
+    db = mongo_client[config["database"]["name"]]
     
     # Get collection from database
-    gen_timeline_documents = db['generated-timelines']
+    gen_timeline_documents = db[config["database"]["timelines_collection"]]
             
     # If timeline should not be generated
     if timeline == "to_generate_error" or timeline == "generate_similar_articles_error":
@@ -838,3 +843,4 @@ def display_gradio():
 
 if __name__== "__main__":
     display_gradio()
+    
