@@ -791,7 +791,7 @@ def display_gradio():
             with gr.Row():
                 with gr.Column():
                     input_test_db = gr.File(label="Upload the JSON Database")
-                    input_test_index = gr.Number(label="Test Article Index. Choose an index from 1-7", value=0)
+                    input_test_index = gr.Number(label="Test Article Index. Choose an index from 1-8 (Number of test articles)", value=0)
                     hidden_article_id = gr.Textbox(visible=False)
 
                     with gr.Row():
