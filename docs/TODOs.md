@@ -1,5 +1,4 @@
 - Tag improvements:
-
   - Country should include city, country. Eg (Johor, Malaysia) and not just johor
 
 - Link Timeline Generation to MongoDB database
@@ -10,11 +9,14 @@
 
 
 Friday:
-1. Link the Generated timelines to a local database
-2. Plan RAG Approach and go through it with someone
-3. Ask if need timeline heading? - If so just use gemini API code
-4. Work on styling the StoryTimeline.vue file
-5. Try to mount this repo onto the SPH one
+1. Plan RAG Approach and go through it with someone
+2. Ask if need timeline heading? - If so just use gemini API code
+3. Work on styling the StoryTimeline.vue file
+4. Try to mount this repo onto the SPH one
+
+Monday:
+- Fix App.Vue to pull timeline not from json but from mongodb
+
 
 Tuesday:
 - Clarify workflow of start to end of timeline generation. What is the intended function?
