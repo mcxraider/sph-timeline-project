@@ -146,7 +146,7 @@ def split_batches(timeline, max_batch_size=30):
 
 def scale_df_embeddings(df_train, df_test):
     print("Processing embedding data and scaling data...\n")
-    # Deserializing the embeddings
+    #Deserializing the embeddings
     body_embeddings_train = np.array(df_train['embeddings'].apply(ast.literal_eval).tolist())
     title_embeddings_train = np.array(df_train['Title_embeddings'].apply(ast.literal_eval).tolist())
     tags_embeddings_train = np.array(df_train['tags_embeddings'].apply(ast.literal_eval).tolist())
@@ -174,9 +174,10 @@ def scale_df_embeddings(df_train, df_test):
     return train_embeddings,  test_embeddings
 
 def get_variance_performance(train_embeddings):
-# Experiment for this variance range of 94% to 97%
+# Experiment for this variance range of 92% to 95%
     print("Finding best Model parameters...\n")
-    variance_range = list(np.arange(0.92, 0.95, 0.01))
+    variance_range = [0.92]
+    #variance_range = list(np.arange(0.92, 0.95, 0.01))
     variance_dic = {}
 
     for variance in variance_range:
@@ -184,7 +185,7 @@ def get_variance_performance(train_embeddings):
         train_pca_embeddings = pca.fit_transform(train_embeddings)
         
         # Range of max_d values to try, for this dataset we use 65
-        max_d_values = np.arange(45, 65)
+        max_d_values = np.arange(52, 58)
         
         # List to store silhouette scores
         silhouette_scores_train = []
@@ -257,7 +258,7 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
         cluster_df = df_train.iloc[cluster_indices]
         
         cluster_dict = {
-            "Test point": {'id': test_point.id,
+            "Test point": {'id': test_point.st_id,
                         "Title": test_point.Title, 
                         "Tags": test_point.tags},
             "Cluster": test_cluster,
@@ -265,7 +266,7 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
         }
         
         for _, row in cluster_df.iterrows():
-            cluster_contents.append({"id": row['id'], 
+            cluster_contents.append({"id": row['st_id'], 
                                     "Title": row['Title'],
                                     "Tags": row['tags'], 
                                     })
@@ -274,7 +275,7 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
     input_list = ""
     input_list += f"Test Artice Chosen: (Title: {cluster_dict['Test point']['Title']}\nTags: {cluster_dict['Test point']['Tags']}):\n"
     for _, row in cluster_df.iterrows():
-        input_list += f"Article id: {row['id']}, Title: {row['Title']}, Tags: {row['tags']}]\n"
+        input_list += f"Article id: {row['st_id']}, Title: {row['Title']}, Tags: {row['tags']}]\n"
     return input_list, df_train, df_test
 
 def generate_clusters(df_train, df_test):
@@ -368,7 +369,7 @@ def to_generate_timeline(test_data):
         print("Hence I gave this a required timeline score of " + str(final_response['score']))
         output_error = "A timeline for this article is not required. \n" \
                     + "\n" +final_response['Reason'] + "\n"+ "\nHence this timeline received a necessity score of " \
-                    + str(final_response['score'])
+                    + str(final_response['score'])  + "\n"
         return False, output_error
 
 def get_article_dict(input_list, df_train, df_test):
@@ -431,7 +432,7 @@ def get_article_dict(input_list, df_train, df_test):
         # Find similar articles in df_train
         similar_indexes = []
         for train_index, train_row in df_train_cluster.iterrows():
-            if train_row['id'] in article_keys:
+            if train_row['st_id'] in article_keys:
                 similar_indexes.append(train_index)
         
         # Store the result in the dictionary if there are at least 2 supporting articles
@@ -448,7 +449,7 @@ def get_article_dict(input_list, df_train, df_test):
         # Print results 
         print("-"*80 + "\n")
         print(f"Test Article Title: << {similar_articles_dict['Title']}>>\n")
-        print("Supporting Article Titles:")
+        print("Selected Supporting Article Titles:")
         for idx in similar_articles_dict['indexes']:
             print(f" - {df_train.loc[idx, 'Title']}")
         print("\n" + "-"*80)
@@ -563,7 +564,7 @@ def generate_and_sort_timeline(similar_articles_dict, df_train, df_test):
     unsorted_timeline = []
     for event in generated_timeline:
         article_index = event["Article"] - 1
-        event["Article_id"] = df_retrieve.iloc[article_index].id
+        event["Article_id"] = df_retrieve.iloc[article_index].st_id
     for event in generated_timeline:
         del event["Article"]
         unsorted_timeline.append(event)  
@@ -666,10 +667,10 @@ def generate_save_timeline(relevant_articles, df_train, df_test):
     similar_articles = get_article_dict(relevant_articles, df_train, df_test)
     if similar_articles == "generate_similar_error":
         return "Error02"
-    generated_timeline = generate_and_sort_timeline(similar_articles, df_train, df_test)
-    final_timeline = enhance_timeline(generated_timeline)
-    final_timeline = save_enhanced_timeline(final_timeline)
-    return final_timeline
+    # generated_timeline = generate_and_sort_timeline(similar_articles, df_train, df_test)
+    # final_timeline = enhance_timeline(generated_timeline)
+    # final_timeline = save_enhanced_timeline(final_timeline)
+    # return final_timeline
 
 
 
@@ -687,7 +688,7 @@ def main_hierarchical(test_article, df_train):
     else:
         return "to_generate_error", reason01    
 
-def load_mongo():
+def load_mongo_train():
     print("Fetching article data from MongoDB...\n")
     # Connect to the MongoDB client
     try:
@@ -700,18 +701,32 @@ def load_mongo():
         sys.exit()
     return train_docs
 
+def load_mongo_test():
+    print("Fetching article data from MongoDB...\n")
+    # Connect to the MongoDB client
+    try:
+        db = mongo_client[config["database"]["name"]]
+        train_docs = db[config["database"]["test_collection"]].find()
+        print("Data successfully fetched from MongoDB\n")
+    except Exception as error: 
+        print(f"Unable to fetch data from MongoDB. Check your connection the database...\n")
+        print(f"ERROR: {error}\n")
+        sys.exit()
+    return train_docs
+
+
+
 def gradio_generate_timeline(test_articles_json, index):
     print("Starting Timeline Generation\n")
     
-    # Function to load JSON formatted test articles:
-    def load_test_articles():
-        with open(test_articles_json, "r", encoding='utf-8') as fin:
-            test_database = json.load(fin)
-            print("Test Database loaded\n")
-        return test_database
+    train_database = load_mongo_train()
+    test_database = load_mongo_test()
     
-    train_database = load_mongo()
-    test_database = load_test_articles()
+    def count_test_length(test_database):
+        count = 0
+        for doc in test_database:
+            count += 1
+        return count
 
     # Select the test article based on the given index
     test_article = test_database[index-1]
@@ -719,13 +734,14 @@ def gradio_generate_timeline(test_articles_json, index):
     df_train = pd.DataFrame(train_database)
     
     # Validate the index
-    if index < 0 or index >= len(test_database):
+    if index < 0 or index >= count_test_length(test_database):
         return {"error": "Index out of range"}
 
-    test_article_id = test_article['id']
+    test_article_id = test_article['st_id']
     
     # Run this after gradio workflow tested
     timeline, fail_reason = main_hierarchical(test_article, df_train)
+  
     
     # Pull database
     db = mongo_client[config["database"]["name"]]
@@ -826,7 +842,7 @@ def display_gradio():
                     timeline_error = result["error"]
                     return timeline_error, None, article_id, ""
                 else:
-                    timeline = result['timeline']
+                    timeline = result['Timeline']
                     return "NIL", timeline, article_id, ""
 
         generate_button.click(
@@ -846,9 +862,7 @@ def display_gradio():
             outputs=download_button  # This provides the file for download
         )
         
-    gradio_timeline.launch(inbrowser=True, debug=True)
+    gradio_timeline.launch(inbrowser=True, debug=True)    
     
-
-if __name__== "__main__":
+if __name__ == "__main__":
     display_gradio()
-    
