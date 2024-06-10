@@ -2,5 +2,6 @@ database:
   uri: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.6"
   name: "timeline-project"
   timelines_collection: "generated-timelines"
-  train_collection: "train-articles-initial"
-  test_collection: "test-articles-initial"
+  train_collection: "train-articles"
+  test_collection: "test-articles"
+  
