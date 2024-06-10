@@ -2,8 +2,6 @@
 
   - Country should include city, country. Eg (Johor, Malaysia) and not just johor
 
-- Link Timeline Generation to MongoDB database
-- Ensure that retrieval of timeline using the Article_id is possible
 - Plan for RAG approach
 - Code for timeline generation heading
 
@@ -16,13 +14,12 @@ Friday:
 
 Monday:
 
-- Fix stupid bug with dataset and why the retrieval for the clustering is not working properly.
 - Fix App.Vue to pull timeline not from json but from mongodb
-- Hosting Mongodb on AWS?
 
 
 Tuesday:
 
 - Clarify workflow of start to end of timeline generation. What is the intended function?
 - Ask about how KP envisions the product and workflow to be like
+- As for timeline title, want it to be generated after? or before the timeline starts being generated
 
