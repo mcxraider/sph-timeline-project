@@ -35,6 +35,7 @@ genai.configure(api_key=GEMINI_KEY)
 with open("../gradio_config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
 
+# Initialise mongo client.
 mongo_client = MongoClient(config["database"]["uri"])
 
 
@@ -153,6 +154,14 @@ def scale_df_embeddings(df_train, df_test):
     body_embeddings_test = np.array(df_test['embeddings'].apply(ast.literal_eval).tolist())
     title_embeddings_test = np.array(df_test['Title_embeddings'].apply(ast.literal_eval).tolist())
     tags_embeddings_test = np.array(df_test['tags_embeddings'].apply(ast.literal_eval).tolist())
+    
+    # body_embeddings_train = np.array(df_train['Body_embeddings'].apply(ast.literal_eval).tolist())
+    # title_embeddings_train = np.array(df_train['Title_embeddings'].apply(ast.literal_eval).tolist())
+    # tags_embeddings_train = np.array(df_train['MPNET_tags_embeddings'].apply(ast.literal_eval).tolist())
+
+    # body_embeddings_test = np.array(df_test['Body_embeddings'].apply(ast.literal_eval).tolist())
+    # title_embeddings_test = np.array(df_test['Title_embeddings'].apply(ast.literal_eval).tolist())
+    # tags_embeddings_test = np.array(df_test['MPNET_tags_embeddings'].apply(ast.literal_eval).tolist())
 
     # Combine embeddings
     all_embeddings_train = np.concatenate((body_embeddings_train, title_embeddings_train, tags_embeddings_train), axis=1)
@@ -668,7 +677,7 @@ def main_hierarchical(test_article, df_train):
     #check if the test point is worth generating a timeline. 
     to_generate, reason01 = to_generate_timeline(test_article)
     if to_generate:
-        df_test = pd.DataFrame(test_article)
+        df_test = pd.DataFrame([test_article])
         relevant_articles, df_train, df_test = generate_clusters(df_train, df_test)
         final_timeline = generate_save_timeline(relevant_articles, df_train, df_test)
         if final_timeline=="Error02":
@@ -686,7 +695,7 @@ def load_mongo():
         train_docs = db[config["database"]["train_collection"]].find()
         print("Data successfully fetched from MongoDB\n")
     except Exception as error: 
-        print("Unable to fetch data from MongoDB. Check your connection the database...\n")
+        print(f"Unable to fetch data from MongoDB. Check your connection the database...\n")
         print(f"ERROR: {error}\n")
         sys.exit()
     return train_docs
@@ -739,7 +748,6 @@ def gradio_generate_timeline(test_articles_json, index):
         except Exception as error:
             print(f"Unable to save timeline to database. Check your connection the database...\nERROR: {error}\n")
             sys.exit()
-            
             
     else:
         # Convert the timeline to JSON
