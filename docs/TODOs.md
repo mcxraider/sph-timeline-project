@@ -16,10 +16,8 @@ Monday:
 
 - Fix App.Vue to pull timeline not from json but from mongodb
 
-
 Tuesday:
 
 - Clarify workflow of start to end of timeline generation. What is the intended function?
 - Ask about how KP envisions the product and workflow to be like
 - As for timeline title, want it to be generated after? or before the timeline starts being generated
-
