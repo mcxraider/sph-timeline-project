@@ -32,7 +32,7 @@ GEMINI_KEY = os.environ.get('GEMINI_KEY')
 genai.configure(api_key=GEMINI_KEY)
 
 # Normally where to do this? (in which function?)
-with open("../gradio_config.yaml", "r") as config_file:
+with open("../../gradio_config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
 
 # Initialise mongo client.
@@ -846,7 +846,6 @@ def display_gradio():
                     output_timeline_HTML = gr.HTML()
         
         clear_button.click(lambda: 0, None, input_test_index)
-        
         def handle_generate_timeline(index):
                 result = gradio_generate_timeline(index)
                 article_id = result['Article_id']
@@ -858,7 +857,6 @@ def display_gradio():
                     
                     timeline = result['Timeline']
                     return "NIL, Press Show Generated Timeline to display generated timeline", timeline, article_id, article_title
-
         generate_button.click(
                 handle_generate_timeline,
                 inputs=input_test_index,
@@ -872,7 +870,9 @@ def display_gradio():
         user_download_button.click(
             inputs=output_timeline
         )
-    gradio_timeline.launch(inbrowser=True)        
+    return gradio_timeline 
 
-if __name__=="__main__":
-    display_gradio()
+
+gradio_app = display_gradio()
+if __name__ == "__main__":
+    gradio_app.launch(server_name='0.0.0.0', server_port=7860, share=True)     

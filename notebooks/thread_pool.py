@@ -1,7 +1,6 @@
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import pandas as pd
-from tqdm import trange
 
 
 def load_and_merge_csv(file_pattern, num_files):
@@ -45,6 +44,11 @@ def process_articles(df):
             time.sleep(cooldown_period)
     return results
 
-df = load_and_merge_csv('../data_upload/cluster_labels{}.csv', 4)
-df = df.loc[range(200)]
-tags = process_articles(df)
+def run():
+    df = load_and_merge_csv('../data_upload/cluster_labels{}.csv', 4)
+    df = df.loc[range(200)]
+    tags = process_articles(df)
+    return tags
+
+if __name__=="__main__":
+    run()
