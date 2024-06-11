@@ -4,7 +4,6 @@ from utils.data_loader import *
 
 import os
 import sys
-import re
 import json
 import pandas as pd
 
@@ -25,12 +24,12 @@ genai.configure(api_key=GEMINI_KEY)
 
 
 def to_generate_timeline(test_data):
+    print("Evaluating necessity of Timeline for this article.\n")
     llm = genai.GenerativeModel('gemini-1.5-flash-latest')
     class Event(BaseModel):
         score: int = Field(description="The need for this article to have a timeline")
         Reason: str = Field(description = "The main reason for your choice why a timeline is needed or why it is not needed")
             
-
     output_parser = JsonOutputParser(pydantic_object=Event)
 
         # See the prompt template you created for formatting
@@ -62,7 +61,6 @@ def to_generate_timeline(test_data):
     Here is the information for the article:
     Title:{title}
     Text: {text}
-    
 
     Based on the factors above, decide whether generating a timeline of events leading up to the key event in this article would be beneficial. 
     Your answer will include the need for this article to have a timeline with a score 1 - 5, 1 means unnecessary, 5 means necessary. It will also include the main reason for your choice.
@@ -78,8 +76,8 @@ def to_generate_timeline(test_data):
     )
 
         # Define the headline
-    headline = test_data.Title[0]
-    body = test_data.Text[0]
+    headline = test_data["Title"]
+    body = test_data["Text"]
 
         # Format the prompt
     final_prompt = prompt.format(title=headline, text=body)
@@ -98,13 +96,16 @@ def to_generate_timeline(test_data):
     # If LLM approves
     if final_response['score'] >=3:
         print("Timeline is necessary for this chosen article.\n")
-        return True
+        return True, None
     else:
         print("A timeline for this article is not required. \n")
         for part in final_response['Reason'].replace(". ", ".").split(". "):
             print(f"{part}\n")
         print("Hence I gave this a required timeline score of " + str(final_response['score']))
-        return False
+        output_error = "A timeline for this article is not required. \n" \
+                    + "\n" +final_response['Reason'] + "\n"+ "\nHence this timeline received a necessity score of " \
+                    + str(final_response['score'])  + "\n"
+        return False, output_error
 
 def get_article_dict(input_list, df_train, df_test):
     llm = genai.GenerativeModel("gemini-1.5-flash-latest")
@@ -166,7 +167,7 @@ def get_article_dict(input_list, df_train, df_test):
         # Find similar articles in df_train
         similar_indexes = []
         for train_index, train_row in df_train_cluster.iterrows():
-            if train_row['id'] in article_keys:
+            if train_row['st_id'] in article_keys:
                 similar_indexes.append(train_index)
         
         # Store the result in the dictionary if there are at least 2 supporting articles
@@ -174,17 +175,16 @@ def get_article_dict(input_list, df_train, df_test):
             similar_articles_dict = {
                 'Title': test_row['Title'],
                 'indexes': similar_indexes,
-                'Text': test_row['Text']
+                'Text': test_row['Text'],
             }
-    print(similar_articles_dict)
     if not similar_articles_dict:
-        print("Inadequate articles found to construct a timeline... Exiting execution now\n")
-        sys.exit()
+        print("There are insufficient relevant articles to construct a meaningful timeline. ... Exiting execution now\n")
+        return "generate_similar_error"
     else:
         # Print results 
         print("-"*80 + "\n")
         print(f"Test Article Title: << {similar_articles_dict['Title']}>>\n")
-        print("Supporting Article Titles:")
+        print("Selected Supporting Article Titles:")
         for idx in similar_articles_dict['indexes']:
             print(f" - {df_train.loc[idx, 'Title']}")
         print("\n" + "-"*80)
@@ -285,7 +285,9 @@ def generate_and_sort_timeline(similar_articles_dict, df_train, df_test):
         return dict_of_timelines, df_retrieve
     
     timeline_dic, df_retrieve = process_articles(df_train)
-    
+    # df_retrieve = df_train.loc[similar_articles_dict['indexes']]
+    # df_retrieve = pd.concat([df_retrieve, df_test], axis=0).iloc[::-1].reset_index(drop=True)
+    # return df_retrieve
     print("The first timeline has been generated\n")
     generated_timeline = []
     for idx, line in timeline_dic.items():
@@ -299,20 +301,20 @@ def generate_and_sort_timeline(similar_articles_dict, df_train, df_test):
     unsorted_timeline = []
     for event in generated_timeline:
         article_index = event["Article"] - 1
-        event["Article_id"] = df_retrieve.iloc[article_index].id
+        event["Article_id"] = df_retrieve.iloc[article_index].st_id
     for event in generated_timeline:
         del event["Article"]
         unsorted_timeline.append(event)  
         
     timeline = sorted(unsorted_timeline, key=lambda x:x['Date'])
     finished_timeline = [event for event in timeline if event['Date'].lower()!= 'nan']
-    for i in range(len(generated_timeline)):
-        date = generated_timeline[i]['Date']
+    for i in range(len(finished_timeline)):
+        date = finished_timeline[i]['Date']
         if date.endswith('-XX-XX') or date.endswith('00-00'):
-            generated_timeline[i]['Date'] = date[:4]
+            finished_timeline[i]['Date'] = date[:4]
         elif date.endswith('-XX') or date.endswith('00'):
-            generated_timeline[i]['Date'] = date[:7]
-    return finished_timeline
+            finished_timeline[i]['Date'] = date[:7]
+    return finished_timeline, df_retrieve
 
 def enhance_timeline(timeline):
     print("\nProceeding to enhance the timeline...\n")
@@ -376,7 +378,7 @@ def enhance_timeline(timeline):
     print("Finished enhancing the timeline\n")
     return sorted_timeline
 
-def save_enhanced_timeline(enhanced_timeline, output_path: str):
+def save_enhanced_timeline(enhanced_timeline, df_retreive):
     """
     Save the enhanced timeline to a JSON file.
 
@@ -395,19 +397,40 @@ def save_enhanced_timeline(enhanced_timeline, output_path: str):
         return timeline
 
     edited_timeline = edit_timeline(enhanced_timeline)
+    id_url_pairs = {}
+    for event in edited_timeline:
+            id_list = event['Article_id']
+            for i in range(len(id_list)):
+                id = id_list[i]
+                id_url = df_retreive[df_retreive['st_id'] == id]['article_url'].values
+                id_url_pairs[id] = id_url
+                id_list[i] = id_url
+            event['Article_URL'] = [array.tolist() for array in id_list if array.size > 0]
+            event.pop('Article_id')
+    
     json_data = json.dumps(edited_timeline, indent=4, ensure_ascii=False)
+    return json_data
 
-    # Write the JSON string to a file
-    with open(output_path, 'w', encoding='utf-8') as fout:
-        fout.write(json_data)
-    print(f"Enhanced timeline saved to '{output_path}'")
-
-def generate_save_timeline(relevant_articles, df_train, df_test, output_path):
+def generate_save_timeline(relevant_articles, df_train, df_test):
     similar_articles = get_article_dict(relevant_articles, df_train, df_test)
-    generated_timeline = generate_and_sort_timeline(similar_articles, df_train, df_test)
+    if similar_articles == "generate_similar_error":
+        return "Error02"
+    generated_timeline, df_retrieve = generate_and_sort_timeline(similar_articles, df_train, df_test)
     final_timeline = enhance_timeline(generated_timeline)
-    save_enhanced_timeline(final_timeline, output_path)
+    final_timeline = save_enhanced_timeline(final_timeline, df_retrieve)
     return final_timeline
 
-
+def main_hierarchical(test_article, df_train):
+    #check if the test point is worth generating a timeline. 
+    to_generate, reason01 = to_generate_timeline(test_article)
+    if to_generate:
+        df_test = pd.DataFrame([test_article])
+        relevant_articles, df_train, df_test = generate_clusters(df_train, df_test)
+        final_timeline = generate_save_timeline(relevant_articles, df_train, df_test)
+        if final_timeline=="Error02":
+            reason02 = "There are insufficient relevant articles to construct a meaningful timeline. "
+            return "generate_similar_articles_error", reason02
+        return final_timeline, None
+    else:
+        return "to_generate_error", reason01    
 

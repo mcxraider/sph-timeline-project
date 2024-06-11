@@ -873,8 +873,6 @@ def display_gradio():
             inputs=output_timeline
         )
     gradio_timeline.launch(inbrowser=True)        
-    
-
 
 if __name__=="__main__":
     display_gradio()

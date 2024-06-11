@@ -1,6 +1,7 @@
 import json
 import re
 from json.decoder import JSONDecodeError
+from datetime import datetime
 
 def clean_llm_score(output):
     text = output.parts[0].text.replace("```", '').replace('json','')
@@ -65,9 +66,6 @@ def clean_sort_timeline(timelines, df_retrieve):
             event['Date'] = date[:7]
     return timeline
 
-
-# DATE CLEANING FUNCTION
-from datetime import datetime
 def format_timeline_date(date_str):
     formats = ['%Y', '%Y-%m-%d', '%Y-%m']
     for fmt in formats:

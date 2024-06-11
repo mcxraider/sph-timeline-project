@@ -1,51 +1,3 @@
-import json
-import logging
-import pandas as pd
-from typing import Optional
-
-
-def load_single_json(file_path: str) -> Optional[dict]:
-    """
-    Load JSON data from a file.
-    """
-    try:
-        with open(file_path, 'r', encoding='utf-8') as fin:
-            data = json.load(fin)
-            print("Files Loaded")
-        logging.info(f"JSON file '{file_path}' loaded successfully.")
-        return data
-    except FileNotFoundError:
-        logging.error(f"File '{file_path}' not found. Please check the file path.")
-        return None
-    except json.JSONDecodeError:
-        logging.error(f"Error decoding JSON from file '{file_path}'. Please check the file content.")
-        return None
-
-def combine_4_json(files):
-    combined_data = []
-    for file in files:
-        with open(file, 'r') as f:
-            # Load data from the file and append it to the combined list
-            data = json.load(f)
-            combined_data.extend(data)
-    print("Input files combined\n")
-    return combined_data
-
-def read_load_json_to_df(json_data):
-    for item in json_data:
-        #Convert the embeddings to json string as CSVs dont accept list as a data type
-        item['tags_embeddings'] = json.dumps(item['tags_embeddings'])
-        item['Title_embeddings'] = json.dumps(item['Title_embeddings'])
-    df = pd.DataFrame(json_data)
-    print("Input data converted and read in\n")
-    return df
-
-def load_df(files):
-    db = combine_4_json(files)
-    df = read_load_json_to_df(db)
-    #Drop nan rows 
-    final_df = df.drop(df[df.isnull().any(axis=1)].index)
-    return final_df
 
 
 def split_batches(timeline, max_batch_size=30):
@@ -71,3 +23,23 @@ def split_batches(timeline, max_batch_size=30):
         batches.append(timeline[start:start + remainder])
     
     return batches
+
+
+def load_mongodb():
+    print("Fetching article data from MongoDB...\n")
+    
+    # Connect to the MongoDB client
+    try:
+        db = mongo_client[config["database"]["name"]]
+        train_documents = db[config["database"]["train_collection"]].find()
+        print("Train data successfully fetched from MongoDB\n")
+    except Exception as error: 
+        print(f"Unable to fetch train data from MongoDB. Check your connection the database...\nERROR: {error}\n")
+        sys.exit()   
+    try:
+        test_docs = db[config["database"]["test_collection"]].find()
+        print("Test data successfully fetched from MongoDB\n")
+    except:
+        print(f"Unable to fetch test data from MongoDB. Check your connection the database...\nERROR: {error}\n")
+        sys.exit()
+    return train_documents, test_docs

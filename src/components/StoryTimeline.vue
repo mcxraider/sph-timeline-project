@@ -15,7 +15,7 @@
             <strong>Contextual_Annotation: </strong
             >{{ entry.Contextual_Annotation }}
           </div>
-          <div><strong>Article id: </strong>{{ entry.Article_id }}</div>
+          <div><strong>Article URLs: </strong>{{ entry.Article_URL }}</div>
 
           <hr />
         </q-timeline-entry>
@@ -47,7 +47,7 @@ const fetchTimelineData = async () => {
   try {
     console.log("Fetching timeline data...");
     // Make a GET request to fetch the JSON data
-    const response = await axios.get("/data_upload/Timeline.json");
+    const response = await axios.get("/data_upload/final_timeline.json");
     console.log("Data fetched:", response.data);
     // Set the fetched data to the reactive reference
     timelineData.value = response.data;

@@ -3,17 +3,13 @@ import numpy as np
 from sklearn.metrics import silhouette_score
 from sklearn.decomposition import PCA
 from scipy.cluster.hierarchy import linkage, fcluster
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from scipy.cluster.hierarchy import linkage, fcluster
 
 
-def split_df(df):
-    df_train, df_test = train_test_split(df, test_size=1)
-    return df_train, df_test.reset_index(drop=True)
-
 def scale_df_embeddings(df_train, df_test):
-    # Deserializing the embeddings
+    print("Processing embedding data and scaling data...\n")
+    #Deserializing the embeddings
     body_embeddings_train = np.array(df_train['embeddings'].apply(ast.literal_eval).tolist())
     title_embeddings_train = np.array(df_train['Title_embeddings'].apply(ast.literal_eval).tolist())
     tags_embeddings_train = np.array(df_train['tags_embeddings'].apply(ast.literal_eval).tolist())
@@ -21,7 +17,7 @@ def scale_df_embeddings(df_train, df_test):
     body_embeddings_test = np.array(df_test['embeddings'].apply(ast.literal_eval).tolist())
     title_embeddings_test = np.array(df_test['Title_embeddings'].apply(ast.literal_eval).tolist())
     tags_embeddings_test = np.array(df_test['tags_embeddings'].apply(ast.literal_eval).tolist())
-
+    
     # Combine embeddings
     all_embeddings_train = np.concatenate((body_embeddings_train, title_embeddings_train, tags_embeddings_train), axis=1)
     all_embeddings_test = np.concatenate((body_embeddings_test, title_embeddings_test, tags_embeddings_test), axis=1)
@@ -33,9 +29,10 @@ def scale_df_embeddings(df_train, df_test):
     return train_embeddings,  test_embeddings
 
 def get_variance_performance(train_embeddings):
-# Experiment for this variance range of 94% to 97%
+# Experiment for this variance range of 92% to 95%
     print("Finding best Model parameters...\n")
-    variance_range = list(np.arange(0.92, 0.95, 0.01))
+    variance_range = [0.92]
+    #variance_range = list(np.arange(0.92, 0.95, 0.01))
     variance_dic = {}
 
     for variance in variance_range:
@@ -43,7 +40,7 @@ def get_variance_performance(train_embeddings):
         train_pca_embeddings = pca.fit_transform(train_embeddings)
         
         # Range of max_d values to try, for this dataset we use 65
-        max_d_values = np.arange(45, 65)
+        max_d_values = np.arange(52, 58)
         
         # List to store silhouette scores
         silhouette_scores_train = []
@@ -116,7 +113,7 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
         cluster_df = df_train.iloc[cluster_indices]
         
         cluster_dict = {
-            "Test point": {'id': test_point.id,
+            "Test point": {'id': test_point.st_id,
                         "Title": test_point.Title, 
                         "Tags": test_point.tags},
             "Cluster": test_cluster,
@@ -124,7 +121,7 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
         }
         
         for _, row in cluster_df.iterrows():
-            cluster_contents.append({"id": row['id'], 
+            cluster_contents.append({"id": row['st_id'], 
                                     "Title": row['Title'],
                                     "Tags": row['tags'], 
                                     })
@@ -133,7 +130,7 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
     input_list = ""
     input_list += f"Test Artice Chosen: (Title: {cluster_dict['Test point']['Title']}\nTags: {cluster_dict['Test point']['Tags']}):\n"
     for _, row in cluster_df.iterrows():
-        input_list += f"Article id: {row['id']}, Title: {row['Title']}, Tags: {row['tags']}]\n"
+        input_list += f"Article id: {row['st_id']}, Title: {row['Title']}, Tags: {row['tags']}]\n"
     return input_list, df_train, df_test
 
 def generate_clusters(df_train, df_test):
