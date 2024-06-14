@@ -103,7 +103,6 @@ def clean_sort_timeline(timelines, df_retrieve):
     return timeline
 
 
-
 def format_timeline_date(date_str):
     formats = ['%Y', '%Y-%m-%d', '%Y-%m']
     for fmt in formats:
@@ -870,9 +869,8 @@ def display_gradio():
         user_download_button.click(
             inputs=output_timeline
         )
-    return gradio_timeline 
+    gradio_timeline.launch(inbrowser=True)
 
 
-gradio_app = display_gradio()
 if __name__ == "__main__":
-    gradio_app.launch(server_name='0.0.0.0', server_port=7860, share=True)     
+    display_gradio()
