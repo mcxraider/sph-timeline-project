@@ -11,7 +11,6 @@ db.createUser({
   ] 
 })
 
-
 db.grantRolesToUser("jerry", [ 
     { role: "dbOwner", db: "article_content_profile" },
 ]);
