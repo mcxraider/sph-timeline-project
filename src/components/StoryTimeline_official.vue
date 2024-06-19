@@ -130,8 +130,6 @@
         :body="item.text"
       >
       </q-timeline-entry>
-
-      
     </q-timeline>
   </div>
 </template>

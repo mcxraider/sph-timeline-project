@@ -1,34 +1,31 @@
 <template>
   <div>
-    <div class="q-px-lg q-py-md">
       <q-timeline :layout="layout" color="secondary" class="timeline">
         <q-timeline-entry heading>
           <strong>Timeline heading</strong>
+          <br>
+        ({{$q.screen.lt.sm ? 'Dense' : ($q.screen.lt.md ? 'Comfortable' : 'Loose')}} layout)
+
         </q-timeline-entry>
 
-        <hr />
-
-        <q-timeline-entry v-for="(entry, index) in timelineData" :key="index">
-          <div><strong>Date: </strong>{{ entry.Date }}</div>
-          <div><strong>Event: </strong>{{ entry.Event }}</div>
-          <div>
-            <strong>Contextual_Annotation: </strong
-            >{{ entry.Contextual_Annotation }}
-          </div>
-          <div><strong>Article URLs: </strong>{{ entry.Article_URL }}</div>
-
-          <hr />
-        </q-timeline-entry>
+        <q-timeline-entry v-for="(item, index) in timelineData" :key="index"
+          :title="item.Event"
+          :subtitle="item.Date"
+          :side="index % 2 === 0 ? 'right' : 'left'"
+        >
+        <div>
+          {{item.Contextual_Annotation}}
+        </div>
+        </q-timeline-entry>        
       </q-timeline>
-    </div>
   </div>
 </template>
 
 <script setup>
 // Import necessary functions and libraries
-import { useQuasar } from "quasar";
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
+import { useQuasar, QTimeline, QTimelineEntry } from 'quasar';
 
 // Initialize Quasar utilities
 const $q = useQuasar();
@@ -42,46 +39,30 @@ const layout = computed(() => {
 // Create a reactive reference to hold the timeline data
 const timelineData = ref([]);
 
-// Define an async function to fetch data from the JSON file
 const fetchTimelineData = async () => {
-  try {
-    console.log("Fetching timeline data...");
-    // Make a GET request to fetch the JSON data
-    const response = await axios.get("/data_upload/final_timeline.json");
-    console.log("Data fetched:", response.data);
-    // Set the fetched data to the reactive reference
-    timelineData.value = response.data;
-  } catch (error) {
-    // Log any errors that occur during the fetch operation
-    console.error("Error fetching timeline data:", error);
-  }
-};
-
-// Fetch the timeline data when the component is mounted
+        try {
+        console.log("Fetching timeline data...");
+        // Make a GET request to fetch the JSON data
+        const response = await axios.get("http://localhost:3000");
+        console.log("Data fetched:", response.data);
+        // Set the fetched data to the reactive reference
+        const timelineString = response.data.Timeline;
+        console.log(`This is the timeline String: ${timelineString}`);
+        const parsedTimeline = JSON.parse(timelineString);
+        console.log(`This is the parsed timeline: ${parsedTimeline}`)
+        // Set the parsed data to the reactive reference
+        timelineData.value = parsedTimeline;
+        } catch (error) {
+        console.error("Error fetching timeline data:", error);
+        }
+        };
+        
 onMounted(() => {
-  console.log("Component mounted");
-  fetchTimelineData();
-});
+      fetchTimelineData();
+    });
+
+
 </script>
 
 <style scoped>
-.timeline {
-  margin: 10px;
-}
-
-.q-timeline-entry {
-  padding: 10px 0;
-}
-
-.q-timeline-entry .entry-content {
-  margin-top: 10px;
-}
-
-.q-timeline-entry .entry-content p {
-  margin: 0 0 5px;
-}
-
-.q-timeline-entry strong {
-  font-weight: bold;
-}
 </style>

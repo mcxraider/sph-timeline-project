@@ -810,6 +810,9 @@ def display_timeline(timeline_str):
     html_content += "</div>"
     return html_content
 
+def user_download_button():
+    return gr.DownloadButton(visible=True)
+
 def display_gradio():
     with gr.Blocks(title="Article Timeline Generator", theme='snehilsanyal/scikit-learn') as gradio_timeline:
         gr.Markdown("""
@@ -866,7 +869,8 @@ def display_gradio():
                 outputs=output_timeline_HTML
             )
         user_download_button.click(
-            inputs=output_timeline
+            inputs=output_timeline,
+            outputs = user_download_button
         )
     gradio_timeline.launch(inbrowser=True)
 

@@ -8,14 +8,20 @@
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-server": "node server/server.js",
+    "concur": "concurrently \"npm run start-server\" \"npm run dev\""
   },
   "main": "index.js",
   "dependencies": {
+    "@quasar/extras": "^1.16.11",
     "axios": "^1.7.2",
     "core-js": "^3.8.3",
     "quasar": "^2.16.4",
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -23,6 +29,7 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "concurrently": "^8.2.2",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3"
   },

@@ -1,12 +1,15 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import { Quasar } from 'quasar'
-import 'quasar/dist/quasar.css'
+import { createApp } from 'vue';
+import App from './App.vue';
+import { Quasar } from 'quasar';
+import 'quasar/dist/quasar.css';
 
-const app = createApp(App)
+// Create the Vue application instance
+const app = createApp(App);
 
+// Use Quasar with its configuration
 app.use(Quasar, {
-  plugins: {} // Add Quasar plugins if needed
-})
+  config: {},
+});
 
-app.mount('#app')
+// Mount the Vue application
+app.mount('#app');
