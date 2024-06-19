@@ -1,12 +1,14 @@
 <template>
   <div>
       <q-timeline :layout="layout" color="secondary" class="timeline">
+        
+        
         <q-timeline-entry heading>
           <strong>Timeline heading</strong>
+          <hr>
           <br>
-        ({{$q.screen.lt.sm ? 'Dense' : ($q.screen.lt.md ? 'Comfortable' : 'Loose')}} layout)
-
         </q-timeline-entry>
+
 
         <q-timeline-entry v-for="(item, index) in timelineData" :key="index"
           :title="item.Event"
@@ -16,7 +18,9 @@
         <div>
           {{item.Contextual_Annotation}}
         </div>
-        </q-timeline-entry>        
+        </q-timeline-entry>  
+        
+        
       </q-timeline>
   </div>
 </template>
