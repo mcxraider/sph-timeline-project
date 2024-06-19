@@ -102,7 +102,6 @@ def clean_sort_timeline(timelines, df_retrieve):
             event['Date'] = date[:7]
     return timeline
 
-
 def format_timeline_date(date_str):
     formats = ['%Y', '%Y-%m-%d', '%Y-%m']
     for fmt in formats:
@@ -806,7 +805,7 @@ def display_timeline(timeline_str):
         html_content += f"<p><strong>Event:</strong> {event['Event']}</p>"
         html_content += f"<p><strong>Contextual Annotation:</strong> {event['Contextual_Annotation']}</p>"
         #Display only the first 60 chars of the first article url
-        html_content += "<p><strong>Article IDs:</strong> " + event['Article_URL'][0][0][:60] + "</p>"
+        html_content += "<p><strong>Article URL:</strong> " + event['Article_URL'][0][0][:60] + "</p>"
         html_content += "<hr>"
     html_content += "</div>"
     return html_content
