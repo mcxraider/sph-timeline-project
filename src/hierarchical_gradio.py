@@ -1,3 +1,6 @@
+### FIX THE COMMENTED OUT CODE IN GENERATE CLUSTERS FUNCTION
+
+
 import os
 import ast
 import sys
@@ -32,7 +35,7 @@ GEMINI_KEY = os.environ.get('GEMINI_KEY')
 genai.configure(api_key=GEMINI_KEY)
 
 # Normally where to do this? (in which function?)
-with open("../../gradio_config.yaml", "r") as config_file:
+with open("../gradio_config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
 
 # Initialise mongo client.
@@ -266,6 +269,7 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
     input_list += f"Test Artice Chosen: (Title: {cluster_dict['Test point']['Title']}\nTags: {cluster_dict['Test point']['Tags']}):\n"
     for _, row in cluster_df.iterrows():
         input_list += f"Article id: {row['st_id']}, Title: {row['Title']}, Tags: {row['tags']}]\n"
+        print(f"{row['st_id']}")
     return input_list, df_train, df_test
 
 def generate_clusters(df_train, df_test):
@@ -682,6 +686,9 @@ def main_hierarchical(test_article, df_train):
     if to_generate:
         df_test = pd.DataFrame([test_article])
         relevant_articles, df_train, df_test = generate_clusters(df_train, df_test)
+        ######
+        sys.exit()
+        ########
         final_timeline = generate_save_timeline(relevant_articles, df_train, df_test)
         if final_timeline=="Error02":
             reason02 = "There are insufficient relevant articles to construct a meaningful timeline. "
