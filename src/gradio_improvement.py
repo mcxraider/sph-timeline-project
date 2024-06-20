@@ -732,15 +732,6 @@ def gradio_generate_timeline(index):
     # Run this after gradio workflow tested
     timeline, fail_reason = main_hierarchical(test_article, df_train)
     
-    
-    # def for_testing():
-    #     with open('../public/data_upload/final_timeline.json', 'r') as json_file:
-    #         timeline = json.load(json_file)
-    #     fail_reason = "NIL"
-    #     return timeline, fail_reason
-    # timeline, fail_reason = for_testing()
-    
-    
     # Pull database
     db = mongo_client[config["database"]["name"]]
     

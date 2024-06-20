@@ -2,15 +2,14 @@
   <div>
       <q-timeline :layout="layout" color="secondary" class="timeline">
         
-        
-        <q-timeline-entry heading>
+
+      <q-timeline-entry heading>
           <strong>Timeline heading</strong>
-          <hr>
           <br>
-        </q-timeline-entry>
+      </q-timeline-entry>
 
 
-        <q-timeline-entry v-for="(item, index) in timelineData" :key="index"
+      <q-timeline-entry v-for="(item, index) in timelineData" :key="index"
           :title="item.Event"
           :subtitle="item.Date"
           :side="index % 2 === 0 ? 'right' : 'left'"
@@ -18,8 +17,7 @@
         <div>
           {{item.Contextual_Annotation}}
         </div>
-        </q-timeline-entry>  
-        
+      </q-timeline-entry>  
         
       </q-timeline>
   </div>
@@ -70,3 +68,6 @@ onMounted(() => {
 
 <style scoped>
 </style>
+
+
+
