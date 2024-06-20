@@ -51,4 +51,4 @@ def run():
     return tags
 
 if __name__=="__main__":
-    run()
+    tags = run()
