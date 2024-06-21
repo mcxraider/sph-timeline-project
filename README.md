@@ -1,5 +1,7 @@
 # sph-timeline-project
 
+(Will update project documentation in the future. Do not actually follow)
+
 ## Project setup
 ```
 npm install
