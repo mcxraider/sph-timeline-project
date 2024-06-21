@@ -1,6 +1,3 @@
-### FIX THE COMMENTED OUT CODE IN GENERATE CLUSTERS FUNCTION
-
-
 import os
 import ast
 import sys
@@ -269,7 +266,6 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
     input_list += f"Test Artice Chosen: (Title: {cluster_dict['Test point']['Title']}\nTags: {cluster_dict['Test point']['Tags']}):\n"
     for _, row in cluster_df.iterrows():
         input_list += f"Article id: {row['st_id']}, Title: {row['Title']}, Tags: {row['tags']}]\n"
-        print(f"{row['st_id']}")
     return input_list, df_train, df_test
 
 def generate_clusters(df_train, df_test):
@@ -290,7 +286,7 @@ def to_generate_timeline(test_data):
             
     output_parser = JsonOutputParser(pydantic_object=Event)
 
-        # See the prompt template you created for formatting
+    # See the prompt template you created for formatting
     format_instructions = output_parser.get_format_instructions()
 
     # Define the template
@@ -543,9 +539,6 @@ def generate_and_sort_timeline(similar_articles_dict, df_train, df_test):
         return dict_of_timelines, df_retrieve
     
     timeline_dic, df_retrieve = process_articles(df_train)
-    # df_retrieve = df_train.loc[similar_articles_dict['indexes']]
-    # df_retrieve = pd.concat([df_retrieve, df_test], axis=0).iloc[::-1].reset_index(drop=True)
-    # return df_retrieve
     print("The first timeline has been generated\n")
     generated_timeline = []
     for idx, line in timeline_dic.items():
@@ -686,9 +679,6 @@ def main_hierarchical(test_article, df_train):
     if to_generate:
         df_test = pd.DataFrame([test_article])
         relevant_articles, df_train, df_test = generate_clusters(df_train, df_test)
-        ######
-        sys.exit()
-        ########
         final_timeline = generate_save_timeline(relevant_articles, df_train, df_test)
         if final_timeline=="Error02":
             reason02 = "There are insufficient relevant articles to construct a meaningful timeline. "
