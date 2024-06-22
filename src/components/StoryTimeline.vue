@@ -1,7 +1,6 @@
 <template>
   <div>
       <q-timeline :layout="layout" color="secondary" class="timeline">
-        
 
       <q-timeline-entry heading>
           <strong>Timeline heading</strong>
@@ -15,7 +14,10 @@
           :side="index % 2 === 0 ? 'right' : 'left'"
         >
         <div>
-          {{item.Contextual_Annotation}}
+          THIS IS WHERE THE EVENT WILL BE PLACED
+        </div>
+        <div>
+          {{item.Article_URL}}
         </div>
       </q-timeline-entry>  
         
@@ -62,11 +64,11 @@ const fetchTimelineData = async () => {
 onMounted(() => {
       fetchTimelineData();
     });
-
-
 </script>
 
 <style scoped>
+
+
 </style>
 
 
