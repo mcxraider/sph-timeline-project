@@ -1,35 +1,48 @@
 <template>
-  <div>
-      <q-timeline :layout="layout" color="secondary" class="timeline">
+  <div class="timeline-container">
+    <q-timeline :layout="layout" color="secondary" class="timeline">
 
       <q-timeline-entry heading>
-          <strong>{{ timelineHeading }}</strong>
-          <br>
+        <strong class="timeline-heading">{{ timelineHeading }}</strong>
+        <br>
       </q-timeline-entry>
 
-
-      <q-timeline-entry v-for="(item, index) in timelineData" :key="index"
-          :title="item.Event_Summary ? item.Event_Summary : item.Event"
-          :subtitle="item.Date"
-          :side="index % 2 === 0 ? 'right' : 'left'"
-        >
-        <div>
-          THIS IS WHERE THE EVENT WILL BE PLACED
+      <q-timeline-entry 
+        v-for="(item, index) in timelineData" 
+        :key="index"
+        :title="item.Event_Summary ? item.Event_Summary : item.Event"
+        :subtitle="item.Date"
+        :side="index % 2 === 0 ? 'right' : 'left'"
+        class="timeline-entry"
+      >
+        <div v-if="item.Event_Summary && countWords(item.Event) > 30" class="event-details">
+          {{ item.Event }}
         </div>
-        <div>
-          {{item.Article_URL}}
-        </div>
-      </q-timeline-entry>  
         
-      </q-timeline>
+        <q-expansion-item
+          expand-separator
+          dense-toggle
+          class="article-links"
+          :label="'List of relevant articles'"
+          :switch-toggle-side="index % 2 === 1"
+        >
+          <div v-for="(link, linkIndex) in item.Article_URL" :key="linkIndex" class="article-link">
+              <a :href="link.url" target="_blank">{{ link.title }}</a>
+          </div>
+        </q-expansion-item>
+
+      </q-timeline-entry>
+
+    </q-timeline>
   </div>
 </template>
+
 
 <script setup>
 // Import necessary functions and libraries
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
-import { useQuasar, QTimeline, QTimelineEntry } from 'quasar';
+import { useQuasar, QTimeline, QTimelineEntry, QExpansionItem } from 'quasar';
 
 // Initialize Quasar utilities
 const $q = useQuasar();
@@ -61,7 +74,6 @@ const fetchTimelineData = async () => {
 
     // Update the reactive reference for the timeline header
     const timelineHeader= response.data.Timeline_header;
-    // const parsedTimelineHeader = JSON.parse(timelineHeader);
     timelineHeading.value = timelineHeader
     console.log(`This is the parsed timeline heading: ${timelineHeader}`);
     
@@ -74,12 +86,18 @@ const fetchTimelineData = async () => {
 onMounted(() => {
   fetchTimelineData();
 });
+
+const countWords = (text) => {
+  return text.split(/\s+/).length;
+};
 </script>
 
 
 <style scoped>
 
-
+.timeline-container{
+  margin: 20px;
+}
 </style>
 
 
