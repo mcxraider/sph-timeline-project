@@ -3,7 +3,7 @@
       <q-timeline :layout="layout" color="secondary" class="timeline">
 
       <q-timeline-entry heading>
-          <strong>Timeline heading</strong>
+          <strong>{{ timelineHeading }}</strong>
           <br>
       </q-timeline-entry>
 
@@ -40,31 +40,38 @@ const layout = computed(() => {
   return $q.screen.lt.sm ? "dense" : $q.screen.lt.md ? "comfortable" : "loose";
 });
 
-// Create a reactive reference to hold the timeline data
+// Create reactive references to hold the timeline data and header
 const timelineData = ref([]);
+const timelineHeading = ref("");
 
+// Function to fetch timeline data from the server
 const fetchTimelineData = async () => {
-        try {
-        console.log("Fetching timeline data...");
-        // Make a GET request to fetch the JSON data
-        const response = await axios.get("http://localhost:3000");
-        console.log("Data fetched:", response.data);
-        // Set the fetched data to the reactive reference
-        const timelineString = response.data.Timeline;
-        console.log(`This is the timeline String: ${timelineString}`);
-        const parsedTimeline = JSON.parse(timelineString);
-        console.log(`This is the parsed timeline: ${parsedTimeline}`)
-        // Set the parsed data to the reactive reference
-        timelineData.value = parsedTimeline;
-        } catch (error) {
-        console.error("Error fetching timeline data:", error);
-        }
-        };
-        
+  try {
+    console.log("Fetching timeline data...");
+    // Make a GET request to fetch the JSON data
+    const response = await axios.get("http://localhost:3000");
+    console.log("Data fetched:", response.data);
+    
+    // Set the fetched data to the reactive references
+    const timelineString = response.data.Timeline;
+    console.log(`This is the timeline String: ${timelineString}`);
+    const parsedTimeline = JSON.parse(timelineString);
+    console.log(`This is the parsed timeline: ${parsedTimeline}`);
+    
+    timelineData.value = parsedTimeline;
+    timelineHeading.value = response.data.timelineHeader || "Timeline heading";
+    
+  } catch (error) {
+    console.error("Error fetching timeline data:", error);
+  }
+};
+
+// Fetch timeline data when the component is mounted
 onMounted(() => {
-      fetchTimelineData();
-    });
+  fetchTimelineData();
+});
 </script>
+
 
 <style scoped>
 
