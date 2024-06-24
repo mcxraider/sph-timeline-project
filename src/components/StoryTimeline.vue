@@ -57,9 +57,13 @@ const fetchTimelineData = async () => {
     console.log(`This is the timeline String: ${timelineString}`);
     const parsedTimeline = JSON.parse(timelineString);
     console.log(`This is the parsed timeline: ${parsedTimeline}`);
-    
     timelineData.value = parsedTimeline;
-    timelineHeading.value = response.data.timelineHeader || "Timeline heading";
+
+    // Update the reactive reference for the timeline header
+    const timelineHeader= response.data.Timeline_header;
+    // const parsedTimelineHeader = JSON.parse(timelineHeader);
+    timelineHeading.value = timelineHeader
+    console.log(`This is the parsed timeline heading: ${timelineHeader}`);
     
   } catch (error) {
     console.error("Error fetching timeline data:", error);

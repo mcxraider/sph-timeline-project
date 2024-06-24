@@ -29,7 +29,8 @@ db.once('open', () => {
 const timelineSchema = new mongoose.Schema({
     Article_id: String,
     Article_Title: String,
-    Timeline: String
+    Timeline: String,
+    Timeline_header: String
   }, { collection: 'generated_timelines' });
   
 
