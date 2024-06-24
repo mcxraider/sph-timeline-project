@@ -14,6 +14,7 @@
         :subtitle="item.Date"
         :side="index % 2 === 0 ? 'right' : 'left'"
         class="timeline-entry"
+        :header-inset-level="0" 
       >
         <div v-if="item.Event_Summary && countWords(item.Event) > 30" class="event-details">
           {{ item.Event }}
@@ -21,11 +22,14 @@
         
         <q-expansion-item
           expand-separator
-          dense-toggle
           class="article-links"
           :label="'List of relevant articles'"
           :switch-toggle-side="index % 2 === 1"
+          expand-icon="explore"
+          :header-inset-level="0" 
+          :content-inset-level="1"
         >
+        
           <div v-for="(link, linkIndex) in item.Article_URL" :key="linkIndex" class="article-link">
               <a :href="link.url" target="_blank">{{ link.title }}</a>
           </div>
