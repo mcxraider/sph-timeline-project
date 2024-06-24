@@ -6,9 +6,6 @@
   "author": "",
   "scripts": {
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start-server": "node server/server.js",
     "concur": "concurrently \"npm run start-server\" \"npm run dev\""
   },
@@ -17,11 +14,12 @@
     "@quasar/extras": "^1.16.11",
     "axios": "^1.7.2",
     "core-js": "^3.8.3",
-    "quasar": "^2.16.4",
-    "vue": "^3.2.13",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^5.10.7"
+    "material-design-icons-iconfont": "^6.7.0",
+    "mongoose": "^5.10.7",
+    "quasar": "^2.16.4",
+    "vue": "^3.2.13"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

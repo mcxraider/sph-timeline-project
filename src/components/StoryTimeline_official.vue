@@ -135,7 +135,7 @@
 </template>
 
 <script setup>
-import { useQuasar } from 'quasar'
+import { useQuasar, QTimeline, QTimelineEntry, QExpansionItem } from 'quasar';
 import { computed } from 'vue'
 
 const $q = useQuasar()
