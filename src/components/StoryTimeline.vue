@@ -17,19 +17,18 @@
         :header-inset-level="0" 
       >
         <div v-if="item.Event_Summary && countWords(item.Event) > 30" class="event-details">
-          {{ item.Event }}
+          <strong>{{ item.Event }}</strong>
         </div>
         
         <q-expansion-item
           expand-separator
           class="article-links"
-          :label="'List of relevant articles'"
+          :label="'Explore relevant articles'"
           :switch-toggle-side="index % 2 === 1"
           expand-icon="explore"
           :header-inset-level="0" 
           :content-inset-level="1"
         >
-        
           <div v-for="(link, linkIndex) in item.Article_URL" :key="linkIndex" class="article-link">
               <a :href="link.url" target="_blank">{{ link.title }}</a>
           </div>
@@ -102,7 +101,5 @@ const countWords = (text) => {
 .timeline-container{
   margin: 20px;
 }
+
 </style>
-
-
-
