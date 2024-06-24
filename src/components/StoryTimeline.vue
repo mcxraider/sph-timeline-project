@@ -9,7 +9,7 @@
 
 
       <q-timeline-entry v-for="(item, index) in timelineData" :key="index"
-          :title="item.Event"
+          :title="item.Event_Summary ? item.Event_Summary : item.Event"
           :subtitle="item.Date"
           :side="index % 2 === 0 ? 'right' : 'left'"
         >
