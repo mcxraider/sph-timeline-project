@@ -9,3 +9,5 @@ Hybrid search retrieval using vetor db:
   - Cohere Re rank
   - LLM Re rank
 
+
+- Multi
