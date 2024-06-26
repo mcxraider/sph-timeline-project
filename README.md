@@ -1,26 +1,3 @@
 # sph-timeline-project
 
-(Will update project documentation in the future. Do not actually follow)
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run dev
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+u need to npm install vue etc. Check 
