@@ -1,0 +1,103 @@
+Cluster 9
+
+--------------------------------------------------------------------------------
+- ‘Godzilla had a kid’: Rogue monitor lizards interrupt Singapore Grand Prix practice session 
+
+Number of articles: 1
+Generated label: Unconventional Interruptions in Sports Events
+
+Cluster 1
+
+--------------------------------------------------------------------------------
+- Team by team analysis of the Las Vegas Grand Prix
+
+- Fuel system problem rules Sainz out of Qatar Grand Prix
+
+Number of articles: 2
+Generated label: Grand Prix Racing Issues
+
+Cluster 2
+
+--------------------------------------------------------------------------------
+- Red Bull take constructors’ title as Max Verstappen wins in Japan
+
+- Verstappen holds off Hamilton for 50th career F1 win
+
+- Red Bull’s Max Verstappen fastest in US GP practice
+
+- Albon flies as Verstappen completes Mexico practice sweep
+
+- Perez to feel the love even if the dream is dashed
+
+- McLaren can be a real threat to Red Bull next season, says Brawn
+
+Number of articles: 6
+Generated label: Max Verstappen and Red Bull's F1 Dominance
+
+Cluster 3
+
+--------------------------------------------------------------------------------
+- Felipe Massa says deadline for Formula One and FIA is the last one
+
+- Brazil's F1 race to remain in Sao Paulo until 2030
+
+Number of articles: 2
+Generated label: Formula One and FIA Developments
+
+Cluster 4
+
+--------------------------------------------------------------------------------
+- GM plans F1 power unit supply to Andretti from 2028
+
+- Formula One’s Las Vegas race isn’t living up to the hype
+
+- Lewis Hamilton defends F1 Las Vegas race after Max Verstappen outburst
+
+- Aston Martin to enter Le Mans with Valkyrie from 2025
+
+- Netflix pairs PGA Tour stars with F1 drivers for live match play event
+
+Number of articles: 5
+Generated label: Formula One and Motorsport News
+
+Cluster 5
+
+--------------------------------------------------------------------------------
+- Formula One set to change sprint format for 2024
+
+Number of articles: 1
+Generated label: Formula One Format Changes
+
+Cluster 6
+
+--------------------------------------------------------------------------------
+- ‘It was like a dream’: Fan spots Lewis Hamilton at Promenade ahead of S’pore Grand Prix
+
+- S’pore race driver Sean Hudspeth buoyed by GT World Challenge Europe podium finish
+
+- Singaporean teen Christian Ho takes next step in pursuit of F1 dream 
+
+Number of articles: 3
+Generated label: Racing and Motorsports in Singapore
+
+Cluster 7
+
+--------------------------------------------------------------------------------
+- Aston Martin’s Lance Stroll in horror crash during Singapore Grand Prix qualifying
+
+- Martin wins Indian GP sprint after Bezzecchi crashes on first turn
+
+- No fractures for Bagnaia in Catalunya GP crash, Bastianini set for surgery
+
+Number of articles: 3
+Generated label: Motor Racing Crashes and Injuries
+
+Cluster 8
+
+--------------------------------------------------------------------------------
+- No Italian delight for tifosi as Max Verstappen completes perfect 10, close racing thrills crowd
+
+- Monza ready to get to work as contract talks rev up
+
+Number of articles: 2
+Generated label: Formula 1 and Racing
