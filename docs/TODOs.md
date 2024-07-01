@@ -10,4 +10,3 @@ Hybrid search retrieval using vetor db:
   - LLM Re rank
 
 
-- Multi
