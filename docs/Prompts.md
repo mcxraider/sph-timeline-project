@@ -1,3 +1,13 @@
+# Prompt to determine timeline heading of an article:
+
+I would like to create a timeline of events based on the title of an article Given this article title below, what would be a generalised, suitable name for for a timeline for such an article that will provide a reader contextual information about a timeline of events regarding the article.
+
+article title: Japan to provide $88 million in additional humanitarian aid to Palestinians. 
+only return the fill in the blank part 
+Answer: Timeline of <fill in this blank>
+
+
+
 # Prompt to try to determine need for headline:
 You are a highly intelligent AI tasked with analyzing articles to determine whether generating a timeline of events leading up to the key event in the article would be beneficial. 
 Consider the following factors to make your decision:
