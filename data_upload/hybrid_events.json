@@ -16,7 +16,7 @@
         "Date": "2023-11-06",
         "Article_URL": "https://www.straitstimes.com/world/middle-east/un-bodies-make-united-call-for-humanitarian-ceasefire-in-gaza",
         "reranked_score": 6.501074314117432,
-        "Event": "The heads of several major United Nations bodies made a united call for a humanitarian ceasefire in Gaza.",
+        "Event": "The heads of several UN bodies called for a humanitarian ceasefire in Gaza.",
         "Event_date": "2023-11-06"
     },
     {
@@ -26,7 +26,7 @@
         "Date": "2023-11-04",
         "Article_URL": "https://www.straitstimes.com/asia/japan-to-provide-65-million-additional-humanitarian-aid-to-palestinians",
         "reranked_score": 6.271285057067871,
-        "Event": "Japan announced an additional $88 million in humanitarian aid for Palestinians.",
+        "Event": "Japan announced an additional $88 million in humanitarian aid to Palestinians",
         "Event_date": "2023-11-03"
     },
     {
@@ -36,7 +36,7 @@
         "Date": "2023-10-31",
         "Article_URL": "https://www.straitstimes.com/world/middle-east/palestinian-americans-fundraise-for-gaza-as-aid-groups-receive-record-donations",
         "reranked_score": 6.103775978088379,
-        "Event": "Hamas militants launched an attack on Israel, killing 1,400 people and taking 229 hostages.",
+        "Event": "Hamas militants attacked Israel, killing 1,400 people and taking 229 hostages.",
         "Event_date": "2023-10-07"
     },
     {
@@ -46,8 +46,8 @@
         "Date": "2023-10-24",
         "Article_URL": "https://www.straitstimes.com/opinion/the-nightmare-of-delivering-aid-during-this-israel-hamas-war",
         "reranked_score": 6.039750576019287,
-        "Event": "US President Joe Biden pledged US$100 million in humanitarian assistance for Gaza.",
-        "Event_date": "2023-10"
+        "Event": "US President Joe Biden pledged $100 million in humanitarian assistance for the citizens of Gaza.",
+        "Event_date": "2023-10-24"
     },
     {
         "id": "st_1157341",
@@ -56,7 +56,7 @@
         "Date": "2023-10-24",
         "Article_URL": "https://www.straitstimes.com/world/middle-east/scaling-up-gaza-aid-effort-faces-tangle-of-challenges",
         "reranked_score": 6.003586769104004,
-        "Event": "Aid began flowing into Gaza through the Rafah crossing from Egypt on October 21st.",
+        "Event": "The first convoy of aid trucks, carrying food, water, and medicine, entered Gaza through the Rafah crossing.",
         "Event_date": "2023-10-21"
     },
     {
@@ -66,7 +66,7 @@
         "Date": "2023-10-31",
         "Article_URL": "https://www.straitstimes.com/world/middle-east/israel-pm-netanyahu-rejects-gaza-ceasefire-says-it-amounts-to-surrendering-to-hamas",
         "reranked_score": 5.907919883728027,
-        "Event": "Israeli Prime Minister Benjamin Netanyahu rejected a ceasefire in the ongoing conflict with Hamas, stating that it would be equivalent to surrendering to the group.",
+        "Event": "Israeli Prime Minister Benjamin Netanyahu rejected a ceasefire in the ongoing war against Hamas.",
         "Event_date": "2023-10-30"
     },
     {
@@ -76,7 +76,7 @@
         "Date": "2023-10-31",
         "Article_URL": "https://www.straitstimes.com/singapore/s-pore-red-cross-gives-270k-worth-of-relief-aid-to-victims-of-hamas-israel-war-in-gaza",
         "reranked_score": 5.10781192779541,
-        "Event": "The Singapore Red Cross announced it will send US$200,000 worth of relief supplies to Gaza to help victims of the Hamas-Israel war.",
+        "Event": "The Singapore Red Cross announced it will send US$200,000 worth of relief supplies to Gaza.",
         "Event_date": "2023-10-24"
     },
     {
@@ -86,7 +86,7 @@
         "Date": "2023-10-28",
         "Article_URL": "https://www.straitstimes.com/singapore/s-pore-supports-humanitarian-aid-calls-for-civilian-lives-to-be-protected-in-gaza-s-pore-un-ambassador",
         "reranked_score": 4.371120929718018,
-        "Event": "Singapore supported a UN resolution calling for a humanitarian truce in Gaza.",
+        "Event": "Singapore expressed its support for humanitarian aid to Gaza and called for the protection of civilians.",
         "Event_date": "2023-10-27"
     },
     {
@@ -96,7 +96,7 @@
         "Date": "2023-11-17",
         "Article_URL": "https://www.straitstimes.com/world/middle-east/aid-supplies-to-gaza-halted-again-un-says-starvation-imminent",
         "reranked_score": 4.301633834838867,
-        "Event": "UN aid deliveries to Gaza were suspended again due to shortages of fuel and a communications shutdown.",
+        "Event": "The United Nations suspended aid deliveries to Gaza due to fuel shortages and a communications shutdown.",
         "Event_date": "2023-11-17"
     },
     {
@@ -106,7 +106,7 @@
         "Date": "2023-10-10",
         "Article_URL": "https://www.straitstimes.com/world/middle-east/who-calls-for-humanitarian-corridor-into-gaza-as-war-displaces-over-200000",
         "reranked_score": 3.3527657985687256,
-        "Event": "The UN human rights chief condemned allegations of mass killings and executions by Palestinian armed groups and warned against Israel’s 'complete siege' of Gaza.",
+        "Event": "The UN human rights chief condemned allegations of mass killings and executions by Palestinian armed groups.",
         "Event_date": "2023-10-10"
     },
     {
@@ -116,7 +116,7 @@
         "Date": "2023-11-18",
         "Article_URL": "https://www.straitstimes.com/world/israel-to-allow-some-fuel-into-gaza-after-us-push-officials",
         "reranked_score": 3.333937883377075,
-        "Event": "Israel agreed to allow 140,000 liters of fuel into Gaza every two days.",
+        "Event": "Israel agreed to allow 140,000 liters of fuel into Gaza every two days after a request from the United States.",
         "Event_date": "2023-11-17"
     }
 ]

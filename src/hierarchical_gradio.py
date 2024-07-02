@@ -21,15 +21,24 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from scipy.cluster.hierarchy import linkage, fcluster
 
-# Import libraries for working with language models and Google Gemini
+# Groq to generate main event for each article
+import re
+import json
+from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain_groq import ChatGroq
+from langchain_core.prompts import PromptTemplate
 from langchain_core.prompts import PromptTemplate
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain_groq import ChatGroq
+from langchain_core.prompts import PromptTemplate
 
-# Load environment variables
+chat_model = "llama3-8b-8192"
 load_dotenv()
+groq_api_key = os.getenv('GROQ_API_KEY')
 GEMINI_KEY = os.environ.get('GEMINI_KEY')
 genai.configure(api_key=GEMINI_KEY)
 
@@ -143,7 +152,6 @@ def split_batches(timeline, max_batch_size=30):
     return batches
 
 
-
 def scale_df_embeddings(df_train, df_test):
     print("Processing embedding data and scaling data...\n")
     #Deserializing the embeddings
@@ -175,15 +183,16 @@ def get_variance_performance(train_embeddings):
     for variance in variance_range:
         pca = PCA(n_components=variance)
         train_pca_embeddings = pca.fit_transform(train_embeddings)
+        print(train_pca_embeddings.shape)
         
         # Range of max_d values to try, for this dataset we use 65
-        max_d_values = np.arange(52, 58)
+        max_d_values = np.arange(54,55)
         
         # List to store silhouette scores
         silhouette_scores_train = []
 
         # Perform hierarchical clustering
-        Z = linkage(train_pca_embeddings, method='ward')
+        Z = linkage(train_pca_embeddings, method='average', metric='cosine')
 
         for max_d in max_d_values:
             clusters_train = fcluster(Z, max_d, criterion='distance')
@@ -229,7 +238,7 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
     pca_train_embeddings = pca.fit_transform(train_embeddings)
     pca_test_embeddings = pca.transform(test_embeddings)
 
-    Z = linkage(pca_train_embeddings, method='ward', metric='euclidean')
+    Z = linkage(pca_train_embeddings, method='average', metric='cosine')
     clusters_train = fcluster(Z, best_max_d, criterion='distance')
     # Predict clusters for test data using the nearest cluster center
 
@@ -272,8 +281,8 @@ def get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddi
 
 def generate_clusters(df_train, df_test):
     train_embeddings, test_embeddings = scale_df_embeddings(df_train, df_test)
-    variance_perf = get_variance_performance(train_embeddings)
-    best_variance, best_max_d = get_best_variance(variance_perf)
+    # variance_perf = get_variance_performance(train_embeddings)
+    best_variance, best_max_d = 92, 54
     relevant_articles, df_train, df_test = get_cluster_labels(best_variance, best_max_d, train_embeddings, test_embeddings, df_train, df_test)
     return relevant_articles, df_train, df_test
 
@@ -414,7 +423,7 @@ def get_article_dict(input_list, df_train, df_test):
     similar_articles_dict = {}
     
     # Iterate over each test article in the filtered df_test
-    for index, test_row in df_test.iterrows():
+    for _, test_row in df_test.iterrows():
         test_cluster_label = test_row['Cluster_labels']
         
         # Filter df_train for the same cluster label
@@ -440,9 +449,10 @@ def get_article_dict(input_list, df_train, df_test):
         # Print results 
         print("-"*80 + "\n")
         print(f"Test Article Title: << {similar_articles_dict['Title']}>>\n")
-        print("Selected Supporting Article Titles:")
+        print("Article Titles selected by Gemini:")
         for idx in similar_articles_dict['indexes']:
-            print(f" - {df_train.loc[idx, 'Title']}")
+            print(f" Title - {df_train.loc[idx, 'Title']}")
+            print(f" published date- {df_train.loc[idx, 'Publication_date']}\n")
         print("\n" + "-"*80)
         return similar_articles_dict
         
@@ -543,7 +553,7 @@ def generate_and_sort_timeline(similar_articles_dict, df_train, df_test):
     timeline_dic, df_retrieve = process_articles(df_train)
     print("The first timeline has been generated\n")
     generated_timeline = []
-    for idx, line in timeline_dic.items():
+    for _, line in timeline_dic.items():
         indiv_timeline = clean_output(line)
         if type(indiv_timeline) == list:
             for el in indiv_timeline:
@@ -569,39 +579,40 @@ def generate_and_sort_timeline(similar_articles_dict, df_train, df_test):
             finished_timeline[i]['Date'] = date[:7]
     return finished_timeline, df_retrieve
 
-def enhance_timeline(timeline):
-    print("\nProceeding to enhance the timeline...\n")
+def reduce_by_date(timeline_list):
+    '''
+    Takes in a list of events in one day, and returns a list of dicts for events in that day
+    
+    '''
+    timeline_string = json.dumps(timeline_list)
+    
     llm = genai.GenerativeModel(model_name='gemini-1.5-flash-latest')
 
     class Event(BaseModel):
-            Date: str = Field(description="The date of the event in YYYY-MM-DD format")
             Event: str = Field(description="A detailed description of the event")
-            Contextual_Annotation: str = Field(description="Contextual anecdotes of the event.")
-            Article_id: list = Field(description="The article id(s) from which the event was extracted")
+            Article_id: list = Field(description="The article id(s) from which the events were extracted")
 
     parser = JsonOutputParser(pydantic_object=Event)
 
-    template = '''
-        You are given a timeline of events, your task is to enhance this timeline by improving its clarity and contextual information.
-        IF the same event occurs on the exact same date, merge these events to avoid redundancy, and add the article ids to a list. 
-        Add contextual annotations by providing brief annotations for major events to give additional context and improve understanding.
-        Only retain important information that would be value-add when the general public reads the information.
+    template = '''You are a news article editor tasked with simplifying a section of a timeline of events on the same day. 
+Given this snippet a timeline, filter out duplicated events. 
+IF events convey the same overall meaning, I want you to merge these events into one event to avoid redundancy, and add the article ids to a list. 
+However, the events are all different, do not combine them, I want you to return it as it is, however, follow the specified format instructions below. 
+Furthermore, if the event is not considered to be an event worthy of an audience reading the timeline, do not include it.
+Take your time and evaluate the timeline slowly to make your decision.
 
-        Initial Timeline:
-        {text}
+Timeline snippet:
+{text}
 
-        {format_instructions}
-        Ensure that the format follows the example output format strictly before returning the output.
-        '''
+{format_instructions}
+Ensure that the format follows the example output format strictly before returning the output.'''
     prompt = PromptTemplate(
             input_variables=["text"],
-            template=template
+            template=template,
+            partial_variables={"format_instructions": parser.get_format_instructions()}
         )
-            
-    def generate_enhanced(batch):
-        batch_timeline_text = json.dumps(batch)
-        final_prompt = prompt.format(text=batch_timeline_text, format_instructions=parser.get_format_instructions())
-        response = llm.generate_content(final_prompt,
+    final_prompt = prompt.format(text=timeline_string)
+    response = llm.generate_content(final_prompt,
             safety_settings={
                 HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
                 HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
@@ -609,29 +620,46 @@ def enhance_timeline(timeline):
                 HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
             }
         )
-        data = extract_json_from_string(response.parts[0].text)
-        return data
+    data = extract_json_from_string(response.parts[0].text)
+    for event_dic in data:
+        article_id_list = event_dic['Article_id']
+        if len(article_id_list)> 2:
+            shortened_ids = article_id_list
+            event_dic['Article_id'] = shortened_ids
+    return data
 
-    def process_articles(timeline):
-        results = []
-        batches = split_batches(timeline, max_batch_size=30)
-        num_batches = len(batches)
+# Creating a set of unique days. This will reduce the number of tokens to the model, and makes it easier to handle in the output
+def first_timeline_enhancement(timeline):
+    '''
+    This function takes in a timeline in list format 
+    '''
+    uniq_dates = sorted(list(set([event['Date'] for event in timeline])))
+    dic = {}
+    for i in range(len(uniq_dates)):
+        dic[uniq_dates[i]] = [{'Event':event['Event'], 'Article_id': event['Article_id']} for event in timeline if event['Date'] == uniq_dates[i]]
+     
+    new_timeline = {}
+    for date, snippet in dic.items():
+        if len(snippet) == 1:
+            new_timeline[date] = snippet
+        else:
+            new_snippet = reduce_by_date(snippet)
+            new_timeline[date] =new_snippet
+    enhanced_timeline = []
+    for date, events in new_timeline.items():
+            for event in events:
+                new_event = {}
+                new_event['Date'] = date
+                new_event['Event'] = event['Event']
+                article_id = event['Article_id']
+                if isinstance(article_id, str):
+                    new_event['Article_id'] = [article_id]
+                else:
+                    new_event['Article_id'] = event['Article_id']
+                enhanced_timeline.append(new_event)
+    return enhanced_timeline
 
-        with ThreadPoolExecutor(max_workers=num_batches) as executor:
-            print("Processing batches simultaneously now...\n")
-            futures = {executor.submit(generate_enhanced, batch): batch for batch in batches}
-            for future in as_completed(futures):
-                indiv_batch = future.result()
-                for event in indiv_batch:
-                    results.append(event)
-        return results
-
-    full_enhanced = process_articles(timeline)
-    sorted_timeline = sorted(full_enhanced, key=lambda x:x['Date'])
-    print("Finished enhancing the timeline\n")
-    return sorted_timeline
-
-def save_enhanced_timeline(enhanced_timeline, df_retreive):
+def pair_article_urls(enhanced_timeline, df_retrieve):
     """
     Save the enhanced timeline to a JSON file.
 
@@ -644,33 +672,108 @@ def save_enhanced_timeline(enhanced_timeline, df_retreive):
         for event in timeline:
             new_date = format_timeline_date(event['Date'])
             event['Date'] = new_date
-            # Check if Contextual Annotation empty    
-            if not event['Contextual_Annotation']:
-                event['Contextual_Annotation'] = "NONE"
         return timeline
 
     edited_timeline = edit_timeline(enhanced_timeline)
-    id_url_pairs = {}
+
     for event in edited_timeline:
-            id_list = event['Article_id']
-            for i in range(len(id_list)):
-                id = id_list[i]
-                id_url = df_retreive[df_retreive['st_id'] == id]['article_url'].values
-                id_url_pairs[id] = id_url
-                id_list[i] = id_url
-            event['Article_URL'] = [array.tolist() for array in id_list if array.size > 0]
-            event.pop('Article_id')
+        id_list = event['Article_id']
+        url_title_pairs = []
+        
+        for i in range(len(id_list)):
+            id = id_list[i]
+            url = df_retrieve[df_retrieve['st_id'] == id]['article_url'].values[0]
+            title = df_retrieve[df_retrieve['st_id'] == id]['Title'].values[0]
+            url_title_pairs.append({'url': url, 'title': title})
+        
+        event['Article_URL'] = url_title_pairs
+        event.pop('Article_id')  
+    return edited_timeline
+
+def num_words(event_str):
+    ls = event_str.split()
+    return len(ls)
+
+def get_needed_summaries(timeline):
+    need_summary_timeline = []
+    for i in range(len(timeline)):
+        if num_words(timeline[i]['Event']) > 20:
+            need_summary_timeline.append((i,timeline[i]))
     
-    json_data = json.dumps(edited_timeline, indent=4, ensure_ascii=False)
-    return json_data
+    # Get out events
+    events = {}
+    for i in range(len(need_summary_timeline)):
+        events[need_summary_timeline[i][0]] = need_summary_timeline[i][1]
+    return events
+
+def groq_summariser(events_ls):
+    # Define your desired data structure.
+    class summarized_event(BaseModel):
+        Event: str = Field(description="Event in a timeline")
+        Event_Summary: str = Field(description="Short Summary of event")
+    
+    parser = JsonOutputParser(pydantic_object=summarized_event)
+
+    chat = ChatGroq(temperature=0, model_name=chat_model)
+    
+    template = '''
+You are a news article editor.
+Given a list of events from a timeline, you are tasked to provide a short summary of these series of events. 
+For each event, you should return the event, and the summary.
+
+Series of events:
+{text}
+
+{format_instructions}
+    '''
+    
+    prompt = PromptTemplate(
+        template=template,
+        input_variables=["text"],
+        partial_variables={"format_instructions": parser.get_format_instructions()},
+    )
+    
+    chain = prompt | chat | parser
+    
+    event_str = json.dumps(events_ls)
+    result = chain.invoke({"text": event_str})
+    return result
+
+def merge_event_summaries(events_ls, llm_answer, timeline, need_summary_timeline):
+    # Need to improve error handling for this section....
+    print(len(llm_answer) == len(events_ls))
+    if len(llm_answer) != len(need_summary_timeline):
+        print("Groq had an error where timeline summary output length not equal to input but trying to resolve")
+        llm_answer = groq_summariser(events_ls)
+        print(len(llm_answer) == len(events_ls))
+    i = 0
+    for k,v in need_summary_timeline.items():
+        need_summary_timeline[k]['Event_Summary'] = llm_answer[i]['Event_Summary']
+        i += 1
+        
+    for i in range(len(timeline)):
+            if i in need_summary_timeline:
+                timeline[i] = need_summary_timeline[i]
+    return timeline
+
+def second_timeline_enhancement(timeline):
+    need_summary_timeline = get_needed_summaries(timeline)
+    events_ls = [event['Event'] for _, event in need_summary_timeline.items()]
+    summaries = groq_summariser(events_ls)
+    final_timeline = merge_event_summaries(events_ls, summaries, timeline, need_summary_timeline)
+    return final_timeline
 
 def generate_save_timeline(relevant_articles, df_train, df_test):
     similar_articles = get_article_dict(relevant_articles, df_train, df_test)
     if similar_articles == "generate_similar_error":
         return "Error02"
     generated_timeline, df_retrieve = generate_and_sort_timeline(similar_articles, df_train, df_test)
-    final_timeline = enhance_timeline(generated_timeline)
-    final_timeline = save_enhanced_timeline(final_timeline, df_retrieve)
+    print("Proceeding to Stage 1/2 of enhancement...\n")
+    first_enhanced_timeline = first_timeline_enhancement(generated_timeline)
+    second_enhanced_timeline = pair_article_urls(first_enhanced_timeline, df_retrieve)
+    print("Proceeding to Stage 2/2 of enhancement...\n")
+    final_timeline = second_timeline_enhancement(second_enhanced_timeline)
+    print("Timeline enhanced.. \n")
     return final_timeline
 
 
@@ -708,6 +811,38 @@ def load_mongodb():
         sys.exit()
     return train_documents, test_docs
 
+def groq_header(final_timeline):
+    event_titles = [event['Event_Summary'] if 'Event_Summary' in event else event['Event'] for event in final_timeline ]
+    # Define your desired data structure.
+    class summarized_event(BaseModel):
+        timeline_heading: str = Field(description="Heading of timeline")
+    
+    parser = JsonOutputParser(pydantic_object=summarized_event)
+
+    chat = ChatGroq(temperature=0, model_name=chat_model)
+    
+    template = '''
+You are a news article editor.
+Given a list of events from a timeline, analyse the series of events which are displayed in chronological order. 
+Form a concise and accurate heading for this timeline.
+
+
+Series of events:
+{text}
+
+{format_instructions}
+    '''
+    prompt = PromptTemplate(
+        template=template,
+        input_variables=["text"],
+        partial_variables={"format_instructions": parser.get_format_instructions()},
+    )
+    
+    chain = prompt | chat | parser
+    
+    result = chain.invoke({"text": event_titles})
+    return result
+
 def gradio_generate_timeline(index):
     print("Starting Timeline Generation\n")
     
@@ -715,7 +850,7 @@ def gradio_generate_timeline(index):
     
     def count_test_length(test_database):
         count = 0
-        for doc in test_database:
+        for _ in test_database:
             count += 1
         return count
 
@@ -730,7 +865,8 @@ def gradio_generate_timeline(index):
 
     # Run this after gradio workflow tested
     timeline, fail_reason = main_hierarchical(test_article, df_train)
-    
+        
+    print("Fetching database to store the generated timeline.. \n")
     # Pull database
     db = mongo_client[config["database"]["name"]]
     
@@ -741,29 +877,34 @@ def gradio_generate_timeline(index):
     test_article_title = test_article['Title']
     # If timeline should not be generated
     if timeline == "to_generate_error" or timeline == "generate_similar_articles_error":
-        
         # Timeline instance to return for error message
         timeline_return = {"Article_id": test_article_id, 
                            "Article_Title": test_article_title, 
+                           "Timeline_header": "null",
                            "error": fail_reason}
         
         # Timeline instance to export to MongoDB
         timeline_export = {"Article_id": test_article_id, 
                            "Article_Title": test_article_title, 
+                           "Timeline_header": "null",
                            "Timeline": "null"}
         try:
             # Insert result into collection
             gen_timeline_documents.insert_one(timeline_export)
-            print("Data successfully saved to MongoDB")
+            print(f"Timeline with article id {test_article_id} successfully saved to MongoDB")
         except Exception as error:
             print(f"Unable to save timeline to database. Check your connection the database...\nERROR: {error}\n")
             sys.exit()
             
     else:
+        # If no error in timeline, then generate a heading for it
+        print("Generating the timeline header...\n")
+        timeline_header = groq_header(timeline)['timeline_heading']
         # Convert the timeline to JSON
         timeline_json = json.dumps(timeline)
         timeline_return = {"Article_id": test_article_id, 
                            "Article_Title": test_article_title, 
+                           "Timeline_header": timeline_header,
                            "Timeline": timeline_json}
         timeline_export = timeline_return
         
@@ -771,11 +912,12 @@ def gradio_generate_timeline(index):
         try:
             # Insert result into collection
             gen_timeline_documents.insert_one(timeline_export)
-            print("Data successfully saved to MongoDB")
+            print(f"Timeline with article id {test_article_id} successfully saved to MongoDB")
         except Exception as error:
             print(f"Unable to save timeline to database. Check your connection the database...\nERROR: {error}\n")
             sys.exit()
     return timeline_return
+
 
 def display_timeline(timeline_str):
     print("Displaying timeline on Gradio Interface \n")

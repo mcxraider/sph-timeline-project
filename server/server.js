@@ -31,7 +31,7 @@ const timelineSchema = new mongoose.Schema({
     Article_Title: String,
     Timeline: String,
     Timeline_header: String
-  }, { collection: 'generated_timelines' });
+  }, { collection: 'generated_hybrid_timelines' });
   
 
 const TimelineEntry = mongoose.model('TimelineEntry', timelineSchema);
@@ -39,7 +39,7 @@ const TimelineEntry = mongoose.model('TimelineEntry', timelineSchema);
 // Define a route to fetch data
 app.get('/', async (req, res) => {
     try {
-      const latestEntry = await TimelineEntry.findOne({Article_id:"st_1155048"});
+      const latestEntry = await TimelineEntry.findOne({Article_id:"st_1159793"});
       res.json(latestEntry);
     } catch (error) {
       res.status(500).send(error);
