@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import StoryTimeline from "./components/StoryTimeline_hybrid.vue";
+import StoryTimeline from "./components/StoryTimeline.vue";
 
 export default {
   name: "App",

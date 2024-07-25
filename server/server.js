@@ -25,20 +25,20 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-// Define a schema and model
-// const timelineSchema = new mongoose.Schema({
-//     Article_id: String,
-//     Article_Title: String,
-//     Timeline: String,
-//     Timeline_header: String
-//   }, {collection: 'generated_timelines'});
-
+//Define a schema and model
 const timelineSchema = new mongoose.Schema({
     Article_id: String,
     Article_Title: String,
     Timeline: String,
     Timeline_header: String
-  }, {collection: 'generated_hybrid_timelines'});
+  }, {collection: 'generated_timelines'});
+
+// const timelineSchema = new mongoose.Schema({
+//     Article_id: String,
+//     Article_Title: String,
+//     Timeline: String,
+//     Timeline_header: String
+//   }, {collection: 'generated_hybrid_timelines'});
 
 
 const TimelineEntry = mongoose.model('TimelineEntry', timelineSchema);
