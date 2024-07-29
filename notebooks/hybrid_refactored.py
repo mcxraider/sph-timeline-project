@@ -529,7 +529,6 @@ def export_hybrid_timeline(test_article,timeline_data,timeline_header):
         logging.error(f"Unable to save timeline to database. Check your connection the database...\nERROR: {error}\n")
 # end def
 
-
 def main(test_id):
     # Load database 
     db= load_database()
