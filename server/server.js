@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-const mongoConnectionString = 'mongodb://127.0.0.1:27017/timeline-project?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.6';
+const mongoConnectionString = "mongodb://127.0.0.1:27017/timeline-project";
 
 mongoose.connect(mongoConnectionString, {
   useNewUrlParser: true,
@@ -25,22 +25,29 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-// Define a schema and model
+//Define a schema and model
 const timelineSchema = new mongoose.Schema({
     Article_id: String,
     Article_Title: String,
     Timeline: String,
     Timeline_header: String
-  }, { collection: 'generated_timelines' });
-  
+  }, {collection: 'generated_timelines'});
+
+// const timelineSchema = new mongoose.Schema({
+//     Article_id: String,
+//     Article_Title: String,
+//     Timeline: String,
+//     Timeline_header: String
+//   }, {collection: 'generated_hybrid_timelines'});
+
 
 const TimelineEntry = mongoose.model('TimelineEntry', timelineSchema);
 
 // Define a route to fetch data
 app.get('/', async (req, res) => {
     try {
-      const latestEntry = await TimelineEntry.findOne({Article_id:"st_1155048"});
-      res.json(latestEntry);
+      const timelineEntry = await TimelineEntry.findOne();
+      res.json(timelineEntry);
     } catch (error) {
       res.status(500).send(error);
     }
