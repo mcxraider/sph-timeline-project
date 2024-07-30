@@ -26,6 +26,7 @@ db.once('open', () => {
 });
 
 //Define a schema and model
+// Schema below for version 1 of timeline
 const timelineSchema = new mongoose.Schema({
     Article_id: String,
     Article_Title: String,
@@ -33,6 +34,8 @@ const timelineSchema = new mongoose.Schema({
     Timeline_header: String
   }, {collection: 'generated_timelines'});
 
+
+// Schema below for version 2 of timeline
 // const timelineSchema = new mongoose.Schema({
 //     Article_id: String,
 //     Article_Title: String,
