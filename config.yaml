@@ -4,6 +4,6 @@ database:
   timelines_collection: "generated_timelines"
   train_collection: "train_articles"
   test_collection: "test_articles"
-  hybrid_timeline_collection: "generated_hybrid_timelines"
+  version_2_collection: "generated_hybrid_timelines"
 
 chat_model: "llama3-8b-8192"
