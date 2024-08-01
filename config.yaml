@@ -1,9 +1,7 @@
 database:
   uri: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.6"
   name: "timeline-project"
-  timelines_collection: "generated_timelines"
+  version_1_collection: "generated_timelines"
+  version_2_collection: "generated_hybrid_timelines"
   train_collection: "train_articles"
   test_collection: "test_articles"
-  version_2_collection: "generated_hybrid_timelines"
-
-chat_model: "llama3-8b-8192"
