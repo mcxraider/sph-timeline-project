@@ -3,7 +3,6 @@ This Github Repo contains all the code that use for the creation of 2 versions o
 
 This Repo contain following structure:
 ```
-.
 ├── notebooks
 │   └── hierarchical_clustering_experiment.ipynb
 ├── public
@@ -42,7 +41,7 @@ This Repo contain following structure:
 
 ```
 
-# Note:
+# MongoDB configuration:
 - Adjust config.yaml file for proper connection to local MongoDB.
 - Change the Mongo client string
 - Change the name of the collections in the database accordingly
