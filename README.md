@@ -2,6 +2,7 @@
 This Github Repo contains all the code that use for the creation of 2 versions of the timeline.
 
 This Repo contain following structure:
+```
 ├── notebooks
 │   ├── google_nlp_tag_generation.ipynb
 │   ├── hierarchical_experiment.ipynb
@@ -35,6 +36,7 @@ This Repo contain following structure:
 ├── README.md
 ├── requirements.txt
 └── vue.config.js
+```
 
 
 # Documentation
