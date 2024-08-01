@@ -26,6 +26,7 @@ db.once('open', () => {
 });
 
 //Define a schema and model
+
 // Schema below for version 1 of timeline
 const timelineSchema = new mongoose.Schema({
     Article_id: String,
