@@ -38,6 +38,11 @@ This Repo contain following structure:
 └── vue.config.js
 ```
 
+# Note:
+- Adjust config.yaml file for proper connection to local MongoDB.
+- Change the Mongo client string
+- Change the name of the collections in the database accordingly
+
 
 # Documentation
 <br>
