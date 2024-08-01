@@ -3,11 +3,9 @@ This Github Repo contains all the code that use for the creation of 2 versions o
 
 This Repo contain following structure:
 ```
+.
 ├── notebooks
-│   ├── google_nlp_tag_generation.ipynb
-│   ├── hierarchical_experiment.ipynb
-│   ├── version_1_timeline.ipynb
-│   └── version_2_timeline.ipynb
+│   └── hierarchical_clustering_experiment.ipynb
 ├── public
 │   ├── index.html
 │   └── st_logo.ico
@@ -22,9 +20,14 @@ This Repo contain following structure:
 │   │   ├── Version1_timeline.vue
 │   │   └── Version2_timeline.vue
 │   ├── utils
-│   │   └── __init__.py
+│   │   ├── __init__.py
+│   │   ├── google_nlp_tag_generation.py
+│   │   ├── graio_interface.py
+│   │   ├── main.js
+│   │   ├── verison_2_timeline.py
+│   │   └── version_1_timeline.py
 │   ├── App.vue
-│   ├── main.js
+│   └── main.js
 ├── .env
 ├── .gitignore
 ├── babel.config.js
@@ -36,6 +39,7 @@ This Repo contain following structure:
 ├── README.md
 ├── requirements.txt
 └── vue.config.js
+
 ```
 
 # Note:
